@@ -15,4 +15,4 @@ their skills.
 
 You can view the meeting notes and discussions until today in the [Wiki](https://github.com/mehmetemreakbulut/AkbulutTopcuoglu/wiki) page of the project.
 
-We mainly worked on OverLeaf. You can track the "History" from [Link]()
+We mainly worked on OverLeaf. You can track the "History" from [Link]().
