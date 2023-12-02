@@ -1,0 +1,151 @@
+This document has been prepared to help you approaching Latex as a formatting tool for your Travlendar+ deliverables. This document suggests you a possible style and format for your deliverables and contains information about basic formatting commands in Latex. A good guide to Latex is available here \href{https://tobi.oetiker.ch/lshort/lshort.pdf}{https://tobi.oetiker.ch/lshort/lshort.pdf}, but you can find many other good references on the web. 
+
+Writing in Latex means writing textual files having a \texttt{.tex} extension and exploiting the Latex markup commands for formatting purposes. Your files then need to be compiled using the Latex compiler. Similarly to programming languages, you can find many editors that help you writing and compiling your latex code. Here \href{https://beebom.com/best-latex-editors/}{https://beebom.com/best-latex-editors/} you have a short oviewview of some of them. Feel free to choose the one you like.  
+
+Include a subsection for each of the following items\footnote{By the way, what follows is the structure of an itemized list in Latex.}:
+\begin{itemize}
+\item
+Purpose: here we include the goals of the project
+\item
+Scope: here we include an analysis of the world and of the shared phenomena
+\item
+Definitions, Acronyms, Abbreviations
+\item
+Revision history
+\item
+Reference Documents 
+\item
+Document Structure
+\end{itemize}
+Below you see how to define the header for a subsection.
+\subsection{Purpose}
+In today's digital age, education has evolved significantly, with online learning becoming more and more important, especially in subjects like computer science. However, only theoretical learning often can be insufficient in practical fields like coding. This is where the CodeKataBattle (CKB) project steps in, addressing the need for a hands-on, collaborative, and engaging approach to learning programming and software development.
+
+
+Although theoretical knowledge is essential in computer science, it is the practical application and coding practice that strengthen students' understanding and skills. Hence, CKB is designed to support students with a platform where they can actively practice coding, experiment, learn from their mistakes, and improve their skills. Moreover, it encourages students to work together in teams, promoting teamwork and communication, essential qualities in the software development field. For educators, CKB offers a valuable teaching tool, enabling them to create coding challenges in accordance with their curricula, making learning more engaging, and helping assess students' progress.
+
+
+In summary, the CodeKataBattle project serves as a bridge between theoretical learning and practical application in computer science education. It offers students a platform to practice coding, collaborate, and improve their skills, and provides educators with effective teaching tools and assessment methods. The aim of CKB is to make computer science education more engaging, practical, and rewarding for both students and educators.
+
+\subsubsection{Goals}
+
+\begin{enumerate}
+
+\item Students are able to find, join, or create teams for specific code kata battles within a tournament.
+
+\item  Educators can create and manage code kata battles, including the provision of detailed descriptions, project templates with test cases, and build automation scripts.
+
+\item  Educators have the capability to set up and customize various battle parameters such as team size limits, registration deadlines, submission deadlines, and scoring configurations.
+
+\item  Students commit their code implementations to a specific GitHub repository for each battle, triggering automated testing and scoring through the platform.
+
+\item  The platform automatically calculates and updates battle scores based on predefined criteria including the number of passed tests, commit timeliness, and code quality.
+
+\item  Educators can manually score submissions, considering aspects outside of automated evaluations.
+
+\item  Students and educators can view the evolving ranks and scores of teams during a battle.
+
+\item  The final battle ranks are determined after considering both automated and manual evaluations, and made visible to all participants upon completion of each battle.
+
+\item  Cumulative personal tournament scores are updated and displayed for each student, contributing to an overall tournament ranking.
+
+\item  The platform notifies students of new tournaments, battle opportunities, and updates on their tournament standings.
+
+\item  Students can view their rankings on their profiles.
+\end{enumerate}
+
+\subsection{Scope}
+
+\subsubsection{Product Identification}
+
+\begin{itemize}
+
+    \item The \textbf{target audience} of the platform is mainly \textbf{students and educators} in computer science and related fields. 
+    
+    \item CKB is an \textbf{interactive web-based coding platform} specifically designed to improve the coding skills of students by participating in battles designed by educators. It is mainly an \textbf{educational tool} where practice can be applied.
+
+    \item CKB is also a \textbf{competitive learning environment}. By organizing the coding exercises in battle format, the students are expected to be more motivated to perform their best in challenges.
+
+    \item The platform \textbf{promotes teamwork and collaboration} by allowing students to form groups to tackle battles together. This reflects real-world software development scenarios where collaborative team dynamics are key.
+
+    \item The platform has an \textbf{educator-centric control}. The educators play a crucial role in the platform because they are the ones creating, managing, and scoring the battles and tournaments.
+
+    \item CKB enables students to \textbf{use professional tools and practices} such as version control, and fork-pull-push mechanisms so that they can enhance their real-world software development skills with the help of Github.
+
+    \item The platform makes use of \textbf{automated testing} to assess student submissions, ensuring objective evaluation of functional correctness and code quality. Additionally, it allows educators to perform manual evaluations for aspects that require subjective judgment.
+
+    \item CKB is designed to provide \textbf{instant feedback} on submissions and \textbf{real-time updates} of team scores and rankings.
+
+    \item The platform offers \textbf{flexibility} to educators in terms of the choice of programming languages, difficulty levels of challenges, and the scope of coding tasks, making it adaptable to various learning curves and educational needs.
+
+    
+\end{itemize}
+
+\subsubsection{Domain Analysis}
+The CKB platform operates within the domain of educational technology, specifically tailored for coding and software development education. From this perspective, we have the following users:
+
+Educators:
+Educators use CKB to \textbf{create and manage coding exercises}, known as code katas, in a battle format. They have the capability to set parameters for these exercises, including difficulty levels, deadlines, and specific technical requirements. Educators can \textbf{evaluate student submissions} both automatically (using the platform's tools) and manually, \textbf{providing feedback and scores}.
+
+Students:
+Students exploit the platform to enhance their coding skills by \textbf{participating} in these code battles. They work individually or in teams to solve the challenges set by educators, fostering both individual and collaborative learning experiences. Students use the platform \textbf{to submit their code, receive real-time feedback, and track their progress in coding proficiency}.
+
+In summary, the domain of the CKB platform is focused on interactive, competitive coding education, enabling students to have an engaging learning experience while offering educators powerful tools for managing and evaluating coding exercises.
+
+\subsubsection{World Phenomena}
+
+\begin{enumerate}
+    \item Educators prepare the necessary documents for code battles including descriptions, test cases and build automation scripts.
+    \item Students fork the GitHub repository.
+    \item Students set up an automated workflow through GitHub Actions.
+    \item Students write code on their devices.
+\end{enumerate}
+
+\subsubsection{Shared Phenomena}
+
+
+\quad \space \space \textbf{World Controlled}
+\begin{enumerate}
+    \item Educators upload coding challenges, including descriptions and test cases, to the platform.
+    \item Educators create tournaments and give permission to their colleagues to create battles for that tournament.
+    \item Educators set specific rules and criteria such as deadlines, number of team members, additional configurations for scoring for code kata battles.
+    \item Educators decide on the inclusion of manual scoring components for battles.
+    \item Students invite peers to form teams within the platform or join individually.
+    \item Students submit their code solutions by pushing the code via GitHub.
+    
+\end{enumerate}
+
+\textbf{Machine Controlled}
+\begin{enumerate}[resume]
+    \item The CKB platform sends notifications to students about new battles and tournaments, final battle ranks and final tournament ranks.
+    \item The platform generates and manages GitHub repositories for each battle and sends links to students that are participating.
+    \item The CKB platform automatically evaluates code submissions against test cases.
+    \item The platform updates battle scores and battle rankings in real-time.
+    \item The platform displays leaderboards (i.e. the rank of the sum of all battle scores received in that tournament).
+\end{enumerate}
+
+\subsection{Definitions, Acronyms, Abbreviations}
+
+\subsubsection{Definitions}
+\begin{itemize}
+    \item \textbf{Student}: An individual enrolled in an educational program or course who uses the platform to participate in coding exercises and improve software development skills.
+    \item \textbf{Educator}: A person, such as a teacher or instructor, responsible for creating coding challenges and managing learning activities on the platform.
+    \item \textbf{Automated Testing}: A process where the CKB platform automatically executes predefined tests on student code submissions to assess their functionality and correctness without manual intervention.
+    \item \textbf{Manual Scoring}: The process where educators evaluate student code submissions subjectively, complementing the automated testing system.
+    \item \textbf{Battle}: A competitive coding challenge on the platform where students or teams of students solve specific programming problems within set parameters and time frames.
+    \item \textbf{Tournament}: A series of code kata battles organized and managed by educators on the CKB platform, that ranks students or teams based on cumulative scores from individual battles.
+    \item \textbf{Ranking}: A system within the CKB platform that orders participating students or teams based on their performance in individual code kata battles, determined by scores from automated and manual evaluations.
+    \item \textbf{Leaderboard}: A feature on CKB that displays the standings of students or teams based on their performance overall in a tournament.
+\end{itemize}
+
+\subsubsection{Acronyms}
+\begin{itemize}
+    \item \textbf{CKB}: CodeKataBattle
+\end{itemize}
+
+\subsubsection{Abbreviations}
+\begin{itemize}
+    \item $G_{x}$: x-th Goal
+    \item $WP_{x}$: x-th World Phenomena
+    \item $SP_{x}$: x-th Shared Phenomena
+\end{itemize}
