@@ -17,7 +17,7 @@
     In the rankings, they are informed via tooltips about the scaling of their scores and the calculation methods of them. So they decided to focus more on code and try to find why some test cases are not passed. The team keeps an eye on the CKB dashboard, which updates their battle score after each commit. They note improvements in their score as they refine their solutions, ensuring more test cases pass and optimizing their code for better quality. This iterative process of coding, committing, and refining continues, with the team members frequently discussing strategies and sharing insights to improve their solutions. After looking at some exercises related to recursions they finally find the wrong part in the algorithm they implemented. After changes they commit and push the code. They see in the rankings that they got 93 points from battle. This iterative process of coding, committing, and refining continues, with the team members frequently discussing strategies and sharing insights to improve their solutions. They think that this is the most efficient algorithm they can implement. So they decide not to do anything else until code kata battle deadline. \newline
     \item \textbf{Educator Evaluates Submission Manually} \newline
     After the submission deadline expires, there is a consolidation stage enabling educators to assign optional points for teams. Professor Mottola begins her manual evaluation of the submissions for the "Check if String is Palindrome" battle. He logs into CKB and accesses the educator's dashboard from the battle's page, where he can review each team's submission. On this page code of the submission and other materials from the repository are shown to the educator. He starts from the latest submission and gives extra points if he finds the solution by analyzing 'Code Warriors', impressed by their timely submission and high score, viewable in the rankings table. Professor Mottola examines their code, focusing on the efficiency of their solution, which got 8/10 from the analysis tool. Considering these factors, she awards them a high personal score. This score reflects her assessment of their problem-solving skills and coding proficiency, adding a crucial human element to the automated evaluation. 
-    \item \textbf{Educators Analyze Tournament Leaderbord} \newline
+    \item \textbf{Educators Analyze Tournament Leaderboard} \newline
     Professor Emanuelle have created a tournament called "Winter Semester Coding Exercise 1" at the beginning of the semester. Some other colleagues of hers registered for the tournament as educators and created koda battles during the semester. During the semester, she has viewed the leaderboard and at the end of every week, she has exported the result. Eventually, at the end of the semester, Professor Emanuelle closes the tournament. She then goes to the leaderboard screen and starts to see the general success of her students by comparing leaderboard exports from the very first battle. In this way, she notices that the leaderboard becomes more competitive as we get closer to the end of the year. She interprets this situation as students improving their programming skills battle by battle. After analyzing the leaderboard she searched other ongoing tournaments of other professors from the university to see the success of their students in different tournaments created by teachers of different courses.
     
 \end{enumerate}
@@ -49,12 +49,43 @@ Firstly, the tournament is in the very first state called "Registration Open", w
 \end{center}
 Firstly tournament is created with the "Registration Open" state. In this state, students can register to battle with teams or individually. When the deadline expires, Battle goes into the "Registration Closed" state. At this time, it is calculated that if there is any registration for battle. If no, it goes to the "Final" state with no registration and any other action. If there are registrations, it goes to a new state called as RepoOrganization in which GitHub repository for the battle is created with proper instructions. Sending the link and instructions triggers the process to go into the "Idle" state. This means that Battle has started and waits for API calls from forked repositories, triggered by a new commit. An API call from repositories of competitor leads to go into "Processing Submission. Here with the "createSubmision" input 3 sequential states follow each other, respectively, "Pull Sources", "Analyzing Code / Test Run" and "RankUpdating". In this 3 state code is pulled and analyzed. Then, the score and rankings are updated.  Eventually, it returns to the "Idle" state. Until the submission deadline, students' commit can change their scores. When the deadline expires, Battle goes into the "Consolidation Stage" state in which educators can change rankings via manual scorings. When they are finalized, Battle is closed, indicating as state "FinalRanksAvailable". Immediately, the notification sending process starts. After all notifications are sent, Battle goes into the Final state.
 \newpage
+
+
+
 \subsection{Product Functions}
-\subsubsection{User Authentication}
-Login and Sign up functions are available for all kinds of users. There is two types of user in the platform, which should be indicated when signing up for the system. In signup, all users are requested to provide the following information respectively:
-name, surname, email, password, and type. A verification email is sent to the provided email in order to verify the user. After confirmation, the user is redirected to the platform login page. Here, an email and password are required to enter the platform. Also "stay logged in" option is available to avoid the need to enter credentials every time entering the platform.
-\subsubsection{Tournament}
-In the platform, educators can create a tournament with a title, description, and deadline for registration.  The title and description should briefly explain tournament content. Until the given subscription deadline, students can subscribe to the tournament. Also creator should be able to invite some of her/his colleagues to a tournament in order to create battles in it. While the tournament continues, educators create battles in which students can participate. Scores students gained from battles are summed up for the leaderboard of the tournament. After the creator educator closes the tournament, if all battles are finalized, all scores from battles are summed up to build the final leaderboard including rankings. In the period of the tournament, students are notified with emails about new battles. Also, at the end of the tournament, final rankings are sent to students.
-\subsubsection{Battle}
-An educator in a tournament can be able to create battles in it. These battles are created with titles, descriptions, start-end dates, min-max group sizes, test cases, build scripts, and scoring criteria. Scoring criteria are defined by the educator. It should provide the system with a test file including test cases, whether there is manual evaluation, and quality aspects chosen from a list in the system such as efficiency, clean code, etc. With this information system can evaluate the submissions.
+
+The major functions of the project will be organised according to the user types. We will have three sections, first for the common function both regarding the educators and the students. The second and the third will be specific to each user type respectively.
+
+\subsubsection{Common Functions}
+
+\begin{itemize}
+    \item \textbf{Account Registration:} Both students and educators can be registered to the platform. During registration, the user indicated which type of user they are along with their credentials.
+
+    \item \textbf{Viewing Leaderboards and Rankings:} Both user types can view leaderboards that display rankings of participants based on performance in battles and overall tournament standings.
+\end{itemize}
+
+\subsubsection{Educator Functions}
+\begin{itemize}
+    \item \textbf{Creating a Tournament:} Educators can create and configure tournaments, setting specific parameters such as time constraints. In these tournaments, multiple battles can take place.
+
+    \item \textbf{Creating a Battle:} Educators can create and configure coding battles in the tournament that they have created or they have been permitted by their fellow educators. During battle creation, specific parameters such as coding languages, and team sizes are set by the educator. On top of that, the description of the battle and the test file including test cases, automated build scripts or manual evaluation choice should be provided.
+
+    \item \textbf{Giving Permission to Other Educators:} This function can be utilised both in the creation of a tournament and during the management of a tournament. Educators are able to permit fellow educators to create battles in the tournaments that they have created.
+
+    \item \textbf{Scoring:} This function is vital since it is used to compute the points of the students' submissions in the battles. The output of this method determines the ranking of the students. Both automated and manual scoring reply to this function call.
+    
+\end{itemize}
+
+\subsubsection{Student Functions}
+\begin{itemize}
+    \item \textbf{Join a Tournament:} Students can join tournaments that the educators are created.
+
+    \item \textbf{Join a Battle:} Students can join battles which is a part of the tournament they already joined. When joining the battle, students can send requests to other students to form a team if they want or need to.
+
+    \item \textbf{Send Request for Teaming:} This function can be called during students join the battle. Students send requests to other students using their usernames, and if they accept the invitation, they are now a part of the team for the battle they are joining.
+
+    \item \textbf{Submit Solution:} Students submit their solutions for each code battle. After submission successfully completed, the scoring function is called.
+\end{itemize}
+
+
 
