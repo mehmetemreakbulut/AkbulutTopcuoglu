@@ -23,7 +23,13 @@
 \end{enumerate}
 \newpage
 \subsubsection{Domain Class Diagram}
-In Figure(1.1), the Domain Class Diagram for the CodeKataBattle (CKB) platform is illustrated. This diagram is a crucial element in understanding the structure and relationships within the CKB system. It visually represents the key classes, their attributes, and the interactions among them in the context of the platform. This diagram is designed to provide a clear and concise overview of the domain model, offering insights into how the different components of the CKB platform interact to facilitate a competitive and educational coding environment. Below are descriptions of the most relevant parts of the diagram:
+In the figure below, the Domain Class Diagram for the CodeKataBattle (CKB) platform is illustrated. This diagram is a crucial element in understanding the structure of the classes and relationships within the CKB system. It visually represents the key classes, their attributes, and the interactions among them in the context of the platform. This diagram is designed to provide a clear and concise overview of the domain model, offering insights into how the different components of the CKB platform interact to facilitate a competitive and educational coding environment. 
+
+\begin{center}
+\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{Images/class-diagram.png}
+\end{center}
+
+The descriptions below are the explanations of the important classes that take place in the diagram:
 \begin{itemize}
     \item \textbf{Student and Educator Classes}: The diagram differentiates between two primary types of Users: students and educators. Both share common attributes such as name, surname, email, and password, but they interact with the system differently. Educators, for instance, have the ability to create tournaments and battles, while students can participate in these competitions.
     \item \textbf{Tournament and Battle Classes}: These classes represent the core competitive elements of CKB. A Tournament, created by an Educator, can contain multiple Battles. Each Battle, associated with a specific Tournament, includes attributes like description, start\_date, end\_date, min-max of group size, and scoring\_criteria.
@@ -32,9 +38,7 @@ In Figure(1.1), the Domain Class Diagram for the CodeKataBattle (CKB) platform i
     \item \textbf{GitHub Integration}: A separate class to represent the integration with GitHub, showing how students' code repositories are connected to the CKB platform for automatic evaluation. For every battle, an instance of Github Integration is created and responsible for the API calls from Github Actions and pulling source code from the forked repository.
     \item \textbf{Scoring Class}: This class illustrates the scoring mechanism of CKB, including both automated and manual scoring components as detailed in the project description.
 \end{itemize}
-\begin{center}
-\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{DomainClassDiagramRASD (1).jpg}
-\end{center}
+
 \newpage
 \subsubsection{Statecharts}
 The state charts presented in this section elucidate the operation of the CodeKataBattle (CKB) project, illustrating the state transitions for a code kata battle and a tournament within the platform. Especially for tournaments, a state chart is very crucial to gain a better understanding of the tournament.\newline
