@@ -16,3 +16,8 @@ their skills.
 You can view the meeting notes and discussions until today in the [Wiki](https://github.com/mehmetemreakbulut/AkbulutTopcuoglu/wiki) page of the project.
 
 We mainly worked on OverLeaf. You can track the "History" from [Link]().
+
+Figma Flows:
+- [Login/Signup](https://www.figma.com/proto/zkXadmaN17x4QNCt7XYvuB/CodeKataBattle?type=design&node-id=0-1&t=wAlwz3OVUxCxK8eE-0&scaling=scale-down&starting-point-node-id=2%3A1480&show-proto-sidebar=1)
+- [Student](https://www.figma.com/proto/zkXadmaN17x4QNCt7XYvuB/CodeKataBattle?type=design&node-id=0-1&t=wAlwz3OVUxCxK8eE-0&scaling=scale-down&starting-point-node-id=95%3A41529&show-proto-sidebar=1)
+- [Educator](https://www.figma.com/proto/zkXadmaN17x4QNCt7XYvuB/CodeKataBattle?type=design&node-id=0-1&t=wAlwz3OVUxCxK8eE-0&scaling=scale-down&starting-point-node-id=95%3A46103&show-proto-sidebar=1)
