@@ -31,12 +31,29 @@ In the figure below, the Domain Class Diagram for the CodeKataBattle (CKB) platf
 
 The descriptions below are the explanations of the important classes that take place in the diagram:
 \begin{itemize}
-    \item \textbf{Student and Educator Classes}: The diagram differentiates between two primary types of Users: students and educators. Both share common attributes such as name, surname, email, and password, but they interact with the system differently. Educators, for instance, have the ability to create tournaments and battles, while students can participate in these competitions.
-    \item \textbf{Tournament and Battle Classes}: These classes represent the core competitive elements of CKB. A Tournament, created by an Educator, can contain multiple Battles. Each Battle, associated with a specific Tournament, includes attributes like description, start\_date, end\_date, min-max of group size, and scoring\_criteria.
-    \item \textbf{Competitor Class}: Reflecting the collaborative aspect of CKB, the Competitor class includes attributes like name and members, the latter being a collection of Students in case of team formation. If a student registers individually, the member's field consists of just one member and the name is the student's name.
-    \item \textbf{Submission Class}: This class represents the solutions submitted by the Competitor for a Battle. Key attributes include code\_repository\_link, time\_of\_submission, and score.
-    \item \textbf{GitHub Integration}: A separate class to represent the integration with GitHub, showing how students' code repositories are connected to the CKB platform for automatic evaluation. For every battle, an instance of Github Integration is created and responsible for the API calls from Github Actions and pulling source code from the forked repository.
-    \item \textbf{Scoring Class}: This class illustrates the scoring mechanism of CKB, including both automated and manual scoring components as detailed in the project description.
+    \item \textbf{User:} Serves as a base for different types of users. It encapsulates common attributes that are shared across students and educators. This class is essential for authentication.
+
+    \item \textbf{Educator:} The objects of this class have the ability to create tournaments and battles. They can also be invited to a tournament by the creator of that tournament. 
+
+    \item \textbf{Students:} The objects of this class have the ability to register for the tournaments, and they can create teams for battles or join teams that they are invited to.
+
+    \item \textbf{Tournament:} Tournaments are a vital part of the project. They are created by educators and they include coding battles for teams of students to engage and solve.
+
+    \item \textbf{Battle:} Battles are created by educators who take part in a tournament. During battle creation, educators set some of the fields of the battle object.
+
+    \begin{itemize}
+        \item \textbf{Scoring Criteria:} There exists 3 scoring criteria whose percentages are decided by the educator during battle creation.
+
+        \item \textbf{Language:} There are 9 languages allowed in the system. The educator chooses the allowed languages during battle creation. At least one language must be chosen.
+
+        \item \textbf{CodeKata:} It is the most important part of the battle. The test cases and the build scripts for each allowed language should be uploaded by the educator to the system. The paths to the files in the file system are stored in the fields.
+    \end{itemize}
+
+    \item \textbf{Team:} Teams are created by students, and the teams are able to register for the battles. They have a score for the battle.
+
+    \item \textbf{GitHub Integration:} This class has one object for each battle and it stores the link to the GitHub repository for the battle after creating it by interacting with the GitHub API. It also stores the links to the repositories of the participating teams after they push their code and trigger a function that belongs to this class.
+
+    \item \textbf{Score:} The score of a team for each criterion is calculated for the battle. This class uses an external Static Analyser Tool to calculate the score of the quality aspect of the code. The timeliness and test case scores are handled internally.
 \end{itemize}
 
 \newpage
