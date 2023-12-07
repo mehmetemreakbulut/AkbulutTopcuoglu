@@ -26,7 +26,7 @@
 In the figure below, the Domain Class Diagram for the CodeKataBattle (CKB) platform is illustrated. This diagram is a crucial element in understanding the structure of the classes and relationships within the CKB system. It visually represents the key classes, their attributes, and the interactions among them in the context of the platform. This diagram is designed to provide a clear and concise overview of the domain model, offering insights into how the different components of the CKB platform interact to facilitate a competitive and educational coding environment. 
 
 \begin{center}
-\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{Images/class-diagram.png}
+\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{Images/class-diagram-colored.drawio.png}
 \end{center}
 
 The descriptions below are the explanations of the important classes that take place in the diagram:
@@ -52,6 +52,8 @@ The descriptions below are the explanations of the important classes that take p
     \item \textbf{Team:} Teams are created by students, and the teams are able to register for the battles. They have a score for the battle.
 
     \item \textbf{GitHub Integration:} This class has one object for each battle and it stores the link to the GitHub repository for the battle after creating it by interacting with the GitHub API. It also stores the links to the repositories of the participating teams after they push their code and trigger a function that belongs to this class.
+
+    \item \textbf{Sandbox Manager:} There exists a Sandbox Manager for each team in the corresponding battle. If there exists a docker container (the team previously pushed a code and their GitHub actions already communicated with our RESTful APIs), the same container is called, and the code is run on that container. If there is not an existing container (the team pushes code for the first time), a new container is created and assigned to the team for the rest of the battle. The Sandbox Manager interacts with the Score class after running the code to calculate the score of the team after each push/commit.
 
     \item \textbf{Score:} The score of a team for each criterion is calculated for the battle. This class uses an external Static Analyser Tool to calculate the score of the quality aspect of the code. The timeliness and test case scores are handled internally.
 \end{itemize}

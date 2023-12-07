@@ -13,20 +13,29 @@ Our platform CKB interfaces with various software systems:
 
     \item \textbf{GitHub API:} Integrated for creating coding repositories and managing code \textit{submission} processes.
 
-    \item \textbf{Static Analysis Tool API:} Integrated for scoring the quality aspect of the code. 
+    \item \textbf{Sandboxing:} To create an isolated testing environment, our Sandbox Manager will utilise Docker.
 
-    \item \textbf{Database Management Systems:} Platform uses databases such as PostgreSQL, Neo4j.
+    \item \textbf{Static Analysis Tool:} SonarQube API will be integrated for scoring the quality aspect of the code with static analysis. 
 
-    \item \textbf{Server Software:} Our platform uses Amazon Web Services for hosting.
+    \item \textbf{Database Technology:} Platform uses databases such as PostgreSQL.
+
+    \item \textbf{Hosting:} Our platform uses Amazon Web Services EC2 for web server and database hosting.
+
+    \item \textbf{Cloud File Storage:} The files will be stored using Amazon S3 services.
+
+    \item \textbf{Email Service:} Amazon Simple Email Service SES will be used to send automated email notifications.
 \end{itemize}
 
 \subsubsection{Communication Interfaces}
-Our platform utilises standard communication protocols:
+Our platform utilises various communication systems:
 
 \begin{itemize}
     \item \textbf{HTTPS:} For secure connection over the internet.
 
-    \item \textbf{RESTful APIs:} It enables interaction with external services like GitHub, Static Analysis Tool, and database servers.
+    \item \textbf{RESTful APIs:} We have RESTful APIs to communicate with the requests coming from GitHub Actions and the web application.
 
-    \item \textbf{SMTP:} For automated email notifications.
+    \item \textbf{SMTP:} It is used to manage to send automated emails.
 \end{itemize}
+
+\subsection{Functional Requirements}
+
