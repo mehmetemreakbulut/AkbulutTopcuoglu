@@ -140,61 +140,31 @@ Our platform utilises various communication systems:
 
 
 \subsection{Functional Requirements}
-\subsubsection{Use Case Diagrams}
-\includegraphics[scale=0.27]{Images/use-case-diagrams.drawio.png}
+\subsubsection{Use Case Diagram}
+\label{sec:Use Case Diagram}
+\includegraphics[scale=0.27]{Images/use_case_diagrams.drawio.png}
 \newpage
-\quad Unregistered User Actor has been used to illustrate the Registration Use Case. Similarly, the Registered User Actor has been used to show the Authentication Use Case. Other user actors are assumed to be registered and authenticated.
+Unregistered User Actor has been used to illustrate the Registration Use Case. Similarly, the Registered User Actor has been used to show the Authentication Use Case. Other user actors are assumed to be registered and authenticated.
 
-\quad Our system is composed of two main user types: Student and Educator. In the use case diagram, we showed common use cases with the Authenticated User actor. Authenticated User, simply every user registered to the platform, can view Tournaments, Battles, and their rankings with different filters and search options. Moreover, Registered User has the capability of viewing their profile and editing settings.
+\\
 
-\quad Use case related Educator and Student Actors summarizes the goal of these users in the system.
+Our system is composed of two main user types: Student and Educator. In the use case diagram, we showed common use cases with the Authenticated User actor. Authenticated User, simply every user registered to the platform, can view Tournaments, Battles, and their rankings with different filters and search options. Moreover, Registered User has the capability of viewing their profile and editing settings.
 
-\quad Invitee Student and Invitee Educator Actors are used to demonstrate use cases for tournament (for educators) and team (for students) invitations.
+\\
 
-\quad GitHub System Boundary contains use cases about code submission with the participation of GitHub API Actor.
+Use case related Educator and Student Actors summarizes the goal of these users in the system.
 
+\\
+
+Invitee Student and Invitee Educator Actors are used to demonstrate use cases for tournament (for educators) and team (for students) invitations.
+
+\\
+
+GitHub System Boundary contains use cases about code submission with the participation of GitHub API Actor.
 
 \subsubsection{Use Cases}
 
-TEMPLATE:
-
-\begin{center}
-    \begin{tabular}{ | m{10em} | m{10cm}| } 
-      \hline
-      \textbf{Name} & exp  \\ 
-      \hline
-      \textbf{Actor(s)} & exp \\ 
-      \hline
-      \textbf{Entry Condition} & exp \\ 
-      \hline
-      \textbf{Event Flow} & 
-          \begin{enumerate}[(1)]
-              \item 
-          \end{enumerate}
-      \\ 
-      \hline
-      \textbf{Exit Condition} & exp  \\ 
-      \hline
-      \textbf{Exception(s)} & 
-      \begin{itemize}
-          \item 
-      \end{itemize}
-          \\ 
-      \hline
-      \textbf{Related Use Case(s)} & 
-      \begin{itemize}
-          \item 
-      \end{itemize}
-          \\ 
-      \hline
-      \textbf{Note(s)} & 
-      \begin{itemize}
-          \item 
-      \end{itemize}
-          \\ 
-      \hline
-    \end{tabular}
-\end{center}
+The Use Case Tables below, depict the possible use cases in detail. We tried to cover all the use cases that are included in the Use Case Diagram (see \hyperref[sec:Use Case Diagram]{3.2.1}). However, to reduce the complexity and the number of tables, some use cases that are strongly related to each other have been introduced in the same use case table. To keep track of them, they are written in \textit{italic} in the Event Flow if they occur. Additionally, the Related Use Case(s) row is added to the tables, to see explicitly which use cases from the Use Case Diagram are included in the table. 
 
 \begin{enumerate}
     \item Register
@@ -211,29 +181,21 @@ TEMPLATE:
           \begin{enumerate}[(1)]
               \item The actor enters the platform and clicks the Sign Up button.
               \item The actor fills out the registration form by providing email, password, name, surname, and institution information.
-              \item The actor clicks the Sign Up button.
+              \item The actor clicks the Sign Up button to \textit{register}.
           \end{enumerate} \\
           \hline
           \textbf{Exit Condition} & The actor is registered and the Login page is displayed.  \\ 
           \hline
-          \textbf{Exception(s)} & 
-          \begin{itemize}
-          \item 
-      \end{itemize}
-      \\ 
-          \hline
-          \textbf{Related Use Case(s)} & \begin{itemize}
-          \item 
-      \end{itemize}  \\ 
-          \hline
-          \textbf{Note(s)} & \begin{itemize}
-          \item 
-      \end{itemize}  \\ 
+          \textbf{Related Use Case(s)} & 
+            \begin{itemize}
+                \item \textit{Register}
+            \end{itemize}  \\ 
           \hline
         \end{tabular}
     \end{center}
 
-
+    \newpage
+    
     \item Login
     \begin{center}
     \begin{tabular}{ | m{10em} | m{10cm}| } 
@@ -248,7 +210,7 @@ TEMPLATE:
           \begin{enumerate}[(1)]
               \item The actor enters the platform web page.
               \item The actor fills out the form by providing an email address and a password.
-              \item The actor clicks the Login button.
+              \item The actor clicks the Login button to \textit{authenticate}.
           \end{enumerate}
       \\ 
       \hline
@@ -262,15 +224,9 @@ TEMPLATE:
       \hline
       \textbf{Related Use Case(s)} & 
       \begin{itemize}
-          \item 
+          \item \textit{Authenticate}
       \end{itemize}
-      \\ 
-      \hline
-      \textbf{Note(s)} & 
-      \begin{itemize}
-          \item 
-      \end{itemize}
-      \\ 
+      \\
       \hline
     \end{tabular}
 \end{center}
@@ -290,7 +246,7 @@ TEMPLATE:
               \item The actor clicks the Tournaments button from the sidebar.
               \item In the tournaments page, the actor \textit{views all tournaments} as cards.
               \item The actor \textit{filters tournaments} by registered filter.
-              \item The actor \textit{sorts tournaments} by # of participants.
+              \item The actor \textit{sorts tournaments} by \# of participants.
               \item The actor clicks the first tournament card to \textit{view a specific tournament}.
           \end{enumerate}
       \\ 
@@ -306,18 +262,23 @@ TEMPLATE:
       \hline
       \textbf{Related Use Case(s)} & 
       \begin{itemize}
-          \item 
-      \end{itemize}
-          \\ 
-      \hline
-      \textbf{Note(s)} & 
-      \begin{itemize}
-          \item 
+          \item \textit{View All Tournaments}
+          \item \textit{Filter Tournaments}
+          \begin{itemize}
+              \item \textit{Filter by Registration Status}
+          \end{itemize}
+          \item \textit{Sort Tournaments}
+          \begin{itemize}
+            \item \textit{Sort by \# of Participants}
+          \end{itemize}
+          \item \textit{View a Specific Tournament}
       \end{itemize}
           \\ 
       \hline
     \end{tabular}
 \end{center}
+
+\newpage
 
 \item View the Tournament Leaderboard
 \begin{center}
@@ -337,21 +298,9 @@ TEMPLATE:
       \hline
       \textbf{Exit Condition} & The leaderboard of that tournament is displayed.  \\ 
       \hline
-      \textbf{Exception(s)} & 
-      \begin{itemize}
-          \item 
-      \end{itemize}
-          \\ 
-      \hline
       \textbf{Related Use Case(s)} & 
       \begin{itemize}
-          \item 
-      \end{itemize}
-          \\ 
-      \hline
-      \textbf{Note(s)} & 
-      \begin{itemize}
-          \item 
+      \item \textit{View the Tournament Leaderboard}
       \end{itemize}
           \\ 
       \hline
@@ -371,7 +320,8 @@ TEMPLATE:
       \hline
       \textbf{Event Flow} & 
           \begin{enumerate}[(1)]
-              \item The actor can \textit{view battles of the tournament} in that tournament's page.
+              \item The actor \textit{views the battles of the tournament} in that tournament's page.
+              \item The actor \textit{searches battles} using the search bar at the bottom of the page.
               \item The actor \textit{filters battles} using the filter section on the right-hand side of the page.
               \item The actor chooses one of the results to \textit{view a specific battle}.
           \end{enumerate}
@@ -388,18 +338,18 @@ TEMPLATE:
       \hline
       \textbf{Related Use Case(s)} & 
       \begin{itemize}
-          \item 
-      \end{itemize}
-          \\ 
-      \hline
-      \textbf{Note(s)} & 
-      \begin{itemize}
-          \item 
+          \item \textit{View Battles of the Tournament}
+          \item \textit{Search Battles}
+          \item \textit{Filter Battles}
+          \item \textit{View a Specific Battle}
       \end{itemize}
           \\ 
       \hline
     \end{tabular}
 \end{center}
+
+
+\newpage
 
 
 \item View the Battle Instructions
@@ -420,21 +370,9 @@ TEMPLATE:
       \hline
       \textbf{Exit Condition} & The instructions of that battle are displayed.  \\ 
       \hline
-      \textbf{Exception(s)} & 
-      \begin{itemize}
-          \item 
-      \end{itemize}
-          \\ 
-      \hline
       \textbf{Related Use Case(s)} & 
       \begin{itemize}
-          \item 
-      \end{itemize}
-          \\ 
-      \hline
-      \textbf{Note(s)} & 
-      \begin{itemize}
-          \item 
+          \item \textit{View the Battle Instructions}
       \end{itemize}
           \\ 
       \hline
@@ -459,26 +397,18 @@ TEMPLATE:
       \hline
       \textbf{Exit Condition} & The rankings of that battle are displayed.  \\ 
       \hline
-      \textbf{Exception(s)} & 
-      \begin{itemize}
-          \item 
-      \end{itemize}
-          \\ 
-      \hline
       \textbf{Related Use Case(s)} & 
       \begin{itemize}
-          \item 
-      \end{itemize}
-          \\ 
-      \hline
-      \textbf{Note(s)} & 
-      \begin{itemize}
-          \item 
+\item \textit{View the Battle Rankings}
       \end{itemize}
           \\ 
       \hline
     \end{tabular}
 \end{center}
+
+
+
+\newpage
 
 
 \item Search Tournaments
@@ -495,7 +425,7 @@ TEMPLATE:
           \begin{enumerate}[(1)]
               \item The actor clicks the button in the search area to select the search criteria.
               \item The actor sees three buttons: \textit{Search by Educators}, \textit{Search by Titles}, \textit{Search by Institutions} and chooses to search by title.
-              \item The actor writes "Fall'23 Tournament" to the search bar and hits enter to search.
+              \item The actor writes "Fall'23 Tournament" to the search bar and hits enter to \textit{search tournament}.
           \end{enumerate}
       \\ 
       \hline
@@ -509,13 +439,10 @@ TEMPLATE:
       \hline
       \textbf{Related Use Case(s)} & 
       \begin{itemize}
-          \item 
-      \end{itemize}
-          \\ 
-      \hline
-      \textbf{Note(s)} & 
-      \begin{itemize}
-          \item 
+          \item \textit{Search by Educator}
+          \item \textit{Search by Title}
+          \item \textit{Search by Institution}
+          \item \textit{Search Tournament}
       \end{itemize}
           \\ 
       \hline
@@ -536,7 +463,7 @@ TEMPLATE:
       \textbf{Event Flow} & 
           \begin{enumerate}[(1)]
               \item The actor clicks a card of a tournament in which s/he is not registered.
-              \item The actor clicks the Register button in the pop-up.
+              \item The actor clicks the Register button in the pop-up to \textit{register the tournament}.
           \end{enumerate}
       \\ 
       \hline
@@ -550,18 +477,15 @@ TEMPLATE:
       \hline
       \textbf{Related Use Case(s)} & 
       \begin{itemize}
-          \item 
-      \end{itemize}
-          \\ 
-      \hline
-      \textbf{Note(s)} & 
-      \begin{itemize}
-          \item 
+          \item \textit{Register Tournament}
       \end{itemize}
           \\ 
       \hline
     \end{tabular}
 \end{center}
+
+
+\newpage
 
 
 \item Register to a Battle
@@ -580,7 +504,7 @@ TEMPLATE:
               \item The actor clicks the Register button in the pop-up.
               \item The actor chooses between to \textit{form a team} and to \textit{register individually}. 
               \item If there is going to be a team, the actor \textit{sets a team name} and \textit{invites colleagues}.
-              \item The actor clicks the Complete button.
+              \item The actor clicks the Complete button to \textit{register to the battle}.
           \end{enumerate}
       \\ 
       \hline
@@ -599,13 +523,11 @@ TEMPLATE:
       \hline
       \textbf{Related Use Case(s)} & 
       \begin{itemize}
-          \item 
-      \end{itemize}
-          \\ 
-      \hline
-      \textbf{Note(s)} & 
-      \begin{itemize}
-          \item 
+          \item \textit{Register Battle}
+          \item \textit{Form Team}
+          \item \textit{Register Individually}
+          \item \textit{Invite Colleagues}
+          \item \textit{Set Team Name}
       \end{itemize}
           \\ 
       \hline
@@ -613,6 +535,7 @@ TEMPLATE:
 \end{center}
 
 
+\newpage
 
 \item Complete the Team Registration for the Battle
 \begin{center}
@@ -627,7 +550,7 @@ TEMPLATE:
       \textbf{Event Flow} & 
           \begin{enumerate}[(1)]
               \item The actor can see which colleague accepted the invitation and which colleague rejected it.
-              \item The actor can finalize the team formation if there are enough colleagues on the team by using the Finalize button, or discard the team and battle registration entirely by using the Decline button.
+              \item The actor can finalize the team formation if there are enough colleagues on the team by using the Finalize button, or discard the team and battle registration entirely by using the Decline button to \textit{complete the team registration}.
           \end{enumerate}
       \\ 
       \hline
@@ -637,21 +560,9 @@ TEMPLATE:
           \item If declined, the team is not registered to the battle and the dashboard is displayed.
       \end{itemize}\\ 
       \hline
-      \textbf{Exception(s)} & 
-      \begin{itemize}
-          \item 
-      \end{itemize}
-          \\ 
-      \hline
       \textbf{Related Use Case(s)} & 
       \begin{itemize}
-          \item 
-      \end{itemize}
-          \\ 
-      \hline
-      \textbf{Note(s)} & 
-      \begin{itemize}
-          \item 
+          \item \textit{Complete the Team Registration}
       \end{itemize}
           \\ 
       \hline
@@ -659,10 +570,518 @@ TEMPLATE:
 \end{center}
 
 
-\item 
+\item Respond to the Team Invitation
+\begin{center}
+    \begin{tabular}{ | m{10em} | m{10cm}| } 
+      \hline
+      \textbf{Name} & Respond to the Team Invitation  \\ 
+      \hline
+      \textbf{Actor(s)} & Invitee Student \\ 
+      \hline
+      \textbf{Entry Condition} & The actor is logged in and invited to a team by another student.  \\ 
+      \hline
+      \textbf{Event Flow} & 
+          \begin{enumerate}[(1)]
+              \item The actor opens up the notifications and sees the invitation to join a team formed by another student.
+              \item The actor clicks the notification and a pop-up shows up.
+              \item The actor can choose to \textit{Accept Invitation} by clicking the Accept button or \textit{Reject Invitation} by clicking the Reject button to \textit{respond to the invitation}.
+          \end{enumerate}
+      \\ 
+      \hline
+      \textbf{Exit Condition} & 
+      \begin{itemize}
+          \item If accepted, the specific battle is displayed.
+          \item If rejected, the dashboard is displayed.
+      \end{itemize}\\ 
+      \hline
+      \textbf{Related Use Case(s)} & 
+      \begin{itemize}
+          \item \textit{Accept Invitation}
+          \item \textit{Reject Invitation}
+          \item \textit{Respond to Team Invitation}
+      \end{itemize}
+          \\ 
+      \hline
+    \end{tabular}
+\end{center}
 
+
+
+\newpage
+
+\item Make Submission
+\begin{center}
+    \begin{tabular}{ | m{10em} | m{10cm}| } 
+      \hline
+      \textbf{Name} & Make Submission  \\ 
+      \hline
+      \textbf{Actor(s)} & Student, GitHub API \\ 
+      \hline
+      \textbf{Entry Condition} & The student actor forked the battle repository, and initiated GitHub Actions on their repository. \\ 
+      \hline
+      \textbf{Event Flow} & 
+          \begin{enumerate}[(1)]
+              \item The student actor \textit{sets up the necessary environment}.
+              \item The student actor works on the problem and writes code. 
+              \item The student actor \textit{commits code} to their repository to \textit{make the submission}.
+              \item The GitHub API actor informs the CKB platform to pull the code.
+          \end{enumerate}
+      \\ 
+      \hline
+      \textbf{Exit Condition} & The CKB platform pulls the code from the team's repository that the student actor is in. \\ 
+      \hline
+      \textbf{Exception(s)} & 
+      \begin{itemize}
+          \item The GitHub API stops responding.
+          \item The student is not able to provide a solution.
+      \end{itemize}
+          \\ 
+      \hline
+      \textbf{Related Use Case(s)} & 
+      \begin{itemize}
+          \item \textit{Make Submission}
+          \item \textit{Set Up Environment}
+          \item \textit{Code Commit}
+      \end{itemize}
+          \\ 
+      \hline
+    \end{tabular}
+\end{center}
+
+\item View Profile
+\begin{center}
+    \begin{tabular}{ | m{10em} | m{10cm}| } 
+      \hline
+      \textbf{Name} & View Profile  \\ 
+      \hline
+      \textbf{Actor(s)} & Authenticated User \\ 
+      \hline
+      \textbf{Entry Condition} & The actor is logged in. \\ 
+      \hline
+      \textbf{Event Flow} & 
+          \begin{enumerate}[(1)]
+              \item The actor clicks the Profile button from the sidebar to \textit{view the profile}.
+          \end{enumerate}
+      \\ 
+      \hline
+      \textbf{Exit Condition} & The profile page is displayed.  \\ 
+      \hline
+      \textbf{Related Use Case(s)} & 
+      \begin{itemize}
+          \item \textit{View Profile}
+      \end{itemize}
+          \\ 
+      \hline
+    \end{tabular}
+\end{center}
+
+
+\newpage
+
+\item See Own Tournaments
+\begin{center}
+    \begin{tabular}{ | m{10em} | m{10cm}| } 
+      \hline
+      \textbf{Name} & See Own Tournaments  \\ 
+      \hline
+      \textbf{Actor(s)} & Authenticated User \\ 
+      \hline
+      \textbf{Entry Condition} & The actor is on the profile page. \\ 
+      \hline
+      \textbf{Event Flow} & 
+          \begin{enumerate}[(1)]
+              \item The actor clicks the Tournaments icon to \textit{to see own tournaments}.
+          \end{enumerate}
+      \\ 
+      \hline
+      \textbf{Exit Condition} & The tournaments that the actor engaged (either closed, ongoing, or upcoming) are displayed.  \\ 
+      \hline
+      \textbf{Related Use Case(s)} & 
+      \begin{itemize}
+          \item \textit{See Own Tournaments}
+      \end{itemize}
+          \\ 
+      \hline
+      \textbf{Note(s)} & 
+      \begin{itemize}
+          \item Engage means registered for students, and created for educators.
+      \end{itemize}
+          \\ 
+      \hline
+    \end{tabular}
+\end{center}
+
+\item See Own Battles
+\begin{center}
+    \begin{tabular}{ | m{10em} | m{10cm}| } 
+      \hline
+      \textbf{Name} & See Own Battles  \\ 
+      \hline
+      \textbf{Actor(s)} & Authenticated User \\ 
+      \hline
+      \textbf{Entry Condition} & The actor is on the profile page. \\ 
+      \hline
+      \textbf{Event Flow} & 
+          \begin{enumerate}[(1)]
+              \item The actor clicks the Battles icon to \textit{to see own battles}.
+          \end{enumerate}
+      \\ 
+      \hline
+      \textbf{Exit Condition} &  The battles that the actor engaged (either closed, ongoing, or upcoming) are displayed.  \\ 
+      \hline
+      \textbf{Related Use Case(s)} & 
+      \begin{itemize}
+          \item \textit{See Own Battles}
+      \end{itemize}
+          \\ 
+      \hline
+      \textbf{Note(s)} & 
+      \begin{itemize}
+          \item Engage means registered for students, and created for educators.
+      \end{itemize}
+          \\ 
+      \hline
+    \end{tabular}
+\end{center}
+
+\newpage
+
+\item Delete Profile
+\begin{center}
+    \begin{tabular}{ | m{10em} | m{10cm}| } 
+      \hline
+      \textbf{Name} & Delete Profile  \\ 
+      \hline
+      \textbf{Actor(s)} & Authenticated User \\ 
+      \hline
+      \textbf{Entry Condition} & The actor is on the profile page. \\ 
+      \hline
+      \textbf{Event Flow} & 
+          \begin{enumerate}[(1)]
+              \item The actor clicks the Delete Profile button.
+          \end{enumerate}
+      \\ 
+      \hline
+      \textbf{Exit Condition} & The actor is removed from the platform.  \\ 
+      \hline
+      \textbf{Exception(s)} & 
+      \begin{itemize}
+          \item The actor is of type Educator and s/he has an ongoing tournament that s/he created.
+      \end{itemize}
+          \\ 
+      \hline
+      \textbf{Related Use Case(s)} & 
+      \begin{itemize}
+          \item \textit{Delete Profile}
+      \end{itemize}
+          \\ 
+      \hline
+      \textbf{Note(s)} & 
+      \begin{itemize}
+          \item The educators who have an ongoing tournament created by themselves cannot delete their profile before they end the tournament.
+      \end{itemize}
+          \\ 
+      \hline
+    \end{tabular}
+\end{center}
+
+\item Edit Settings
+\begin{center}
+    \begin{tabular}{ | m{10em} | m{10cm}| } 
+      \hline
+      \textbf{Name} & Edit Settings  \\ 
+      \hline
+      \textbf{Actor(s)} & Authenticated User \\ 
+      \hline
+      \textbf{Entry Condition} & The actor is logged in. \\ 
+      \hline
+      \textbf{Event Flow} & 
+          \begin{enumerate}[(1)]
+              \item The actor clicks the Settings button from the sidebar.
+              \item The actor changes the fields that s/he wants to change. The actor is able to \textit{change name}, \textit{change surname}, \textit{edit institution info}, \textit{change password}.
+              \item The actor clicks the Save button to \textit{edit the settings}.
+          \end{enumerate}
+      \\ 
+      \hline
+      \textbf{Exit Condition} & The fields that the actor wanted to change are changed and the profile page is displayed.  \\ 
+      \hline
+      \textbf{Exception(s)} & 
+      \begin{itemize}
+          \item The old password may be wrong during changing the password.
+      \end{itemize}
+          \\ 
+      \hline
+      \textbf{Related Use Case(s)} & 
+      \begin{itemize}
+          \item \textit{Edit Settings}
+          \item \textit{Change Name}
+          \item \textit{Change Surname}
+          \item \textit{Change Password}
+          \item \textit{Edit Institution Info}
+      \end{itemize}
+          \\ 
+      \hline
+      \textbf{Note(s)} & 
+      \begin{itemize}
+          \item The actor provides the old password if they want to change their passwords for security measures.
+      \end{itemize}
+          \\ 
+      \hline
+    \end{tabular}
+\end{center}
+
+\newpage
+
+
+\item Create Tournament
+\begin{center}
+    \begin{tabular}{ | m{10em} | m{10cm}| } 
+      \hline
+      \textbf{Name} & Create Tournament  \\ 
+      \hline
+      \textbf{Actor(s)} & Educator \\ 
+      \hline
+      \textbf{Entry Condition} & The actor is viewing the tournaments page. \\ 
+      \hline
+      \textbf{Event Flow} & 
+          \begin{enumerate}[(1)]
+              \item The actor clicks the Create Tournament button at the top of the page.
+              \item The actor sets the tournament attributes by \textit{setting a title}, \textit{setting a description}, and \textit{setting a registration deadline} using the corresponding fields in the pop-up and then clicks the Next button.
+              \item The actor can \textit{invite colleagues} to the tournament.
+              \item The actor finishes the \textit{tournament creation} by clicking the Create button.
+          \end{enumerate}
+      \\ 
+      \hline
+      \textbf{Exit Condition} & The tournament is created and my tournaments page is displayed.  \\ 
+      \hline
+      \textbf{Related Use Case(s)} & 
+      \begin{itemize}
+          \item \textit{Create Tournament}
+          \item \textit{Set Title}
+          \item \textit{Set Description}
+          \item \textit{Set Registration Deadline}
+          \item \textit{Invite Colleagues}
+      \end{itemize}
+          \\ 
+      \hline
+    \end{tabular}
+\end{center}
+
+
+
+\newpage
+
+\item Edit Tournament Attributes
+\begin{center}
+    \begin{tabular}{ | m{10em} | m{10cm}| } 
+      \hline
+      \textbf{Name} & Edit Tournament Attributes \\ 
+      \hline
+      \textbf{Actor(s)} & Educator \\ 
+      \hline
+      \textbf{Entry Condition} & The actor is viewing a specific tournament's page that s/he has created. \\ 
+      \hline
+      \textbf{Event Flow} & 
+          \begin{enumerate}[(1)]
+              \item The actor clicks the Edit Tournament button.
+              \item The actor edits the tournament attributes by \textit{setting a title}, \textit{setting a description}, and \textit{setting a registration deadline} using the corresponding fields in the pop-up.
+              \item The actor finishes \textit{editing the tournament} by clicking the Done button.
+          \end{enumerate}
+      \\ 
+      \hline
+      \textbf{Exit Condition} & The tournament is edited and the page of that tournament is displayed.  \\ 
+      \hline
+      \textbf{Exception(s)} & 
+      \begin{itemize}
+          \item The registration deadline may be already left behind. In this case, editing is not allowed. A tournament cannot be edited after it has started.
+      \end{itemize}
+          \\ 
+      \hline
+      \textbf{Related Use Case(s)} & 
+      \begin{itemize}
+          \item \textit{Edit Tournament Attributes}
+          \item \textit{Set Title}
+          \item \textit{Set Description}
+          \item \textit{Set Registration Deadline}
+      \end{itemize}
+          \\ 
+      \hline
+    \end{tabular}
+\end{center}
+
+\item End Tournament
+\begin{center}
+    \begin{tabular}{ | m{10em} | m{10cm}| } 
+      \hline
+      \textbf{Name} & End Tournament \\ 
+      \hline
+      \textbf{Actor(s)} & Educator \\ 
+      \hline
+      \textbf{Entry Condition} & The actor is viewing a specific tournament's page that s/he has created. \\ 
+      \hline
+      \textbf{Event Flow} & 
+          \begin{enumerate}[(1)]
+              \item The actor clicks the End Tournament button to \textit{end the tournament}.
+          \end{enumerate}
+      \\ 
+      \hline
+      \textbf{Exit Condition} & The tournament is ended and all battles inside that tournament have come to an end even if their submission deadline has not arrived yet.  \\ 
+      \hline
+      \textbf{Related Use Case(s)} & 
+      \begin{itemize}
+          \item \textit{End Tournament}
+      \end{itemize}
+          \\ 
+      \hline
+    \end{tabular}
+\end{center}
+
+
+
+\newpage
+
+\item Respond to the Tournament Invitation
+\begin{center}
+    \begin{tabular}{ | m{10em} | m{10cm}| } 
+      \hline
+      \textbf{Name} & Respond to the Tournament Invitation  \\ 
+      \hline
+      \textbf{Actor(s)} & Invitee Educator \\ 
+      \hline
+      \textbf{Entry Condition} & The actor is logged in and invited to a tournament by another educator.  \\ 
+      \hline
+      \textbf{Event Flow} & 
+          \begin{enumerate}[(1)]
+              \item The actor opens up the notifications and sees the invitation to join a tournament created by another educator.
+              \item The actor clicks the notification and a pop-up shows up.
+              \item The actor can choose to \textit{Accept Invitation} by clicking the Accept button or \textit{Reject Invitation} by clicking the Reject button to \textit{respond to the tournament invitation}.
+          \end{enumerate}
+      \\ 
+      \hline
+      \textbf{Exit Condition} & 
+      \begin{itemize}
+          \item If accepted, the specific tournament is displayed.
+          \item If rejected, the dashboard is displayed.
+      \end{itemize}\\ 
+      \hline
+      \textbf{Related Use Case(s)} & 
+      \begin{itemize}
+          \item \textit{Respond to Tournament Invitation}
+          \item \textit{Accept Invitation}
+          \item \textit{Reject Invitation}
+      \end{itemize}
+          \\ 
+      \hline
+    \end{tabular}
+\end{center}
+
+
+\newpage
+
+
+\item Create Battle
+\begin{center}
+    \begin{tabular}{ | m{5em} | m{13cm}| } 
+      \hline
+      \textbf{Name} & Create Battle  \\ 
+      \hline
+      \textbf{Actor(s)} & Educator \\ 
+      \hline
+      \textbf{Entry Condition} & The actor is viewing the page of a tournament that s/he has joined. \\ 
+      \hline
+      \textbf{Event Flow} & 
+          \begin{enumerate}[(1)]
+              \item The actor clicks the Create Battle button at the bottom right of the page.
+              \item The actor \textit{sets the battle attributes} by \textit{setting a title}, \textit{setting a description}, and \textit{setting a registration deadline} using the corresponding fields in the pop-up and then clicks the Next button.
+              \item The actor continues to \textit{set the battle attributes} by \textit{setting the allowed languages}, and \textit{uploading the test cases} using the corresponding fields in the pop-up and then clicks the Next button.
+              \item The actor continues to \textit{set the battle attributes} by \textit{uploading the build scripts}, and \textit{setting the minimum and maximum group size} using the corresponding fields in the pop-up and then clicks the Next button.
+              \item The actor continues to \textit{set the battle attributes} by \textit{setting scoring criteria}. The actor \textit{sets the percentages} of different scoring aspects, \textit{enables or disables manual scoring}, and \textit{selects the quality aspects} to be inspected by the Static Analysis Tool using the corresponding fields in the pop-up.
+              \item The actor finishes the \textit{battle creation} by clicking the Create button.
+          \end{enumerate}
+      \\ 
+      \hline
+      \textbf{Exit Condition} & The battle is created and the page of that battle is displayed.  \\ 
+      \hline
+      \textbf{Exception(s)} & 
+      \begin{itemize}
+          \item The actor may upload the wrong type of files during the test case or build script upload.
+      \end{itemize}
+          \\ 
+      \hline
+      \textbf{Related Use Case(s)} & 
 
     
+      \begin{itemize}
+          \item \textit{Create Battle}
+          \item \textit{Set Battle Attributes}
+          \item \textit{Set Title}
+          \item \textit{Set Description}
+          \item \textit{Set Registration Deadline} - \textit{Set Submission Deadline}
+          \item \textit{Set Minimum and Maximum Team Size}
+          \item \textit{Set Allowed Languages}
+          \item \textit{Upload Test Cases} - \textit{Upload Build Scripts}
+          \item \textit{Set Scoring Criteria}: \textit{Set Percentages}, \textit{Enable Manual Scoring}, \textit{Select Quality Aspects}
+      \end{itemize}
+          \\ 
+      \hline
+      \textbf{Note(s)} & 
+      \begin{itemize}
+          \item In the entry condition, joined means either created or invited \& accepted by the actor.
+      \end{itemize}
+          \\ 
+      \hline
+    \end{tabular}
+\end{center} 
+
+
+\newpage
+
+\item Edit Battle Attributes
+\begin{center}
+    \begin{tabular}{ | m{10em} | m{10cm}| } 
+      \hline
+      \textbf{Name} & Edit Battle Attributes \\ 
+      \hline
+      \textbf{Actor(s)} & Educator \\ 
+      \hline
+      \textbf{Entry Condition} & The actor is viewing a specific battle's page that s/he has created. \\ 
+      \hline
+      \textbf{Event Flow} & 
+          \begin{enumerate}[(1)]
+              \item The actor clicks the Edit Battle button.
+              \item The actor \textit{sets the battle attributes} by \textit{setting a title}, \textit{setting a description}, and \textit{setting a registration deadline} using the corresponding fields in the pop-up and then clicks the Next button.
+              \item The actor continues to \textit{set the battle attributes} by \textit{setting the allowed languages}, and \textit{uploading the test cases} using the corresponding fields in the pop-up and then clicks the Next button.
+              \item The actor continues to \textit{sets the battle attributes} by \textit{uploading the build scripts}, and \textit{setting the minimum and maximum group size} using the corresponding fields in the pop-up and then clicks the Next button.
+              \item The actor continues to \textit{set the battle attributes} by \textit{setting scoring criteria}. The actor \textit{sets the percentages} of different scoring aspects, \textit{enables or disables manual scoring}, and \textit{selects the quality aspects} to be inspected by the Static Analysis Tool using the corresponding fields in the pop-up.
+              \item The actor finishes \textit{editing the battle} by clicking the Done button.
+          \end{enumerate}
+      \\ 
+      \hline
+      \textbf{Exit Condition} & The battle is edited and the page of that battle is displayed.  \\ 
+      \hline
+      \textbf{Exception(s)} & 
+      \begin{itemize}
+          \item The actor may upload the wrong type of files during the test case or build script upload.
+      \end{itemize}
+          \\ 
+      \hline
+      \textbf{Related Use Case(s)} &
+    
+      \begin{itemize}
+          \item \textit{Edit Battle Attributes}
+          \item \textit{Set Battle Attributes}
+          \item \textit{Set Title}
+          \item \textit{Set Description}
+          \item \textit{Set Registration Deadline} - \textit{Set Submission Deadline}
+          \item \textit{Set Minimum and Maximum Team Size}
+          \item \textit{Set Allowed Languages}
+          \item \textit{Upload Test Cases} - \textit{Upload Build Scripts}
+          \item \textit{Set Scoring Criteria}: \textit{Set Percentages}, \textit{Enable Manual Scoring}, \textit{Select Quality Aspects}
+      \end{itemize}
+          \\ 
+      \hline
+    \end{tabular}
+\end{center} 
 
 \end{enumerate}
 
