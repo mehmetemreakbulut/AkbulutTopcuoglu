@@ -142,7 +142,7 @@ Our platform utilises various communication systems:
 \subsection{Functional Requirements}
 \subsubsection{Use Case Diagram}
 \label{sec:Use Case Diagram}
-\includegraphics[scale=0.27]{Images/use_case_diagrams.drawio.png}
+\includegraphics[scale=0.27]{Images/use.case.diagram.drawio.png}
 \newpage
 Unregistered User Actor has been used to illustrate the Registration Use Case. Similarly, the Registered User Actor has been used to show the Authentication Use Case. Other user actors are assumed to be registered and authenticated.
 
@@ -992,7 +992,7 @@ The Use Case Tables below, depict the possible use cases in detail. We tried to 
       \textbf{Event Flow} & 
           \begin{enumerate}[(1)]
               \item The actor clicks the Create Battle button at the bottom right of the page.
-              \item The actor \textit{sets the battle attributes} by \textit{setting a title}, \textit{setting a description}, and \textit{setting a registration deadline} using the corresponding fields in the pop-up and then clicks the Next button.
+              \item The actor \textit{sets the battle attributes} by \textit{setting a title}, \textit{setting a description}, \textit{setting a registration deadline}, and \textit{setting a submission deadline} using the corresponding fields in the pop-up and then clicks the Next button.
               \item The actor continues to \textit{set the battle attributes} by \textit{setting the allowed languages}, and \textit{uploading the test cases} using the corresponding fields in the pop-up and then clicks the Next button.
               \item The actor continues to \textit{set the battle attributes} by \textit{uploading the build scripts}, and \textit{setting the minimum and maximum group size} using the corresponding fields in the pop-up and then clicks the Next button.
               \item The actor continues to \textit{set the battle attributes} by \textit{setting scoring criteria}. The actor \textit{sets the percentages} of different scoring aspects, \textit{enables or disables manual scoring}, and \textit{selects the quality aspects} to be inspected by the Static Analysis Tool using the corresponding fields in the pop-up.
@@ -1085,5 +1085,110 @@ The Use Case Tables below, depict the possible use cases in detail. We tried to 
 
 \end{enumerate}
 
+\newpage
+\subsubsection{Functional Requirements}
+
+In this section, we organized the Functional Requirements with respect to the user types. This section will consist of four parts. \textbf{Common} will include the requirements regarding both the educators and the students. \textbf{Educator} and \textbf{Student} will include the requirements related only to their respective parts. The last part, \textbf{The Platform} will include the requirements that are not directly related to any user type but still need to be executed by the system.
+
+\begin{itemize}
+	\item Common
+	\begin{enumerate}
+		\item The system shall allow unregistered users to register by providing an email, a password, a name, a surname, and institution information.
+            \item The system shall allow unregistered users to select the user type during registration.
+  \item The system shall allow users who received a verification email to verify their emails.
+  \item The system shall allow registered users to log in by providing an email, and a password.
+  \item The system shall allow authenticated users to view all tournaments.
+  \item The system shall allow authenticated users to filter the tournaments by the registration status and availability. 
+  \item The system shall allow authenticated users to sort the tournaments by number of participants and number of battles in it.
+  \item The system shall allow authenticated users to view a specific tournament.
+  \item The system shall allow authenticated users to view the leaderboard of the tournament.
+  \item The system shall allow authenticated users to view all battles in a tournament.
+  \item The system shall allow authenticated users to filter the battles by group size, start date - end date, registration status, institution of the battle creator, allowed programming languages, and the battle creator.
+  \item The system shall allow authenticated users to search battles by text search.
+  \item The system shall allow authenticated users to view a specific battle and its instructions.
+  \item The system shall allow authenticated users to view the rankings of the battle.
+  \item The system shall allow authenticated users to search tournaments with text search by educators, by titles, or by institutions.
+  \item The system shall allow authenticated users to view their profiles.
+  \item The system shall allow authenticated users to delete their profiles unless they do not have an ongoing tournament created by themselves.
+  \item The system shall allow authenticated users to view their own tournaments. 
+  \item The system shall allow authenticated users to view their own battles. 
+  \item The system shall allow authenticated users to view their settings.
+  \item The system shall allow authenticated users to edit their settings by name, surname, password, and institution information.
+  \item The system shall oblige authenticated users to enter their old password during settings editing.
+
+	\end{enumerate}
+	\item Educator
+        \begin{enumerate}[resume]
+            \item The system shall allow educators to create tournaments by providing a title, a description, and a registration deadline.
+            \item The system shall allow educators to invite other educators to their tournaments during tournament creation.
+            \item The system shall allow educators to edit the tournaments that they have created by providing a title, a description, and a registration deadline unless the registration deadline has not passed.
+            \item The system shall allow educators to end the tournaments that they have created.
+            \item The system shall allow educators to accept or reject the tournament invitation coming from other educators for a tournament.
+            \item The system shall allow educators to create battles for tournaments, that they have either created or joined by invitation. 
+            \item The system shall allow educators to create battles by providing a title, a description, a registration deadline, a submission deadline, the allowed languages, test cases, build scripts, minimum \& maximum group size, and the scoring criteria.
+		\item The system shall allow educators to manually evaluate the submissions after the submission deadline has passed.
+            \item The system shall allow educators to edit the battles that they have created.
+	\end{enumerate}
+
+
+
+	\item Student
+        \begin{enumerate}[resume]
+		\item The system shall allow students to register for tournaments.
+		\item The system shall allow students to register for battles in which the tournaments that they have registered for.
+  \item The system shall allow students to register for battles individually.
+  \item The system shall allow students to register for battles by a team and set a team name.
+  \item The system shall allow students to invite other students to their team during battle registration.
+  \item The system shall allow students to accept or reject the team invitation coming from other students for a battle.
+  \item The system shall allow students to finalize their team registration or decline it.
+  \item The system shall allow students to 
+  
+	\end{enumerate}
+
+
+ \item GitHub
+  \begin{enumerate}[resume]
+     \item The system shall create a repository for a battle after the registration deadline for that battle has passed.
+     \item The system shall pull the repository of a team following a trigger from GitHub Actions.
+ \end{enumerate}
+
+
+ \item Email Service
+ \begin{enumerate}[resume]
+    \item The system shall trigger the email service to send a verification email to the recently registered users.
+    \item The system shall trigger the email service to send a notification email for a newly created tournament for all registered users.
+    \item The system shall trigger the email service to send an invitation email for the battle to the invitee students.
+    \item The system shall trigger the email service to send a notification email including the link to the battle repository to the students registered for it.
+    \item The system shall trigger the email service to send an invitation email for the tournament to the invitee educators.
+ \end{enumerate}
+
+
+ \item The Platform
+  \begin{enumerate}[resume]
+     \item The system shall automatically evaluate submissions by scoring criteria.
+     \begin{enumerate}
+         \item The system shall score the submission with respect to test cases, and test case weight.
+         \item The system shall score the submission with respect to timeliness, and timeliness weight.
+         \item The system shall score the submission with respect to quality aspects, and quality aspect weight.
+     \end{enumerate}
+     \item The system shall utilise a Static Analysis Tool to calculate the score in terms of quality aspects.
+     \item The system shall create a sandbox environment for each team for the submissions in order to run the codes.
+     \item The system shall automatically update the battle score of a team after the evaluation of the submission.
+     \item The system shall automatically update the battle rankings when a score is updated.
+     \item The system shall automatically update the tournament leaderboard at the end of each battle.
+ \end{enumerate}
+ 
+\end{itemize}
+
+
+
+
+
+
+\subsubsection{Performance Requirements}
+
+\subsubsection{Design Constraints}
+
+\subsubsection{Software System Attributes}
 
 
