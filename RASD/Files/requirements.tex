@@ -142,7 +142,7 @@ Our platform utilises various communication systems:
 \subsection{Functional Requirements}
 \subsubsection{Use Case Diagram}
 \label{sec:Use Case Diagram}
-\includegraphics[scale=0.27]{Images/use.case.diagram.drawio.png}
+\includegraphics[scale=0.27]{Images/usecase-diagram.png}
 \newpage
 Unregistered User Actor has been used to illustrate the Registration Use Case. Similarly, the Registered User Actor has been used to show the Authentication Use Case. Other user actors are assumed to be registered and authenticated.
 
@@ -406,6 +406,42 @@ The Use Case Tables below, depict the possible use cases in detail. We tried to 
     \end{tabular}
 \end{center}
 
+
+\item Inspect a Submission
+\begin{center}
+    \begin{tabular}{ | m{10em} | m{10cm}| } 
+      \hline
+      \textbf{Name} & Inspect a Submission \\ 
+      \hline
+      \textbf{Actor(s)} & Educator \\ 
+      \hline
+      \textbf{Entry Condition} & The actor is viewing the battle rankings of a specific battle. \\ 
+      \hline
+      \textbf{Event Flow} & 
+          \begin{enumerate}[(1)]
+              \item The actor clicks one of the teams from the rankings table to \textit{view the team's submission}.
+              \item The actor looks at the code and decides to \textit{manually evaluate}.
+              \item The actor enters the bonus points in the respective field and clicks the Add Scoring button.
+          \end{enumerate}
+      \\ 
+      \hline
+      \textbf{Exit Condition} & The total score after manual evaluation of that team are displayed.  \\ 
+      \hline
+      \textbf{Exception(s)} & 
+      \begin{itemize}
+          \item The manual scoring is not enabled.
+      \end{itemize}
+          \\ 
+      \hline
+      \textbf{Related Use Case(s)} & 
+      \begin{itemize}
+\item \textit{View the Code of a Team}
+\item \textit{Manual Evaluation}
+      \end{itemize}
+          \\ 
+      \hline
+    \end{tabular}
+\end{center}
 
 
 \newpage
