@@ -1241,7 +1241,7 @@ In this section, we organized the Functional Requirements with respect to the us
 \begin{itemize}
 	\item Common
 	\begin{enumerate}
-		\item The system shall allow unregistered users to register by providing an email, a password, a name, a surname, and institution information.
+		\item The system shall allow unregistered users to register by providing an unique email, a password, a name, a surname, and institution information.
             \item The system shall allow unregistered users to select the user type during registration.
   \item The system shall allow users who received a verification email to verify their emails.
   \item The system shall allow registered users to log in by providing an email, and a password.
@@ -1274,7 +1274,8 @@ In this section, we organized the Functional Requirements with respect to the us
             \item The system shall allow educators to accept or reject the tournament invitation coming from other educators for a tournament.
             \item The system shall allow educators to create battles for tournaments, that they have either created or joined by invitation. 
             \item The system shall allow educators to create battles by providing a title, a description, a registration deadline, a submission deadline, the allowed languages, test cases, build scripts, minimum \& maximum group size, and the scoring criteria.
-		\item The system shall allow educators to manually evaluate the submissions after the submission deadline has passed.
+            \item The system shall oblige educators to upload test case file and build script for every allowed language in battle.
+		\item The system shall allow educators to manually evaluate the submissions giving extra point between 0 and 10 after the submission deadline has passed.
             \item The system shall allow educators to edit the battles that they have created.
 	\end{enumerate}
 
@@ -1342,7 +1343,18 @@ In this section, we organized the Functional Requirements with respect to the us
     \item 
 \end{itemize}
 
+
+
+
 \subsubsection{Design Constraints}
+\begin{itemize}
+    \item The system shall comply with the General Data Protection Law (GDPR).
+    \item 
+\end{itemize}
+
+
+
+
 
 \subsubsection{Software System Attributes}
 
