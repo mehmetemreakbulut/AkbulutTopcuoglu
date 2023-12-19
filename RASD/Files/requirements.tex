@@ -1340,7 +1340,6 @@ In this section, we organized the Functional Requirements with respect to the us
 \begin{enumerate}
     \item The system shall respond to each user within 3 seconds for at least 90\% of the requests.
     \item The system shall support up to 1000 users concurrently.
-    \item The system shall work 24/7 with no more than 2\% downtime, excluding scheduled maintenance.
     \item The system shall process the codes pushed to the GitHub repositories within 60 seconds unless the GitHub API is down.
 \end{enumerate}
     
@@ -1371,27 +1370,33 @@ In this section, we organized the Functional Requirements with respect to the us
 \subsection{Software System Attributes}
 \subsubsection{Reliability}
 \begin{enumerate}[resume]
-    \item 
+    \item The system shall have a mean time between failures (MTBF) of at least 720 hours.
+    \item The system shall backup at least once every 72 hours.
+    \item The system shall automatically recover from minor failures within 2 minutes.
 \end{enumerate}
 
 \subsubsection{Availability}
 \begin{enumerate}[resume]
-    \item 
+    \item The system shall work 24/7 with no more than 2\% downtime, excluding scheduled maintenance.
+    \item Scheduled maintenance shall be limited to a maximum of 4 hours per month, with at least a week's notice to users.
 \end{enumerate}
 
 \subsubsection{Security}
 \begin{enumerate}[resume]
-    \item 
+    \item The system shall enforce secure HTTPS connections for all data transactions.
+    \item The system shall encrypt sensitive data both in transit and at rest.
 \end{enumerate}
 
 \subsubsection{Maintainability}
 \begin{enumerate}[resume]
-    \item 
+    \item The system shall support logging of all transactions and errors to facilitate debugging and maintenance.
+    \item The system shall be designed to allow updates and maintenance without more than 1 hour of downtime per update.
 \end{enumerate}
 
 \subsubsection{Portability}
 \begin{enumerate}[resume]
-    \item 
+    \item The system shall be compatible with the latest versions of major web browsers including Chrome, Firefox, Safari, Opera, and Edge.
+    \item The system's frontend shall be responsive and adaptable to different screen sizes, ranging from mobile devices to desktop monitors.
 \end{enumerate}
 
 
