@@ -1330,32 +1330,69 @@ In this section, we organized the Functional Requirements with respect to the us
 \end{itemize}
 
 
+\vspace{3mm}
+
+\noindent The following subsections in \hyperref[sect:requirements]{Section 3: Specific Requirements} will include different types of \textbf{Non-Functional Requirements}. Even though they are separated into different subsections, the enumeration of elements will resume between subsections as they all represent Non-Functional Requirements.
 
 
 
-
-\subsubsection{Performance Requirements}
-\begin{itemize}
+\subsection{Performance Requirements}
+\begin{enumerate}
     \item The system shall respond to each user within 3 seconds for at least 90\% of the requests.
     \item The system shall support up to 1000 users concurrently.
     \item The system shall work 24/7 with no more than 2\% downtime, excluding scheduled maintenance.
     \item The system shall process the codes pushed to the GitHub repositories within 60 seconds unless the GitHub API is down.
+\end{enumerate}
+    
+
+\subsection{Design Constraints}
+\subsubsection{Standards Compliance}
+\begin{enumerate}[resume]
+    \item The system shall comply with the General Data Protection Regulation (GDPR).
+    \item The system shall comply with ISO/IEC 27001:2022, managing the information security.
+    \item The system shall use JSON for data interchange within the APIs.
+\end{enumerate}
+ 
+
+\subsubsection{Hardware Limitations}
+\begin{enumerate}[resume]
+    \item The system requires a web-supporting device.
+\end{enumerate}
+ 
+
+\subsubsection{Other Constraints}
+\begin{enumerate}[resume]
+    \item The system user interface language shall be English.
+    \item The system shall be implemented in Python \& FastAPI at the backend, and Javascript \& React at the frontend.
+\end{enumerate}
+
+
+
+\subsection{Software System Attributes}
+\subsubsection{Reliability}
+\begin{enumerate}[resume]
     \item 
-\end{itemize}
+\end{enumerate}
 
-
-
-
-\subsubsection{Design Constraints}
-\begin{itemize}
-    \item The system shall comply with the General Data Protection Law (GDPR).
+\subsubsection{Availability}
+\begin{enumerate}[resume]
     \item 
-\end{itemize}
+\end{enumerate}
 
+\subsubsection{Security}
+\begin{enumerate}[resume]
+    \item 
+\end{enumerate}
 
+\subsubsection{Maintainability}
+\begin{enumerate}[resume]
+    \item 
+\end{enumerate}
 
+\subsubsection{Portability}
+\begin{enumerate}[resume]
+    \item 
+\end{enumerate}
 
-
-\subsubsection{Software System Attributes}
 
 
