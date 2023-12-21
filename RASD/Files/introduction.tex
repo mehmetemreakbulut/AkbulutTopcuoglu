@@ -12,27 +12,20 @@ In summary, the CodeKataBattle project serves as a bridge between theoretical le
 
 \begin{enumerate}
 
-\item Students are able to find, join, or create teams for specific code kata battles within a tournament.
+ \item Educators are able to prepare and manage programming exercises.
+ \item Educators are able to work collaboratively to create coding exercises.
+ \item Students are able to participate in programming exercises individually or with a team.
+ \item Students are able to get evaluations for their coding solutions, enhancing their learning experience.
+ \item Educators are able to compare students' performance based on certain programming exercises.
 
-\item  Educators can create and manage code kata battles, including the provision of detailed descriptions, project templates with test cases, and build automation scripts.
+ 
+ 
 
-\item  Educators have the capability to set up and customize various battle parameters such as team size limits, registration deadlines, submission deadlines, and scoring configurations.
 
-\item  Students commit their code implementations to a specific GitHub repository for each battle, triggering automated testing and scoring through the platform.
 
-\item  The platform automatically calculates and updates battle scores based on predefined criteria including the number of passed tests, commit timeliness, and code quality.
 
-\item  Educators can manually score submissions, considering aspects outside of automated evaluations.
 
-\item  Students and educators can view the evolving ranks and scores of teams during a battle.
-
-\item  The final battle ranks are determined after considering both automated and manual evaluations, and made visible to all participants upon completion of each battle.
-
-\item  Cumulative personal tournament scores are updated and displayed for each student, contributing to an overall tournament ranking.
-
-\item  The platform notifies students of new tournaments, battle opportunities, and updates on their tournament standings.
-
-\item  Students can view their rankings on their profiles.
+% \item  Students can view their rankings on their profiles.
 \end{enumerate}
 
 \subsection{Scope}
@@ -76,10 +69,19 @@ In summary, the domain of the CKB platform is focused on interactive, competitiv
 \subsubsection{World Phenomena}
 
 \begin{enumerate}
-    \item Educators prepare the necessary documents for code battles including descriptions, test cases and build automation scripts.
-    \item Students fork the GitHub repository.
-    \item Students set up an automated workflow through GitHub Actions.
+    \item Educators prepare and manage programming exercises to assess students.
+    \item Educators prepare test cases and build scripts related to their programming exercises.
+    \item Educators can work collaboratively to provide exercises to the students.
+    \item Students participate in programming exercises to improve their programming skills.
+    \item Students will to compare themselves on coding challenges.
+    \item Students can work collaboratively to provide solutions to exercises.
+    \item Students fork the code repositories.
+    \item Students set up an automated workflow.
     \item Students write code on their devices.
+    \item Educators evaluate students based on their solutions to the programming exercises.
+    \item Educators decide on some quality aspects to assess students.
+    \item Educators compare students based on their success in certain coding exercises. 
+    \item Students get evaluations for their solutions to the coding exercises. 
 \end{enumerate}
 
 \subsubsection{Shared Phenomena}
@@ -87,20 +89,20 @@ In summary, the domain of the CKB platform is focused on interactive, competitiv
 
 \quad \space \space \textbf{World Controlled}
 \begin{enumerate}
-    \item Educators upload coding challenges, including descriptions and test cases, to the platform.
+    \item Educators create coding challenges, including descriptions and test cases, for the platform.
     \item Educators create tournaments and give permission to their colleagues to create battles for that tournament.
     \item Educators set specific rules and criteria such as deadlines, number of team members, and additional configurations for scoring for code kata battles.
-    \item Educators decide on the inclusion of manual scoring components for battles.
-    \item Students invite peers to form teams within the platform or join individually.
+    \item Educators decide on the inclusion of manual scoring components for battles and score manually.
+    \item Students invite peers to form teams within the platform or join individually in the battles.
     \item Students submit their code solutions by pushing the code via GitHub.
     
 \end{enumerate}
 
 \textbf{Machine Controlled}
 \begin{enumerate}[resume]
-    \item The CKB platform sends notifications to students about new battles and tournaments, final battle ranks and final tournament ranks.
+    \item The CKB platform sends notifications to students about new battles and tournaments, invitations, final battle ranks, and final tournament ranks.
     \item The platform generates and manages GitHub repositories for each battle and sends links to students that are participating.
-    \item The CKB platform automatically evaluates code submissions against test cases.
+    \item The CKB platform automatically evaluates code submissions against test cases, timeliness, and quality aspects.
     \item The platform updates battle scores and battle rankings in real-time.
     \item The platform displays leaderboards (i.e. the rank of the sum of all battle scores received in that tournament).
 \end{enumerate}
@@ -142,6 +144,6 @@ In summary, the domain of the CKB platform is focused on interactive, competitiv
     \item $D_{x}$: x-th Domain Assumption
     \item $UC_{x}$: x-th Use Case
     \item $SD_{x}$: x-th Sequence Diagram
-    \item $FR_{x}$: x-th Functional Requirement
+    \item $R_{x}$: x-th Functional Requirement
     \item $NFR_{x}$: x-th Non-Functional Requirement
 \end{itemize}

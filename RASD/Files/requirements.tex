@@ -111,17 +111,16 @@ Our platform CKB interfaces with various software systems:
 
     \item \textbf{GitHub API:} Integrated for creating coding repositories and managing code \textit{submission} processes.
 
-    \item \textbf{Sandboxing:} To create an isolated testing environment, our Sandbox Manager will utilise Docker.
+    \item \textbf{Sandboxing:} To create an isolated testing environment, this approach helps to create a reliable running environment while calculating test case scores.
 
-    \item \textbf{Static Analysis Tool:} SonarQube API will be integrated for scoring the quality aspect of the code with static analysis. 
+    \item \textbf{Static Analysis Tool:} An external API will be integrated for scoring the quality aspect of the code with static analysis. 
 
-    \item \textbf{Database Technology:} Platform uses databases such as PostgreSQL.
+    \item \textbf{Database Technology:} The data in the platform is consistent and needs to be stored in a database.
 
-    \item \textbf{Hosting:} Our platform uses Amazon Web Services EC2 for web server and database hosting.
+    \item \textbf{Hosting:} Our platform needs a web service that provides secure, resizable compute capacity in the cloud for web server and database hosting.
 
-    \item \textbf{Cloud File Storage:} The files will be stored using Amazon S3 services.
-
-    \item \textbf{Email Service:} Amazon Simple Email Service SES will be used to send automated email notifications.
+    \item \textbf{Cloud File Storage:} The files will be stored using object storage through a web service interface deployed in the cloud.
+    \item \textbf{Email Service:} A simple Email Service will be used to send automated email notifications.
 \end{itemize}
 
 \subsubsection{Communication Interfaces}
@@ -142,7 +141,7 @@ Our platform utilises various communication systems:
 \subsection{Functional Requirements}
 \subsubsection{Use Case Diagram}
 \label{sec:Use Case Diagram}
-\includegraphics[scale=0.27]{Images/usecase-diagram.png}
+\includegraphics[scale=0.27]{Images/usecasefinal.drawio.png}
 \newpage
 Unregistered User Actor has been used to illustrate the Registration Use Case. Similarly, the Registered User Actor has been used to show the Authentication Use Case. Other user actors are assumed to be registered and authenticated.
 
@@ -645,13 +644,13 @@ The Use Case Tables below, depict the possible use cases in detail. We tried to 
 
 \newpage
 
-\item Make Submission
+\item Submission
 \begin{center}
     \begin{tabular}{ | m{10em} | m{10cm}| } 
       \hline
-      \textbf{Name} & Make Submission  \\ 
+      \textbf{Name} & Submission  \\ 
       \hline
-      \textbf{Actor(s)} & Student, GitHub API \\ 
+      \textbf{Actor(s)} & Student, GitHub API, Static Analyser Tool \\ 
       \hline
       \textbf{Entry Condition} & The student actor forked the battle repository, and initiated GitHub Actions on their repository. \\ 
       \hline
@@ -661,23 +660,28 @@ The Use Case Tables below, depict the possible use cases in detail. We tried to 
               \item The student actor works on the problem and writes code. 
               \item The student actor \textit{commits code} to their repository to \textit{make the submission}.
               \item The GitHub API actor informs the CKB platform to pull the code.
+              \item The CKB platform pulls the code from the team's repository.
+              \item The platform \textit{calculates the score} of the submission with respect to test cases, timeliness, and quality aspects. 
+              \item During the calculation of quality aspects, it uses the API provided by the Static Analyser Tool actor.
           \end{enumerate}
       \\ 
       \hline
-      \textbf{Exit Condition} & The CKB platform pulls the code from the team's repository that the student actor is in. \\ 
+      \textbf{Exit Condition} & The CKB platform assigns the score to the team. \\ 
       \hline
       \textbf{Exception(s)} & 
       \begin{itemize}
           \item The GitHub API stops responding.
+          \item The Static Analyser Tool stops responding.
           \item The student is not able to provide a solution.
       \end{itemize}
           \\ 
       \hline
       \textbf{Related Use Case(s)} & 
       \begin{itemize}
-          \item \textit{Make Submission}
+          \item \textit{Submission}
           \item \textit{Set Up Environment}
           \item \textit{Code Commit}
+          \item \textit{Score Calculation}
       \end{itemize}
           \\ 
       \hline
@@ -1158,33 +1162,34 @@ The Use Case Tables below, depict the possible use cases in detail. We tried to 
     \begin{center}
             \includegraphics[scale=0.2]{Images/sequence_diagrams/SG-inspect_a_submission.jpeg}
     \end{center}
+    \newpage
     \item Search Tournaments
     \begin{center}
             \includegraphics[scale=0.2]{Images/sequence_diagrams/SD-search_tournaments.jpeg}
     \end{center}
-    \newpage
     \item Register to a Tournament
     \begin{center}
             \includegraphics[scale=0.2]{Images/sequence_diagrams/SD-register_to_tournament.jpeg}
     \end{center}
+    \newpage
     \item Register to a Battle
     \begin{center}
             \includegraphics[scale=0.2]{Images/sequence_diagrams/SD-register_to_battle.jpeg}
     \end{center}
-    \newpage
     \item Complete the Team Registration for the Battle
     \begin{center}
             \includegraphics[scale=0.2]{Images/sequence_diagrams/SD-complete_team_registration_for_battle.jpeg}
     \end{center}
+    \newpage
     \item Respond to the Team Invitation
     \begin{center}
             \includegraphics[scale=0.2]{Images/sequence_diagrams/SD-respond_to_team_invitation.jpeg}
     \end{center}
-    \newpage
-    \item Make Submission
+    \item Submission
     \begin{center}
-            \includegraphics[scale=0.2]{Images/sequence_diagrams/SD-make_submission.jpeg}
+            \includegraphics[scale=0.2]{Images/sequence_diagrams/SD-submission.jpeg}
     \end{center}
+    \newpage
     \item View Profile
     \begin{center}
             \includegraphics[scale=0.2]{Images/sequence_diagrams/SD-view_profile.jpeg}
@@ -1193,11 +1198,12 @@ The Use Case Tables below, depict the possible use cases in detail. We tried to 
     \begin{center}
             \includegraphics[scale=0.2]{Images/sequence_diagrams/SD-view_own_tournaments.jpeg}
     \end{center}
-    \newpage
+    
     \item See Own Battles
     \begin{center}
             \includegraphics[scale=0.2]{Images/sequence_diagrams/SD-view_own_battles.jpeg}
     \end{center}
+    \newpage
     \item Delete Profile
     \begin{center}
             \includegraphics[scale=0.2]{Images/sequence_diagrams/SD-delete_profile.jpeg}
@@ -1206,6 +1212,7 @@ The Use Case Tables below, depict the possible use cases in detail. We tried to 
     \begin{center}
             \includegraphics[scale=0.2]{Images/sequence_diagrams/SD-edit_settings.jpeg}
     \end{center}
+    \newpage
     \item Create Tournament
     \begin{center}
             \includegraphics[scale=0.2]{Images/sequence_diagrams/SD-create_tournament.jpeg}
@@ -1214,6 +1221,7 @@ The Use Case Tables below, depict the possible use cases in detail. We tried to 
     \begin{center}
             \includegraphics[scale=0.2]{Images/sequence_diagrams/SD-edit_tournament_attributes.jpeg}
     \end{center}
+    \newpage
     \item End Tournament
     \begin{center}
             \includegraphics[scale=0.2]{Images/sequence_diagrams/SD-end_tournament.jpeg}
@@ -1222,11 +1230,12 @@ The Use Case Tables below, depict the possible use cases in detail. We tried to 
     \begin{center}
             \includegraphics[scale=0.2]{Images/sequence_diagrams/SD-respond_to_tournament_invitation.jpeg}
     \end{center}
+    \newpage
     \item Create Battle
     \begin{center}
             \includegraphics[scale=0.2]{Images/sequence_diagrams/SD-create_battle.jpeg}
     \end{center}
-    \newpage
+
     \item Edit Battle Attributes
     \begin{center}
             \includegraphics[scale=0.2]{Images/sequence_diagrams/SD-edit_battle_attributes.jpeg}
@@ -1241,8 +1250,7 @@ In this section, we organized the Functional Requirements with respect to the us
 \begin{itemize}
 	\item Common
 	\begin{enumerate}
-		\item The system shall allow unregistered users to register by providing an unique email, a password, a name, a surname, and institution information.
-            \item The system shall allow unregistered users to select the user type during registration.
+		\item The system shall allow unregistered users to register by providing a unique email, a password, a name, a surname, and institution information.
   \item The system shall allow users who received a verification email to verify their emails.
   \item The system shall allow registered users to log in by providing an email, and a password.
   \item The system shall allow authenticated users to view all tournaments.
@@ -1256,13 +1264,21 @@ In this section, we organized the Functional Requirements with respect to the us
   \item The system shall allow authenticated users to view a specific battle and its instructions.
   \item The system shall allow authenticated users to view the rankings of the battle.
   \item The system shall allow authenticated users to search tournaments with text search by educators, by titles, or by institutions.
-  \item The system shall allow authenticated users to view their profiles.
+  \item The system shall allow authenticated users to manage their profiles.
+  \begin{enumerate}
+      \item The system shall allow authenticated users to view their profiles.
+      
   \item The system shall allow authenticated users to delete their profiles unless they do not have an ongoing tournament created by themselves.
-  \item The system shall allow authenticated users to view their own tournaments. 
-  \item The system shall allow authenticated users to view their own battles. 
-  \item The system shall allow authenticated users to view their settings.
+
+    \item The system shall allow authenticated users to view their settings.
   \item The system shall allow authenticated users to edit their settings by name, surname, password, and institution information.
   \item The system shall oblige authenticated users to enter their old password during settings editing.
+  
+      
+  \end{enumerate}
+
+
+
 
 	\end{enumerate}
 	\item Educator
@@ -1271,8 +1287,8 @@ In this section, we organized the Functional Requirements with respect to the us
             \item The system shall allow educators to invite other educators to their tournaments during tournament creation.
             \item The system shall allow educators to edit the tournaments that they have created by providing a title, a description, and a registration deadline unless the registration deadline has not passed.
             \item The system shall allow educators to end the tournaments that they have created.
-            \item The system shall allow educators to accept or reject the tournament invitation coming from other educators for a tournament.
-            \item The system shall allow educators to create battles for tournaments, that they have either created or joined by invitation. 
+            \item The system shall allow educators to accept or reject the tournament invitation to create battles coming from other educators for a tournament.
+
             \item The system shall allow educators to create battles by providing a title, a description, a registration deadline, a submission deadline, the allowed languages, test cases, build scripts, minimum \& maximum group size, and the scoring criteria.
             \item The system shall oblige educators to upload test case file and build script for every allowed language in battle.
 		\item The system shall allow educators to manually evaluate the submissions giving extra point between 0 and 10 after the submission deadline has passed.
@@ -1286,11 +1302,10 @@ In this section, we organized the Functional Requirements with respect to the us
 		\item The system shall allow students to register for tournaments.
 		\item The system shall allow students to register for battles in which the tournaments that they have registered for.
   \item The system shall allow students to register for battles individually.
-  \item The system shall allow students to register for battles by a team and set a team name.
+  \item The system shall allow students to register for battles by a team having a team name.
   \item The system shall allow students to invite other students to their team during battle registration.
   \item The system shall allow students to accept or reject the team invitation coming from other students for a battle.
   \item The system shall allow students to finalize their team registration or decline it.
-  \item The system shall allow students to 
   
 	\end{enumerate}
 
@@ -1300,7 +1315,6 @@ In this section, we organized the Functional Requirements with respect to the us
   \begin{enumerate}[resume]
   \item The system shall create a repository for a battle after the registration deadline for that battle has passed.
      \item The system shall pull the repository of a team following a trigger from GitHub Actions.
-     \item The system shall trigger the email service to send a verification email to the recently registered users.
     \item The system shall trigger the email service to send a notification email for a newly created tournament for all registered users.
     \item The system shall trigger the email service to send an invitation email for the battle to the invitee students.
     \item The system shall trigger the email service to send a notification email including the link to the battle repository to the students registered for it.
@@ -1320,14 +1334,283 @@ In this section, we organized the Functional Requirements with respect to the us
  
 \end{itemize}
 
+\newpage
+
+\subsubsection{Mapping on Goals}
+
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{lp{15cm}}
+    \hline
+    \textbf{G1} & Educators are able to prepare and manage programming exercises. \\
+    \hline
+    \hline
+    \textbf{R1} & The system shall allow unregistered users to register by providing a unique email, a password, a name, a surname, and institution information. \\
+
+    \textbf{R2} & The system shall allow users who received a verification email to verify their emails. \\
+
+    \textbf{R3} & The system shall allow registered users to log in by providing an email, and a password. \\
+
+    \textbf{R16} & The system shall allow educators to create tournaments by providing a title, a description, and a registration deadline. \\
+
+    \textbf{R18} & The system shall allow educators to edit the tournaments that they have created by providing a title, a description, and a registration deadline unless the registration deadline has not passed \\
+
+    \textbf{R19} & The system shall allow educators to end the tournaments that they have created. \\
+
+    \textbf{R21} & The system shall allow educators to create battles by providing a title, a description, a registration deadline, a submission deadline, the allowed languages, test cases, build scripts, minimum \& maximum group size, and the scoring criteria. \\
+
+    \textbf{R22} & The system shall oblige educators to upload test case file and build script for every allowed language in battle. \\
+
+    \textbf{R24} & The system shall allow educators to edit the battles that they have created. \\
+
+    \textbf{R32} & The system shall create a repository for a battle after the registration deadline for that battle has passed. \\
+
+    \textbf{R34} & The system shall trigger the email service to send a notification email for a newly created tournament for all registered users. \\
+
+        \textbf{R36} & The system shall trigger the email service to send a notification email including the link to
+the battle repository to the students registered for it. \\
+
+    \hline
+    \hline
+    \textbf{D1} & Educators and students have basic proficiency in using web-based platforms and are familiar with basic operations such as account creation, logging in, and navigating through a digital interface \\
+    \textbf{D2} & Educators have the necessary skills to create and manage coding challenges, including the ability to correctly write problem descriptions, test cases, and understand code quality metrics. \\
+
+    \textbf{D3} & The coding problems and challenges provided by educators are free from errors and ambiguities. \\
+
+    \textbf{D6} & The users have access to reliable internet connectivity and devices capable of supporting the web-based CKB platform. \\
+    \hline
+  \end{tabular}
+\end{table}
+
+
+\newpage
+
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{lp{15cm}}
+    \hline
+    \textbf{G2} & Educators are able to work collaboratively to create coding exercises. \\
+    \hline
+    \hline
+    \textbf{R1} & The system shall allow unregistered users to register by providing a unique email, a password, a name, a surname, and institution information. \\
+
+    \textbf{R2} & The system shall allow users who received a verification email to verify their emails. \\
+
+    \textbf{R3} & The system shall allow registered users to log in by providing an email, and a password. \\
+
+    \textbf{R16} & The system shall allow educators to create tournaments by providing a title, a description, and a registration deadline. \\
+
+    \textbf{R17} & The system shall allow educators to invite other educators to their tournaments during tournament creation. \\
+
+     \textbf{R20} & The system shall allow educators to accept or reject the tournament invitation to create battles
+coming from other educators for a tournament. \\
+
+    \textbf{R21} & The system shall allow educators to create battles by providing a title, a description, a registration deadline, a submission deadline, the allowed languages, test cases, build scripts, minimum \& maximum group size, and the scoring criteria. \\
+
+    \textbf{R22} & The system shall oblige educators to upload test case file and build script for every allowed language in battle. \\
+
+    \textbf{R24} & The system shall allow educators to edit the battles that they have created. \\
+
+    \textbf{R32} & The system shall create a repository for a battle after the registration deadline for that battle has passed. \\
+
+    \textbf{R34} & The system shall trigger the email service to send a notification email for a newly created tournament for all registered users. \\
+
+    \textbf{R36} & The system shall trigger the email service to send a notification email including the link to the battle repository to the students registered for it. \\
+
+\textbf{R37} & The system shall trigger the email service to send an invitation email for the tournament to the invitee educators. \\
+    
+    \hline
+    \hline
+    \textbf{D1} & Educators and students have basic proficiency in using web-based platforms and are familiar with basic operations such as account creation, logging in, and navigating through a digital interface \\
+    \textbf{D2} & Educators have the necessary skills to create and manage coding challenges, including the ability to correctly write problem descriptions, test cases, and understand code quality metrics. \\
+
+    \textbf{D3} & The coding problems and challenges provided by educators are free from errors and ambiguities. \\
+
+    \textbf{D6} & The users have access to reliable internet connectivity and devices capable of supporting the web-based CKB platform. \\
+    \hline
+  \end{tabular}
+\end{table}
+
+
+\newpage
+
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{lp{15cm}}
+    \hline
+    \textbf{G3} & Students are able to participate in programming exercises individually or with a team. \\
+    \hline
+    \hline
+    \textbf{R1} & The system shall allow unregistered users to register by providing an unique email, a password, a name, a surname, and institution information. \\
+
+    \textbf{R2} & The system shall allow users who received a verification email to verify their emails. \\
+
+    \textbf{R3} & The system shall allow registered users to log in by providing an email, and a password. \\
+
+    \textbf{R4} & The system shall allow authenticated users to view all tournaments. \\
+     
+     \textbf{R5} & The system shall allow authenticated users to filter the tournaments by the registration status and availability. \\
+
+    \textbf{R6} & The system shall allow authenticated users to sort the tournaments by number of participants and number of battles in it. \\
+
+    \textbf{R7} & The system shall allow authenticated users to view a specific tournament. \\
+
+\textbf{R9} & The system shall allow authenticated users to view all battles in a tournament. \\
+\textbf{R10} & The system shall allow authenticated users to filter the battles by group size, start date - end date, registration status, institution of the battle creator, allowed programming languages, and the battle creator. \\
+\textbf{R11} &  The system shall allow authenticated users to search battles by text search. \\
+\textbf{R12} &  The system shall allow authenticated users to view a specific battle and its instructions.\\
+\textbf{R14} &  The system shall allow authenticated users to search tournaments with text search by educators, by titles, or by institutions.\\
+
+
+\textbf{R25} &  The system shall allow students to register for tournaments.\\
+\textbf{R26} &  The system shall allow students to register for battles in which the tournaments that they have registered for.\\
+\textbf{R27} &  The system shall allow students to register for battles individually.\\
+\textbf{R28} &  The system shall allow students to register for battles by a team having a team name.\\
+\textbf{R29} &  The system shall allow students to invite other students to their team during battle registration.\\
+\textbf{R30} &  The system shall allow students to accept or reject the team invitation coming from other students for a battle.\\
+\textbf{R31} &  The system shall allow students to finalize their team registration or decline it.\\
+
+\textbf{R35} & The system shall trigger the email service to send an invitation email for the battle to the invitee students. \\
+    
+    \hline
+    \hline
+    \textbf{D4} & Students have at least foundational knowledge in programming and can understand and respond to coding challenges.\\
+    \textbf{D5} & Students’ submissions to the platform are their original work. \\
+    \textbf{D6} & The users have access to reliable internet connectivity and devices capable of supporting the web-based CKB platform. \\
+    \textbf{D7} & Students have familiarity with GitHub operations such as forking a repository, setting up GitHub Actions, and committing and pushing their codes.\\
+    \hline
+  \end{tabular}
+\end{table}
+
+
+
+\newpage
+
+
+
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{lp{15cm}}
+    \hline
+    \textbf{G4} & Students are able to get evaluations for their coding solutions, enhancing their learning experience. \\
+    \hline
+    \hline
+    \textbf{R1} & The system shall allow unregistered users to register by providing a unique email, a password, a name, a surname, and institution information. \\
+
+    \textbf{R2} & The system shall allow users who received a verification email to verify their emails. \\
+
+    \textbf{R3} & The system shall allow registered users to log in by providing an email, and a password. \\
+
+    \textbf{R7} & The system shall allow authenticated users to view a specific tournament. \\
+
+    \textbf{R8} & The system shall allow authenticated users to view the leaderboard of the tournament. \\
+
+\textbf{R12} &  The system shall allow authenticated users to view a specific battle and its instructions.\\
+\textbf{R13} &  The system shall allow authenticated users to view the rankings of the battle.\\
+
+\textbf{R15} &  The system shall allow authenticated users to manage their profiles.\\
+
+\textbf{R23} & The system shall allow educators to manually evaluate the submissions giving extra point between 0 and 10 after the submission deadline has passed.\\
+
+\textbf{R25} &  The system shall allow students to register for tournaments.\\
+\textbf{R26} &  The system shall allow students to register for battles in which the tournaments that they have registered for.\\
+
+\textbf{R32} & The system shall create a repository for a battle after the registration deadline for that battle has passed.\\
+\textbf{R33} & The system shall pull the repository of a team following a trigger from GitHub Actions.\\
+
+\textbf{R38} & The system shall automatically evaluate submissions by scoring criteria.\\
+\textbf{R39} & The system shall utilise a Static Analysis Tool to calculate the score in terms of quality aspects.\\
+
+\textbf{R40} & The system shall create a sandbox environment for each team for the submissions in order to run the codes.\\
+\textbf{R41} & The system shall automatically update the battle score of a team after the evaluation of the submission.\\
+\textbf{R42} & The system shall automatically update the battle rankings when a score is updated. \\
+\textbf{R43} & The system shall automatically update the tournament leaderboard at the end of each battle.\\
+
+
+    \hline
+    \hline
+    \textbf{D1} & Educators and students have basic proficiency in using web-based platforms and are familiar with basic operations such as account creation, logging in, and navigating through a digital interface.\\
+    \textbf{D4} & Students have at least foundational knowledge in programming and can understand and respond to coding challenges. \\
+    \textbf{D5} & Students’ submissions to to platform are their original work. \\
+    \textbf{D6} & The users have access to reliable internet connectivity and devices capable of supporting the web-based CKB platform. \\
+    \textbf{D7} & Students have familiarity with GitHub operations such as forking a repository, setting up GitHub Actions, and committing and pushing their codes.\\
+    \textbf{D8} & The automated testing and scoring systems within the CKB platform are trusted by users to fairly and accurately assess coding submissions. Similarly, educators are trusted in the case of manual evaluation of submissions.\\
+    
+    \hline
+  \end{tabular}
+\end{table}
+
+
+
+\newpage
+
+
+
+
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{lp{15cm}}
+    \hline
+    \textbf{G5} & Educators are able to compare students’ performance based on certain programming exercises. \\
+    \hline
+    \hline
+    \textbf{R1} & The system shall allow unregistered users to register by providing an unique email, a password, a name, a surname, and institution information. \\
+
+    \textbf{R2} & The system shall allow users who received a verification email to verify their emails. \\
+
+    \textbf{R3} & The system shall allow registered users to log in by providing an email, and a password. \\
+
+    \textbf{R7} & The system shall allow authenticated users to view a specific tournament. \\
+
+    \textbf{R8} & The system shall allow authenticated users to view the leaderboard of the tournament. \\
+
+\textbf{R12} &  The system shall allow authenticated users to view a specific battle and its instructions.\\
+\textbf{R13} &  The system shall allow authenticated users to view the rankings of the battle.\\
+
+\textbf{R16} &  The system shall allow educators to create tournaments by providing a title, a description, and a registration deadline.\\
+\textbf{R21} &  The system shall allow educators to create battles by providing a title, a description, a registration deadline, a submission deadline, the allowed languages, test cases, build scripts, minimum \& maximum group size, and the scoring criteria.\\
+
+\textbf{R23} &  The system shall allow educators to manually evaluate the submissions giving extra point between 0 and 10 after the submission deadline has passed.\\
+
+\textbf{R41} & The system shall automatically update the battle score of a team after the evaluation of the submission.\\
+\textbf{R42} & The system shall automatically update the battle rankings when a score is updated. \\
+\textbf{R43} & The system shall automatically update the tournament leaderboard at the end of each battle.\\
+
+    
+    \hline
+    \hline
+    \textbf{D1} & Educators and students have basic proficiency in using web-based platforms and are familiar with basic operations such as account creation, logging in, and navigating through a digital interface.\\
+    \textbf{D2} & Educators have the necessary skills to create and manage coding challenges, including the ability to correctly write problem descriptions, test cases, and understand code quality metrics. \\
+    \textbf{D3} & The coding problems and challenges provided by educators are free from errors and ambiguities \\
+    \textbf{D5} & Students’ submissions to the platform are their original work. \\
+    \textbf{D6} & The users have access to reliable internet connectivity and devices capable of supporting the web-based CKB platform. \\
+    \textbf{D7} & Students have familiarity with GitHub operations such as forking a repository, setting up GitHub Actions, and committing and pushing their codes.\\
+    
+    \hline
+  \end{tabular}
+\end{table}
+
+
+
+\newpage
+
+
+
+
+
+
+
+
 
 \vspace{3mm}
 
-\noindent The following subsections in \hyperref[sect:requirements]{Section 3: Specific Requirements} will include different types of \textbf{Non-Functional Requirements}. Even though they are separated into different subsections, the enumeration of elements will resume between subsections as they all represent Non-Functional Requirements.
+\noindent The following subsections (\hyperref[sec:per]{3.3},\hyperref[sec:des]{3.4},\hyperref[sec:swsa]{3.5}) in \hyperref[sect:requirements]{Section 3: Specific Requirements} will include different types of \textbf{Non-Functional Requirements}. Even though they are separated into different subsections, the enumeration of elements will resume between subsections as they all represent Non-Functional Requirements. Note that constraints (i.e. Technical Requirements) are also classified as Non-Functional Requirements in this document.
+
 
 
 
 \subsection{Performance Requirements}
+\label{sec:per}
 \begin{enumerate}
     \item The system shall respond to each user within 3 seconds for at least 90\% of the requests.
     \item The system shall support up to 1000 users concurrently.
@@ -1336,6 +1619,7 @@ In this section, we organized the Functional Requirements with respect to the us
     
 
 \subsection{Design Constraints}
+\label{sec:des}
 \subsubsection{Standards Compliance}
 \begin{enumerate}[resume]
     \item The system shall comply with the General Data Protection Regulation (GDPR).
@@ -1359,6 +1643,7 @@ In this section, we organized the Functional Requirements with respect to the us
 
 
 \subsection{Software System Attributes}
+\label{sec:swsa}
 \subsubsection{Reliability}
 \begin{enumerate}[resume]
     \item The system shall have a mean time between failures (MTBF) of at least 720 hours.
