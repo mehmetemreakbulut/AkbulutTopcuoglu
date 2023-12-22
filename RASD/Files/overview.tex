@@ -21,13 +21,19 @@
     Professor Emanuelle created a tournament called "Winter Semester Coding Exercise 1" at the beginning of the semester. Some other colleagues of hers registered for the tournament as educators and created battles during the semester. During the semester, she has viewed the leaderboard and at the end of every week, she has exported the result. Eventually, at the end of the semester, Professor Emanuelle closes the tournament. She then goes to the leaderboard screen and starts to see the general success of her students by comparing leaderboard exports from the very first battle. In this way, she notices that the leaderboard becomes more competitive as we get closer to the end of the year. She interprets this situation as students improving their programming skills battle by battle. After analyzing the leaderboard she searched other ongoing tournaments of other professors from the university to see the success of their students in different tournaments created by teachers of different courses.
     
 \end{enumerate}
+
+
 \newpage
 \subsubsection{Domain Class Diagram}
 In the figure below, the Domain Class Diagram for the CodeKataBattle (CKB) platform is illustrated. This diagram is a crucial element in understanding the structure of the classes and relationships within the CKB system. It visually represents the key classes, their attributes, and the interactions among them in the context of the platform. This diagram is designed to provide a clear and concise overview of the domain model, offering insights into how the different components of the CKB platform interact to facilitate a competitive and educational coding environment. 
 
-\begin{center}
-\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{Images/domainclassdiagramfinal.drawio.png}
-\end{center}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{Images/domainclassdiagramfinal.drawio.png}
+    \caption{Domain Class Diagram}
+    \label{fig:dcd}
+\end{figure}
+
 
 The descriptions below are the explanations of the important classes that take place in the diagram:
 \begin{itemize}
@@ -64,19 +70,65 @@ The descriptions below are the explanations of the important classes that take p
 \subsubsection{Statecharts}
 The state charts presented in this section elucidate the operation of the CodeKataBattle (CKB) project, illustrating the state transitions for a code kata battle and a tournament within the platform. Especially for tournaments, a state chart is very crucial to gain a better understanding of the tournament.\newline
 \textbf{Tournament}
-\begin{center}
-    \includegraphics[scale=0.2]{Images/tournamentStatechart.jpeg}
-\end{center}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.2]{Images/state_diagram/state_diagram_tournament.jpeg}
+    \caption{$SC_{1}$ - Tournament}
+    \label{fig:sc-t}
+\end{figure}
+
 Firstly, the tournament is in the very first state called "Registration Open", which indicates that Tournament is created and registration is open for students and invited educators. Until the registration deadline, they can register. When the deadline expires registration is closed, so the tournament goes into the "Registration Closed" state. In this state, the process controls the amount of registration for the tournament. If there is no registration it goes to "Final" state. Otherwise, the tournament starts with the "Ongoing" state. In this state, throughout the tournament, educators can create battles, and personal scores are updated after every battle. If the creator educator closes the tournament, it goes to the "Closed" state. However, there can be some battles in the consolidation stages and it is mandatory to finalize them to calculate final ranks. After every battle is finalized, the tournament transitions to the "FinalRankAvailable" state in which notifications about final rankings are sent to the students. After finishing this notification process tournament reaches the "Final" state. There won't be any rank changes or notifications hereafter. \newpage
 \textbf{Battle}\newline
-\begin{center}
-    \includegraphics[scale=0.2]{Images/battleStatechart.jpeg}
-\end{center}
-Firstly tournament is created with the "Registration Open" state. In this state, students can register to battle with teams or individually. When the deadline expires, Battle goes into the "Registration Closed" state. At this time, it is calculated that if there is any registration for battle. If no, it goes to the "Final" state with no registration and any other action. If there are registrations, it goes to a new state called as RepoOrganization in which GitHub repository for the battle is created with proper instructions. Sending the link and instructions triggers the process to go into the "Idle" state. This means that Battle has started and waits for API calls from forked repositories, triggered by a new commit. An API call from repositories of competitor leads to go into "Processing Submission. Here with the "createSubmision" input 3 sequential states follow each other, respectively, "Pull Sources", "Analyzing Code / Test Run" and "RankUpdating". In this 3 state code is pulled and analyzed. Then, the score and rankings are updated.  Eventually, it returns to the "Idle" state. Until the submission deadline, students' commit can change their scores. When the deadline expires, Battle goes into the "Consolidation Stage" state in which educators can change rankings via manual scorings. When they are finalized, Battle is closed, indicating as state "FinalRanksAvailable". Immediately, the notification sending process starts. After all notifications are sent, Battle goes into the Final state.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.2]{Images/state_diagram/state_diagram_battle.jpeg}
+    \caption{$SC_{2}$ - Battle}
+    \label{fig:sc-b}
+\end{figure}
+
+Firstly tournament is created with the "Registration Open" state. In this state, students can register to battle with teams or individually. When the deadline expires, Battle goes into the "Registration Closed" state. At this time, it is calculated that if there is any registration for battle. If no, it goes to the "Final" state with no registration and any other action. If there are registrations, it goes to a new state called as RepoOrganization in which GitHub repository for the battle is created with proper instructions. Sending the link and instructions triggers the process to go into the "Idle" state. This means that Battle has started and waits for API calls from forked repositories, triggered by a new commit. An API call from repositories of competitor leads to scoring phase. Until the submission deadline, battle switches between Scoring and Idle states.Eventually, it returns to the "Idle" state. Until the submission deadline, students' commit can change their scores. When the deadline expires, Battle goes into the "Consolidation Stage" state in which educators can change rankings via manual scorings. When they are finalized, Battle is closed, indicating as state "FinalRanksAvailable". Immediately, the notification sending process starts. After all notifications are sent, Battle goes into the Final state.
+\newpage
+\textbf{Submission}\newline
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.2]{Images/state_diagram/state_diagram_submission.jpeg}
+    \caption{$SC_{3}$ - Submission}
+    \label{fig:sc-s}
+\end{figure}
+
+
+Firstly, Submission goes into source pulling and initialization phases. After Testing and Rank Updating, which are sequential phases, submission become idle until the submission deadline. In there, either it goes into consolidation stage for manual scoring or immediately finalized. rankings are updated.
 \newpage
 
+\subsubsection{Activity Diagrams}
+\textbf{Register Battle}
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.27]{Images/activity_diagram/activity_diagram_register_battle.jpeg}
+    \caption{$AC_{1}$ - Register Battle}
+\end{figure}
 
 
+\newpage
+\textbf{Create Battle}
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.327]{Images/activity_diagram/activity_diagram_create_battle.jpeg}
+    \caption{$AC_{2}$ - Create Battle}
+\end{figure}
+
+\newpage
+\textbf{Submission}
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.27]{Images/activity_diagram/activity_diagram_submission.jpeg}
+    \caption{$AC_{3}$ - Submission}
+\end{figure}
+
+\newpage
 \subsection{Product Functions}
 
 The major functions of the project will be organised according to the user types. We will have three sections, first for the common function both regarding the educators and the students. The second and the third will be specific to each user type respectively.

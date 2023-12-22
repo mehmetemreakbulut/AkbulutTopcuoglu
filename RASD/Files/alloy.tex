@@ -1,8 +1,27 @@
+In the formal analysis of the Alloy model for "CodeKataBattle," our primary aim is to establish a robust and meaningful representation of a coding tournament environment. This model intricately captures various elements such as tournament, battle, educators, students and relations among them.
+
+\\
+At the heart of the model there are signatures representing Tournament, Battle, Educator, Student, Team and Battle Score. The model also defines relationships and constraints, ensuring logical coherence and real-world applicability. For instance, it enforces unique emails for each user and stipulates that every user is either an educator or a student. This Alloy model ensures that Battle and Tournament constraints are fulfilled. Also model  highlights some of the constraints related to Educators and Students.  Main objective is the defining and checking some constraints related to these signatures, creating a world with requirements and implementing some assertions with respect to goals.
+\\
+In this model, UML Diagrams, Domain Assumptions and Requirements are used to support the model. Because of this, Alloy Signatures are not the exact version of Class Diagram. It is more detailed and defined to include aspects of the software product to be created according to certain Domain assumptions, Requirements and Goals. 
+
+\\
+A notable feature of this model is its ability to simulate the dynamic process of coding tournaments and battles. It captures the lifecycle of a tournament from creation to conclusion, including the creation of battles, team formations, code submissions, and scoring mechanisms. The model's flexibility allows for various scenarios, such as battles with manual scoring enabled and diverse programming language requirements.
+\\
+By running this model in Alloy, we can generate specific "worlds" that demonstrate its soundness and correctness. These worlds represent possible states of the system under different conditions, providing concrete examples of how the model functions in practice. 
+\\
+This model demonstrates that our method of building the system is both logical and coherent. Essentially, the connections between classes and the applied constraints yield an outcome that is both practical and beneficial. Such a result also validates the rationale behind the modeling process.
+
+\\
+In summary, the Alloy model is a comprehensive and flexible tool for simulating and analyzing coding tournaments and battles. Its ability to model complex interactions and enforce constraints makes it a valuable resource for understanding and improving software product.
+
+
+    
     \begin{lstlisting}[language=alloy]
 module CodeKataBattle
 
 
-//These can be Enum
+//These can be Enum also 
 abstract sig Language {}
 one sig PYTHON extends Language {}  
 one sig JAVA extends Language {}
@@ -16,10 +35,10 @@ one sig CSHARP extends Language {}
 abstract sig QualityAspect {}
 one sig COMPLEXITY, DUPLICATIONS, MAINTAINABILITY, RELIABILITY, SECURITY, CLEAN_CODE extends QualityAspect {}
 
-//These can be Enum
+//These can be Enum also
 abstract sig  TournamentStatus {}
 one sig REG_OPEN, ONGOING, CLOSED extends TournamentStatus{}
-//These can be Enum
+//These can be Enum also
 abstract sig BattleStatus {}
 one sig REG_OPEN_BATTLE, ONGOING_BATTLE, CONSOLIDATION, CLOSED_BATTLE extends BattleStatus{}
 
@@ -37,6 +56,8 @@ time: one Int
 //sig Name{}
 //sig Surname{}
 
+
+//Signatures related to statuses of tournaments and battles
 abstract sig Notification{}
 sig TournamentCreated extends Notification{
   tournamentCreated: one Tournament
@@ -54,6 +75,7 @@ sig BattleFinished extends Notification{
 battleFinished: one Battle
 }
 
+//Fundamental Signatures
 sig Institution{}
 sig TournamentTitle{}
 sig TournamentDescription{}
@@ -95,6 +117,7 @@ sig Tournament {
 
 }
 
+//In Alloy range of integers is very low, so values of integers are not the real values, just mock
 sig ScoringWeights{
     TEST_CASES:  Int,
     TIMELINESS:  Int,
@@ -522,11 +545,7 @@ pred addManualScoreIfExist(bs: BattleScore, result: Int) {
         result = bs.totalScore
 }
 
-
-// a student's point from tournament is the sum of points from submissions of team he is part of submitted to battles finished in tournament
-// The system shall update the tournament leaderboard at the end of each battle.
-
-
+//Predicates used to create worlds or assertions
 
 pred EducatorCreatesTournament[e: Educator, t: Tournament] {
     t not in Tournament
@@ -598,7 +617,7 @@ pred educatorEditsTournament[e: Educator, t: Tournament, newTitle: TournamentTit
 
 // Assertions
 
-// Predicate to encourage diversity in tournament attributes
+// Predicate to encourage diversity in tournament attributes, use to create balanced worlds, not a requirement
 pred diverseTournamentAttributes {
     all disj t1, t2: Tournament | {
         t1.description != t2.description or
@@ -608,7 +627,7 @@ pred diverseTournamentAttributes {
     }
 }
 
-// Predicate to encourage diversity in battle attributes
+// Predicate to encourage diversity in battle attributes,  use to create balanced worlds, not a requirement
 pred diverseBattleAttributes {
     all disj b1, b2: Battle | {
         b1.title != b2.title or
@@ -734,7 +753,7 @@ assert CorrectTournamentRegistration {
 check CorrectTournamentRegistration for 5
 
 
-
+//Battle creation validity 
 assert ValidBattleCreationByEducator {
     all e: Educator, b: Battle, t:Tournament | 
         (educatorCreatesBattle[e, t, b] implies 
@@ -743,6 +762,7 @@ assert ValidBattleCreationByEducator {
 
 check ValidBattleCreationByEducator for 5 
 
+//Tournament creation validity
 assert TournamentCreatedEventuallyNotification {
     all e: Educator, t: Tournament | 
         EducatorCreatesTournament[e, t] implies 
@@ -752,6 +772,7 @@ assert TournamentCreatedEventuallyNotification {
 
 check TournamentCreatedEventuallyNotification for 5
 
+//Teams consistency
 assert ConsistentTeamMembership {
     all s: Student, t: Team | 
         (studentJoinsTeam[t, s] implies 
@@ -828,7 +849,7 @@ pred Progress[e:Educator, b:Battle, sub:Submission, s:Student, t:Team, ms:Manual
 
 run Progress for 5 but 1 Team
 
-
+//TournamentScore assertion
 assert TournamentScoreUpdatesAfterBattleClosure {
     all e: Educator, b: Battle, s: Student, t: Team, sub: Submission, ms: ManualScore, tournament: Tournament |
         Progress[e, b, sub, s, t, ms] and b in tournament.hasBattle and t in b.teams and s in t.hasMember implies
@@ -839,6 +860,7 @@ assert TournamentScoreUpdatesAfterBattleClosure {
 check TournamentScoreUpdatesAfterBattleClosure for 5
 
 
+//Manual Score assertion
 assert ManualScoringDuringConsolidation {
     all e: Educator, b: Battle, s: Student, t: Team, sub: Submission, ms: ManualScore |
         Progress[e, b, sub, s, t, ms] implies eventually (b.status = CONSOLIDATION) implies always (some sub.score.manualScore)
@@ -846,7 +868,7 @@ assert ManualScoringDuringConsolidation {
 
 check ManualScoringDuringConsolidation for 5
 
-
+//Battle lifetime 
 assert CorrectBattleStatusSequence {
     all e: Educator, b: Battle, s: Student, t: Team, sub: Submission, ms: ManualScore |
         Progress[e, b, sub, s, t, ms] implies
@@ -856,7 +878,7 @@ assert CorrectBattleStatusSequence {
 check CorrectBattleStatusSequence for 5
 
 
-
+//World1
 pred World {
 all b:Battle	|	#b.allowedLanguages =2
 #Team=2
@@ -868,7 +890,7 @@ some b: Battle	|	b.manualScoringEnabled=TRUE
 run { World } for 5 
    
 
-
+//World2
 pred World2 {
 #Team>3
 #Tournament=1
@@ -880,19 +902,54 @@ run { World2 } for 5
 
 pred show{ #Battle>0 #Team>0}
 run show for 5
-
    \end{lstlisting}
     
-   \subsubsection{World Modelling}
+   \subsection{World Modelling}
    In the Alloy, in order to see the relation between signatures and general view of model, we generally use the see predicates with some constraints such as number of tournaments is greater than 0 etc. Also it really helps us to create lots of assertion because, initially, there are lots of mistakes in the world modelling and it help us to improve system with an iterative approach. Of course there can be more complex or more simple world models. The model attached below is one of the simple world modellings of our system. With the code above there can create more complex models. Also, below a battle progress is modeled with the help of the dynamic modelling in Alloy.
-    \newpage
-   \includegraphics[scale=0.3]{Images/Alloy/alloyRun.jpeg}
+    \\
+
+   \begin{lstlisting}
+pred World {
+all b:Battle	|	#b.allowedLanguages =2
+#Team=2
+#Tournament=2
+#Educator=2
+#Student=3
+some b: Battle	|	b.manualScoringEnabled=TRUE
+}
+   \end{lstlisting}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.3]{Images/Alloy/alloyRun.jpeg}
+    \caption{Alloy Run Log}
+\end{figure}
+
    \\
-  \includegraphics[scale=0.8]{Images/Alloy/World1_Alloy.png}
+
+   \begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.8]{Images/Alloy/World1_Alloy.png}
+    \caption{Alloy World 1}
+\end{figure}
+
 
   \newpage
   \textbf{Dynamic Modelling}
+  We have a dynamic system that demonstrates  a Battle's progress. You can see the predicate Progress above.
   \\
-     \includegraphics[scale=0.8]{Images/Alloy/Progress_1.png}
-          \includegraphics[scale=0.8]{Images/Alloy/Progress_2.png}
-               \includegraphics[scale=0.8]{Images/Alloy/Progress_3.png}
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.8]{Images/Alloy/Progress_1.png}
+    \caption{Alloy Dynamic Modelling 1}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.8]{Images/Alloy/Progress_2.png}
+    \caption{Alloy Dynamic Modelling 2}
+\end{figure}\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.8]{Images/Alloy/Progress_3.png}
+    \caption{Alloy Dynamic Modelling 3}
+\end{figure}
+  
