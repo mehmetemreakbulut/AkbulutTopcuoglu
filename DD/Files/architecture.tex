@@ -34,8 +34,7 @@
     \item A Static Web Server
     \item Application Server
     \item Database Server
-\end{itemize},
-\\
+\end{itemize}
 Users can interact with website via a browser and a device that has browser support such as a computer, a mobile phone etc. Content Delivery Network is used for the web server which behaves as an entry point to users. It hosts the static and dynamic web content, such as .html, .css, .js, and image files, to users. Using Content Delivery Network has some advantages in terms of performance, reliability and security. CDNs speed up content delivery by decreasing the distance between where content is stored and where it needs to go, reducing file sizes to increase load speed, optimizing server infrastructure to respond to user requests more quickly. Also  if a server, a data center, or an entire region of data centers goes down, CDNs can still deliver content from other servers in the network. Moreover, it is also very useful from the security perspective. With their many servers, CDNs are better able to absorb large amounts of traffic, even unnatural traffic spikes from a DDoS attack, than a single origin server.
 \\
 \indent Then we have our Application Server which is hosted on the cloud with 2-4 instances. 
@@ -86,14 +85,396 @@ client’s machine,by browser, so there is no need for any logic to be implement
 
 
 \subsection{Component Interfaces}
+In this section, we explain the interfaces and provided methods and returned objects. Also a class diagram is provided to show the dependencies and relations between the interfaces. Also at the end of the section endpoints provided by the system is listed and explained.
+\\
+The Class Diagram is the same as Domain Level Class Diagram in RASD except some additional schmes to demonstrate the data structures used in interfaces.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{Images/DD-Class Diagram.drawio.png}
+    \caption{Class Diagram (Based on RASD)}
+\end{figure}
 
+\subsubsection{IUserAuthenticator}
+This Interface contains endpoints related to authentication of users. Endpoints explained in a detailed way at the end of the section. Just signatures are available here.
+\begin{itemize}
+\item Register(email: String, password: String, name: String, surname: String, institutionInfo: List<Institution>, userType: UserType) -> HTTP Response
+\item Login(email: String, password: String) -> HTTP Response
+\item Logout()-> HTTP Response
+\item VerifyEmail(email:String) -> HTTP Response
+\end{itemize}
 
+\subsubsection{IProfileManager}
+This Interface contains endpoints related to profiles of users. Endpoints explained in a detailed way at the end of the section. Just signatures are available here.
+\begin{itemize}
+\item GetMyProfile() -> HTTP Response
+\item GetProfile(userId: int) -> HTTP Response
+\item GetSettings() -> HTTP Response
+\item EditSettings(email: String, password: String, newPassword: String, name: String, surname: String, institutionInfo: List<Institution>) -> HTTP Response
+\item GetProfileStats() -> HTTP Response
+\item GetEducators()-> HTTP Response
+\end{itemize}
+\subsubsection{ITournamentManager}
+This Interface contains endpoints related to Tournament. Endpoints explained in a detailed way at the end of the section. Just signatures are available here.
+\begin{itemize}
+\item GetTournaments(registrationStatus: RegistrationStatus, availability: Availability, sortOption: TournamentSortOption, sortDirection: SortDirection) -> HTTP Response
+\item GetTournamentInfo(tournamentId: int) -> HTTP Status
+\item RegisterTournament(tournamentId: int) -> HTTP Status
+\item GetTournamentBattles(tournamentId, minGroupSize: int, maxGroupSize: int, startDate: DateTime, endDate: DateTime, registrationStatus: String, institution: Institution, languages: List<Language>, educatorIds: List<int>, searchText: String) -> HTTP Response
+\item GetTournamentLeaderboard(tournamentId: int) -> HTTP Response
+\item ExportTournamentLeaderboard(tournamentId: int) -> HTTP Response
+\item CreateTournament(title: String, description: String, registrationDeadline: DateTime, invitedEducatorIds: List<int>) -> HTTP Response
+\item AnswerTournamentInvitation(tournamentId: int, isAccepted: boolean, educatorId: int) -> HTTP Response
+\item EndTournament(tournamentId: int) -> HTTP Response
+\end{itemize}
 
+\subsubsection{IBattleManager}
+This Interface contains endpoints related to Battle. Endpoints explained in a detailed way at the end of the section. Just signatures are available here.
+\begin{itemize}
+\item GetBattleInfo(battleId: int) -> HTTP Response
+\item GetBattleLeaderboard(battleId: int) -> HTTP Response
+\item RegisterBattle(battleId: int, teamName: String, teamInvitations: List<int>) -> HTTP Response 
+\item AnswerBattleInvitation(teamId: int, isAccepted: boolean, studentId: int) -> HTTP Response
+\item FinalizeTeam(battleId: int) -> HTTP Response
+\item DeclineTeam(battleId: int) -> HTTP Response
+\item GetTeam(teamId: int) -> HTTP Response
+\item GetTeamScore(teamId: int) -> HTTP Response
+\item AddManualEvaluation(teamId: int, score: float) -> HTTP Response
+\item CreateBattle(title: String, description: String, registrationDeadline: DateTime, submissionDeadline: DateTime, languages: List<Language>, testCases: Map<String, List<File>>, buildScripts: Map<String, File>, minGroupSize: Int, maxGroupSize: int, percentages: Map<String, int>, isManualScoreEnabled: boolean) -> HTTP Response 
+\item ExportBattleLeaderboard(battleId: int) -> HTTP Response
+\end{itemize}
+
+\subsubsection{ISessionManager}
+This Interface provides session related methods to components. Other components such as \textbf{Tournament Manager}, \textbf{Battle Manager} etc. They use to retrieve current user from token provided in request header in order to apply business logic related to specific user attributes.
+\begin{itemize}
+    \item getCurrentUser(token: String) -> User
+\end{itemize}
+\subsubsection{INotification}
+This Interface provides methods that enables other components to send notifications via email or in-app notifications. \textbf{INotification} abstracts the internal operations related to using notification services and provides simple methods.
+
+\begin{itemize}
+    \item sendEmail(to: String, type: NotificationType, payload: Map<String,String>) -> boolean \\ This method sends email to given email with predefined email type related to a template and payload of it.
+    \item sendInAppNotification(userId: int, type: NotificationType, payload: Map<String,String>) -> boolean \\ This method sends in-app notification to given user id with predefined notification type related to a template and payload of it.
+\end{itemize}
+\subsubsection{Model Interfaces}
+These interfaces are mainly responsible for the query management and communication with DBMS. They provide database query methods for other components. 
+\begin{enumerate}
+    \item \textbf{Tournament Model}
+    \begin{itemize}
+        \item GetAllTournaments() -> List<Tournament> 
+        \item GetFilteredTournament(filter: TournamentFilterSchema) -> List<Tournament>\\
+        \item GetTournamentById(tournamentId: int) -> Tournament
+        \item CreateTournament(attributes: TournamentCreateSchema) -> int (Tournament Id)
+        \item EndTournament(tournamentId: int) -> boolean
+        \item AddEducator(tournamentId: int, educatorId: int) -> boolean
+        \item AddStudent(tournamentId: Int, studentId: int) -> boolean
+    \end{itemize}  
+    \item \textbf{Battle Model}
+    \begin{itemize}
+        \item GetBattle(battleId: int) -> Battle
+        \item CreateBattle(attributes: BattleCreateSchema) -> int (Battle Id)
+        \item CreateCodeKata(attributes: CodeKataCreateSchema) -> int (CodeKata Id)
+    \end{itemize}
+    \item \textbf{User Model}
+    \begin{itemize}
+        \item CreateStudent(attributes: StudentSchema) -> int (Student Id)
+        \item CreateEducator(attributes: EducatorSchema) -> int (Educator Id)
+        \item GetUser(userId: int) -> User
+        \item UpdateStudent(attributes: StudentSchema) -> int (Student Id)
+        \item UpdateEducator(attributes: EducatorSchema) -> int (Educator Id)
+        \item DeleteUser(userId: int) -> boolean
+    \end{itemize}
+    \item \textbf{Team Model}
+    \begin{itemize}
+        \item CreateTeam(attributes: TeamCreateSchema) -> int (Team Id)
+        \item FinalizeTeam(teamId: int) -> boolean
+        \item UpdateStudentStatus(teamId: int, studentId: int, isAccepted: boolean) -> boolean
+        \item GetTeam(teamId: int) -> Team
+    \end{itemize}
+    \item \textbf{Submission Model}
+    \begin{itemize}
+        \item CreateSubmission(attributes: SubmissionCreateSchema) -> int (Submission Id) \\
+        This function overwrites the existing submission, more precisely, safe deletes it.
+        \item GetSubmission(teamId: int) -> Submission
+        \item GetSubmissions(battleId: int) -> List<Submission>
+        \item AddManualEvaluation(submissionId: int, score: float) -> boolean
+    \end{itemize}
+\end{enumerate}
+\subsubsection{IBattleTeamOrganiser}
+\begin{itemize}
+    \item UpdateTeamStatus(teamId: int, status: TeamStatus) -> boolean
+    \item CreateTeam(attributes: TeamCreateSchema) -> Team
+    \item GetTeam(teamId: int) -> Team
+    \item AcceptTeamInvitation(teamId: int, studentId: int) -> boolean
+    \item DeclineTeamInvitation(teamId: int, studentId: int) -> boolean
+\end{itemize}
+\subsubsection{ISubmissionManager}
+    \item GetSubmission(teamId: int) -> Submission
+    \item GetBattleScores(battle: Battle) -> List<Map<Team, int>>
+\subsubsection{ISubmissionListener}
+    \item Submission(teamId: int, repoUrl: string) -> HTTP Status \\
+    This is an endpoint responsible to be triggered by Github Actions Workflow created by teams. When they made a new commit, they  send a request to this endpoint.
+\subsubsection{ISubmissionRetriever}
+    \item PullSubmission(repoUrl: String, battleId: int, teamId: int) -> String \\
+    This method provides the url of a folder in the file storage system. The pulled repository content is stored in this folder with a naming using battleId and teamId. The component using this method is then responsible for other actions. 
+\subsubsection{IScoringHandler}
+   \item CalculateTestCaseScore(code: File, testCaseFiles: Map<Language, List<File>>, buildScripts) -> float
+   \item CalculateStaticAnalysisScore(code: File, qualityAspects: List<QualityAspect>) -> float
+   \item CalculateTimelinessScore(submissionDate: DateTime, battleStartDate: DateTime) -> float
+   \item \textbf{ICodeExecutor}
+   \begin{itemize}
+        \item CreateSandboxEnviroment(language: Language, build
+       \item RunTestCases(code: File, language: Language, testCase: File) -> boolean
+   \end{itemize}
+   \item \textbf{IStaticAnalysis}
+   \begin{itemize}
+       \item GetStaticAnalysisScore(code: File, language: Language, qualityAspects: List<QualityAspect>) -> float
+   \end{itemize}
+\subsubsection{IBattleRepoHandler}
+\begin{itemize}
+    \item CreateBattleRepository(battle: Battle) -> String (Repository URL)
+\end{itemize}
+\subsubsection{IGithubAPI}
+This is the external API used to retrieve submission from Github. This Interface is explained later.
+\subsubsection{IFileManagement}
+This is the external service to store and manager files stored in the application. Cloud Object Storage is used. This Interface is explained later.
+
+\subsubsection{API Endpoints}
+\begin{enumerate}
+    \item \textbf{Endpoint Auth/Register} \\
+    \textbf{Method:} POST \\
+    Request Body:\\
+    \begin{itemize}
+        \item email: String
+        \item password: String
+        \item name: String
+        \item surname: String
+        \item institutionInfo: List<Institution>
+        \item userType: UserType
+    \end{itemize}
+    Response:\\
+    \begin{itemize}
+        \item \textbf{200} \\
+        \begin{itemize}
+            \item message: "User is registered successfully"
+            \item id: int
+        \end{itemize}
+                \item \textbf{400} \\
+        \begin{itemize}
+            \item message: "Email exists"
+        \end{itemize}
+    \end{itemize}
+    \item \textbf{Endpoint Auth/Login} \\
+    \textbf{Method:} POST \\
+    Request Body:\\
+    \begin{itemize}
+        \item email: String
+        \item password: String
+    \end{itemize}
+    Response:\\
+    \begin{itemize}
+        \item \textbf{200} \\
+        \begin{itemize}
+            \item message: "User is logged in successfully"
+            \item token: String
+        \end{itemize}
+                \item \textbf{400} \\
+        \begin{itemize}
+            \item message: "Credentials are wrong"
+        \end{itemize}
+    \end{itemize}
+    \item \textbf{Endpoint Auth/Logout} \\
+    \textbf{Method:} POST \\
+    Header:\\
+    \begin{itemize}
+        \item token: String
+    \end{itemize}
+    Response:\\
+    \begin{itemize}
+        \item \textbf{200} \\
+        \begin{itemize}
+            \item message: "User is logged out successfully"
+        \end{itemize}
+                \item \textbf{400} \\
+        \begin{itemize}
+            \item message: "Something went wrong"
+        \end{itemize}
+    \end{itemize}
+    \item \textbf{Endpoint Auth/VerifyEmail} \\
+    \textbf{Method:} POST \\
+    Request Body:\\
+    \begin{itemize}
+        \item email: String
+    \end{itemize}
+    Response:\\
+    \begin{itemize}
+        \item \textbf{200} \\
+        \begin{itemize}
+            \item message: "User is verified successfully"
+        \end{itemize}
+                \item \textbf{400} \\
+        \begin{itemize}
+            \item message: "Something went wrong"
+        \end{itemize}
+    \end{itemize}
+    \item \textbf{Endpoint Profile/GetMyProfile} \\
+    \textbf{Method:} GET \\
+    Header:\\
+    \begin{itemize}
+        \item token: String
+    \end{itemize}
+    Response:\\
+    \begin{itemize}
+        \item \textbf{200} \\
+        \begin{itemize}
+            \item profile: Student
+        \end{itemize}
+        \item \textbf{200} \\
+        \begin{itemize}
+            \item profile: Educator
+        \end{itemize}
+        \item \textbf{400} \\
+        \begin{itemize}
+            \item message: "Something went wrong"
+        \end{itemize}
+    \end{itemize}
+    \item \textbf{Endpoint Profile/GetProfile/:userId} \\
+    \textbf{Method:} GET \\
+    Header:\\
+    \begin{itemize}
+        \item token: String
+    \end{itemize}
+    Response:\\
+    \begin{itemize}
+        \item \textbf{200} \\
+        \begin{itemize}
+            \item profile: Student
+        \end{itemize}
+        \item \textbf{200} \\
+        \begin{itemize}
+            \item profile: Educator
+        \end{itemize}
+        \item \textbf{400} \\
+        \begin{itemize}
+            \item message: "Something went wrong"
+        \end{itemize}
+    \end{itemize}
+\end{enumerate}
+\newpage
 \subsection{Selected Architectural Styles and Patterns}
+\subsubsection{3-Tier Architecture}
+The 3-Tier Architecture is a widely-used design pattern in the development of web-based applications. It divides the application architecture into three distinct layers, each with a specific function, promoting a modular and scalable approach. The three layers are:
+
+Presentation Layer (Client Tier): This is the user interface of the application. It's responsible for displaying user interface elements and processing user input. It communicates with the Business Logic Layer for data processing and operations.
+
+Business Logic Layer (Application Tier): This layer is the core of the application, handling the business logic. It processes user requests, performs calculations, and makes logical decisions. It communicates between the Presentation Layer and the Data Layer, acting as a mediator for data retrieval and storage.
+
+Data Layer (Data Tier): This layer is responsible for managing the database. It stores, retrieves, and updates data in a structured format. This layer ensures data integrity and security.
+
+Benefits of 3-Tier Architecture:
+
+Modularity: Each layer can be developed and maintained independently. This separation of concerns makes the system more manageable and organized.
+
+Scalability: Each layer can be scaled independently based on demand. For example, you can increase the capacity of the data layer without altering the application or presentation layers.
+
+Flexibility and Reusability: Changes in one layer generally do not affect the other layers. For example, the UI can be redesigned without altering the business logic. Similarly, the business logic can be modified without impacting the database structure.
+
+Improved Security: The separation allows for better security measures. For example, the data layer can be secured independently of the other layers, minimizing the risk of data breaches.
+
+Ease of Maintenance: Individual layers can be updated or repaired without affecting the entire system.
+
+Possible Trade-offs:
+
+Complexity: The architecture can be more complex to design and implement compared to simpler architectures like a monolithic design. This can lead to higher initial development costs and longer development time.
+
+Performance Overhead: The inter-layer communication can introduce latency. For high-performance applications, this might be a limiting factor.
+
+Deployment Complexity: Deploying a 3-tier application can be more complex than deploying a single-tier application, as it may involve setting up and managing multiple servers and environments.
+
+Skill Requirements: The need for expertise in multiple technologies (front-end, back-end, database management) can be higher than in more unified architectures.
+
+Compared to Other Architectures:
+
+Vs. Monolithic Architecture: A monolithic architecture combines all three tiers into a single application. It is simpler to deploy and manage but can become unwieldy as the application grows, and it lacks the modularity and scalability of 3-tier architecture.
+
+Vs. Microservices Architecture: Microservices architecture breaks down an application into small, independently deployable services. While it offers high scalability and modularity, it is more complex in terms of inter-service communication and managing multiple small components.
+
+In summary, the 3-tier architecture offers a balanced approach between modularity, scalability, and manageability. It is well-suited for applications where these aspects are prioritized over the simplicity of deployment and initial development ease.
+
+
+\subsubsection{Layered Architecture}
+From deployment perspective we have designed Application Layer as a single component, however, from software design perspective it is layered and contains more layers. The application server is divided into Endpoints/Routers, Services (Main Business Logic), and Repositories (Data Access Layer), represents a layered architecture pattern, often used in modern web applications for clear separation of concerns. \\
+\begin{enumerate}
+\item \textbf{Endpoints/Routers:} This layer handles HTTP requests from clients. It's responsible for receiving requests, interpreting them, and directing them to the appropriate service layer for processing. It doesn't contain business logic or data access code; its sole purpose is to route requests to the correct parts of the application.
+
+\item \textbf{Services (Main Business Logic):}This is the heart of your application. The service layer contains the core business logic. It processes requests forwarded from the endpoints/routers, applies business rules, and performs operations based on these rules. This layer doesn't directly interact with the database; instead, it communicates with the repository layer to access and manipulate data.
+
+\item \textbf{Repositories (Data Access Layer): }The repository layer abstracts the data access logic from the service layer. It provides a collection of methods for accessing and manipulating data in your database or other storage mechanisms. The repository layer's main goal is to isolate the data access logic, making the service layer agnostic of the underlying data source and storage details.
+\end{enumerate}
+
+\textbf{Characteristics of This Architecture:}
+\begin{enumerate}
+\item Separation of Concerns: Each layer has a distinct responsibility. Routers handle HTTP routing, services handle business logic, and repositories manage data access. This separation makes the application more maintainable and scalable.
+
+\item Reusability: Each layer can be reused independently. For example, the same service layer can be used with different endpoints, and repositories can be reused across different services.
+
+\item Testability: This architecture makes it easier to test each layer independently. For instance, you can mock the repository layer when testing services.
+
+\item Flexibility: Changing one layer has minimal impact on the other layers. For example, you can change the data access logic without affecting the business logic.
+
+\item Scalability: Each layer can be scaled independently based on the application's needs.
+\end{enumerate}
+
+This structure aligns with the Layered Architecture pattern, also known as the n-tier architecture pattern. In web applications, it's common to have a multi-layered architecture like this, which helps in organizing code, improving maintainability, and ensuring the application can grow and evolve over time without becoming too complex or unwieldy.
+
+In summary, this application architecture, with clear divisions between endpoints/routers, services, and repositories, is a well-organized example of a layered architecture. This approach is widely adopted in the development of scalable, maintainable, and testable web applications.
+
+\subsubsection{Facade}
+\textbf{Definition:} The Facade pattern provides a unified interface to a set of interfaces in a subsystem. It defines a higher-level interface that makes the subsystem easier to use.
+
+\textbf{Purpose:} Facade is typically used to simplify a complex subsystem or to provide a single entry point to a level of functionality. It doesn't encapsulate the subsystem but provides a simplified interface to it.
+
+When we consider the components in our system such as  TournamentManager or BattleManager,this pattern can help us to provide simple methods like GetBattles() or GetTournaments() without going in underlying logic in the application server. Facade simplifies the usage of the Tournament or Battle in this example.
+
+\subsubsection{Mediators}
+The Mediator pattern is a behavioral design pattern in software engineering, used to reduce complex or tight coupling between components or classes. It promotes loose coupling by encapsulating the way different sets of objects interact and communicate with each other. By introducing a mediator object, all communication between different components is centralized within the mediator, instead of being spread across multiple components.
+\\
+When a Component needs to communicate with another, it sends a message to the Mediator instead of sending it directly to the other Component.
+The Mediator receives the message and decides how to pass these messages to the appropriate Component or Components.
+The Mediator might also process or transform the data before forwarding it.
+\begin{itemize}
+    \item \textbf{Notification Manager:} Notification Manager behaves as Mediator between internal logic of application and Notification Services used to send notification via email or in-app notification. It help us to sustain a flexibility because it is easy to adopt Notification Manager when Notification Service is changed. Otherwise, we have to change every component when solutions used for notification is changed. \textbf{Email Manager} and \textbf{In-App Notification Manager} also help to link this internal logic to external APIs.
+    \item \textbf{Static Analysis Manager:} Static Analysis Manager also acts as a Mediator operating between application server and Static Analysis Tool. Without changing internal components of system, we can adopt to changes of external Static Analysis Tool by just modifying the Static Analysis Manager.
+    \item \textbf{Github Manager:} Github Managers is other component acts as a Mediator between internal components and Github as an external service. It is responsible to apply logic related to Github. The changes in the Github environment and Github API do not affect the system thanks to this component. In other words, Github Manager can be easily modified according to changes related to Github without changing other components in the application.
+\end{itemize}
 
 
 
 
 \subsection{Other Design Decisions}
+In this section we explained further Design Decisions.
+\subsubsection{Load Balancing, Firewall and Replication}
+As we mentioned before we use Load Balancer to satisfy constraints related to \textbf{Availability}. We are aiming to less downtime by distributing incoming traffic to the running instances. Moreover, using Firewall and HTTPS for all data transactions, our \textbf{Security} constraints mentioned in the RASD will be held. Finally, sustaining Database Replication improves the \textbf{Sustainability}
+by backup options and recovery plans. 
+
+\subsubsection{Sandbox Paradigm}
+In CodeKataBattle, it is needed to run submitted code via some test cases. To do so, we decided to Sandboxing. The Sandboxing in software engineering refers to a secure, controlled environment where programs can be executed without affecting the host system. This environment strictly controls the resources and permissions available to the program, ensuring that any code run within the sandbox cannot interfere with the system outside of it. This concept is crucial in scenarios where untrusted or untested code needs to be executed safely.
+\begin{itemize}
+\item Secure Execution of Untrusted Code: When users submit solutions to coding problems on CodeKataBattle, their code is executed on the server. Since this code comes from external, untrusted sources, running it directly on the server poses significant security risks.
+\item Isolation: To mitigate these risks, CodeKataBattle executes user-submitted code within a sandbox. This sandbox environment isolates the code, ensuring that it can't access or manipulate the server's system resources, file system, or network in unauthorized ways.
+\item Resource Limitation: The sandbox also limits the amount of CPU, memory, and other resources the code can use. This prevents issues like infinite loops or excessively resource-intensive operations from affecting the server's stability.
+\item Automated Evaluation: Sandboxes facilitate automated testing of submitted code against predefined test cases. This automation is essential for efficiently handling a large number of submissions and providing immediate feedback.
+\item Consistency in Testing: By running each submission in a standardized environment, you ensure that all code is tested under the same conditions. This is crucial for fairness in judging, as it eliminates variances that could arise from different execution environments.
+\end{itemize}
+
+In summary, sandboxing on a coding challenge platform ensures security, fairness, stability, and scalability. It protects the platform's integrity and the data of its users while providing a fair and consistent environment for evaluating code submissions.
+
+\newpage
+\textbf{Submission Scoring  Algorithm:}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{Images/DD-Sandbox.drawio.png}
+    \caption{Submission Scoring}
+\end{figure}
+
 
 
