@@ -108,9 +108,7 @@ This Interface contains endpoints related to profiles of users. Endpoints explai
 \begin{itemize}
 \item GetMyProfile() -> HTTP Response
 \item GetProfile(userId: int) -> HTTP Response
-\item GetSettings() -> HTTP Response
-\item EditSettings(email: String, password: String, newPassword: String, name: String, surname: String, institutionInfo: List<Institution>) -> HTTP Response
-\item GetProfileStats() -> HTTP Response
+\item EditProfile(email: String, password: String, newPassword: String, name: String, surname: String, institutionInfo: List<Institution>) -> HTTP Response
 \item GetEducators()-> HTTP Response
 \end{itemize}
 \subsubsection{ITournamentManager}
@@ -119,7 +117,7 @@ This Interface contains endpoints related to Tournament. Endpoints explained in 
 \item GetTournaments(registrationStatus: RegistrationStatus, availability: Availability, sortOption: TournamentSortOption, sortDirection: SortDirection) -> HTTP Response
 \item GetTournamentInfo(tournamentId: int) -> HTTP Status
 \item RegisterTournament(tournamentId: int) -> HTTP Status
-\item GetTournamentBattles(tournamentId, minGroupSize: int, maxGroupSize: int, startDate: DateTime, endDate: DateTime, registrationStatus: String, institution: Institution, languages: List<Language>, educatorIds: List<int>, searchText: String) -> HTTP Response
+\item GetTournamentBattles(tournamentId: int, minGroupSize: int, maxGroupSize: int, startDate: DateTime, endDate: DateTime, registrationStatus: RegistrationStatus, institution: Institution, languages: List<Language>, educatorIds: List<int>, searchText: String) -> HTTP Response
 \item GetTournamentLeaderboard(tournamentId: int) -> HTTP Response
 \item ExportTournamentLeaderboard(tournamentId: int) -> HTTP Response
 \item CreateTournament(title: String, description: String, registrationDeadline: DateTime, invitedEducatorIds: List<int>) -> HTTP Response
@@ -131,15 +129,15 @@ This Interface contains endpoints related to Tournament. Endpoints explained in 
 This Interface contains endpoints related to Battle. Endpoints explained in a detailed way at the end of the section. Just signatures are available here.
 \begin{itemize}
 \item GetBattleInfo(battleId: int) -> HTTP Response
-\item GetBattleLeaderboard(battleId: int) -> HTTP Response
+\item GetBattleRankings(battleId: int) -> HTTP Response
 \item RegisterBattle(battleId: int, teamName: String, teamInvitations: List<int>) -> HTTP Response 
 \item AnswerBattleInvitation(teamId: int, isAccepted: boolean, studentId: int) -> HTTP Response
-\item FinalizeTeam(battleId: int) -> HTTP Response
-\item DeclineTeam(battleId: int) -> HTTP Response
+\item FinalizeTeam(teamId: int) -> HTTP Response
+\item DeclineTeam(teamId: int) -> HTTP Response
 \item GetTeam(teamId: int) -> HTTP Response
 \item GetTeamScore(teamId: int) -> HTTP Response
 \item AddManualEvaluation(teamId: int, score: float) -> HTTP Response
-\item CreateBattle(title: String, description: String, registrationDeadline: DateTime, submissionDeadline: DateTime, languages: List<Language>, testCases: Map<String, List<File>>, buildScripts: Map<String, File>, minGroupSize: Int, maxGroupSize: int, percentages: Map<String, int>, isManualScoreEnabled: boolean) -> HTTP Response 
+\item CreateBattle(title: String, description: String, registrationDeadline: DateTime, submissionDeadline: DateTime, languages: List<Language>, testCases: Map<String, List<File> >, buildScripts: Map<String, File>, minGroupSize: int, maxGroupSize: int, percentages: Map<String, int>, isManualScoreEnabled: boolean) -> HTTP Response 
 \item ExportBattleLeaderboard(battleId: int) -> HTTP Response
 \end{itemize}
 
@@ -166,7 +164,7 @@ These interfaces are mainly responsible for the query management and communicati
         \item CreateTournament(attributes: TournamentCreateSchema) -> int (Tournament Id)
         \item EndTournament(tournamentId: int) -> boolean
         \item AddEducator(tournamentId: int, educatorId: int) -> boolean
-        \item AddStudent(tournamentId: Int, studentId: int) -> boolean
+        \item AddStudent(tournamentId: int, studentId: int) -> boolean
     \end{itemize}  
     \item \textbf{Battle Model}
     \begin{itemize}
@@ -209,7 +207,7 @@ These interfaces are mainly responsible for the query management and communicati
 \end{itemize}
 \subsubsection{ISubmissionManager}
     \item GetSubmission(teamId: int) -> Submission
-    \item GetBattleScores(battle: Battle) -> List<Map<Team, int>>
+    \item GetBattleScores(battle: Battle) -> List<Map<Team, int> >
 \subsubsection{ISubmissionListener}
     \item Submission(teamId: int, repoUrl: string) -> HTTP Status \\
     This is an endpoint responsible to be triggered by Github Actions Workflow created by teams. When they made a new commit, they  send a request to this endpoint.
@@ -217,7 +215,7 @@ These interfaces are mainly responsible for the query management and communicati
     \item PullSubmission(repoUrl: String, battleId: int, teamId: int) -> String \\
     This method provides the url of a folder in the file storage system. The pulled repository content is stored in this folder with a naming using battleId and teamId. The component using this method is then responsible for other actions. 
 \subsubsection{IScoringHandler}
-   \item CalculateTestCaseScore(code: File, testCaseFiles: Map<Language, List<File>>, buildScripts) -> float
+   \item CalculateTestCaseScore(code: File, testCaseFiles: Map<Language, List<File> >, buildScripts) -> float
    \item CalculateStaticAnalysisScore(code: File, qualityAspects: List<QualityAspect>) -> float
    \item CalculateTimelinessScore(submissionDate: DateTime, battleStartDate: DateTime) -> float
    \item \textbf{ICodeExecutor}
@@ -352,6 +350,456 @@ This is the external service to store and manager files stored in the applicatio
         \item \textbf{200} \\
         \begin{itemize}
             \item profile: Educator
+        \end{itemize}
+        \item \textbf{400} \\
+        \begin{itemize}
+            \item message: "Something went wrong"
+        \end{itemize}
+    \end{itemize}
+    \item \textbf{Endpoint Profile/EditProfile} \\
+    \textbf{Method:} POST \\
+    Header:\\
+    \begin{itemize}
+        \item token: String
+    \end{itemize}
+    Request Body: \\
+    \begin{itemize}
+        \item email: String
+        \item password: String
+        \item newPassword: String
+        \item name: String
+        \item surname: String
+        \item institutionInfo: List<Institution>
+    \end{itemize}
+    Response:\\
+    \begin{itemize}
+        \item \textbf{200} \\
+        \begin{itemize}
+            \item profile: Student
+        \end{itemize}
+        \item \textbf{200} \\
+        \begin{itemize}
+            \item profile: Educator
+        \end{itemize}
+        \item \textbf{400} \\
+        \begin{itemize}
+            \item message: "Email exists"
+        \end{itemize}
+        \item \textbf{400} \\
+        \begin{itemize}
+            \item message: "Password is wrong"
+        \end{itemize}
+    \end{itemize}
+    \item \textbf{Endpoint Profile/GetEducators} \\
+    \textbf{Method:} GET \\
+    Header:\\
+    \begin{itemize}
+        \item token: String
+    \end{itemize}
+    Response:\\
+    \begin{itemize}
+        \item \textbf{200} \\
+        \begin{itemize}
+            \item educators: List<Educator>
+        \end{itemize}
+        \item \textbf{400} \\
+        \begin{itemize}
+            \item message: "Something went wrong"
+        \end{itemize}
+    \end{itemize}
+    \item \textbf{Endpoint Tournament/GetTournaments} \\
+    \textbf{Method:} GET \\
+    Header:\\
+    \begin{itemize}
+        \item token: String
+    \end{itemize}
+    Request Parameters: \\
+    \begin{itemize}
+        \item registrationStatus: RegistrationStatus
+        \item availability: Availability
+        \item sortOption: TournamentSortOption
+        \item sortDirection: SortDirection
+    \end{itemize}
+    Response:\\
+    \begin{itemize}
+        \item \textbf{200} \\
+        \begin{itemize}
+            \item tournaments: List<Tournament>
+        \end{itemize}
+        \item \textbf{400} \\
+        \begin{itemize}
+            \item message: "Something went wrong"
+        \end{itemize}
+    \end{itemize}
+    \item \textbf{Endpoint Tournament/GetTournamentInfo/:tournamentId} \\
+    \textbf{Method:} GET \\
+    Header:\\
+    \begin{itemize}
+        \item token: String
+    \end{itemize}
+    Response:\\
+    \begin{itemize}
+        \item \textbf{200} \\
+        \begin{itemize}
+            \item tournament: Tournament
+        \end{itemize}
+        \item \textbf{400} \\
+        \begin{itemize}
+            \item message: "Something went wrong"
+        \end{itemize}
+    \end{itemize}
+    \item \textbf{Endpoint Tournament/RegisterTournament/:tournamentId} \\
+    \textbf{Method:} POST \\
+    Header:\\
+    \begin{itemize}
+        \item token: String
+    \end{itemize}
+    Response:\\
+    \begin{itemize}
+        \item \textbf{200} \\
+        \begin{itemize}
+            \item tournamentId: int
+        \end{itemize}
+        \item \textbf{400} \\
+        \begin{itemize}
+            \item message: "Can not register Tournament"
+        \end{itemize}
+    \end{itemize}
+    \item \textbf{Endpoint Tournament/GetTournamentBattles/:tournamentId} \\
+    \textbf{Method:} GET \\
+    Header:\\
+    \begin{itemize}
+        \item token: String
+    \end{itemize}
+    Request Parameters:\\
+    \begin{itemize}
+        \item minGroupSize: int
+        \item maxGroupSize: int
+        \item startDate: DateTime
+        \item endDate: DateTime
+        \item registrationStatus: RegistrationStatus
+        \item institution: Instituion
+        \item langauges: List<Language>
+        \item educatorIds: List<int>
+        \item searchText: String
+    \end{itemize}
+    Response:\\
+    \begin{itemize}
+        \item \textbf{200} \\
+        \begin{itemize}
+            \item battles: List<Battle>
+        \end{itemize}
+        \item \textbf{400} \\
+        \begin{itemize}
+            \item message: "Something went wrong"
+        \end{itemize}
+    \end{itemize}
+    \item \textbf{Endpoint Tournament/GetTournamentLeaderboard/:tournamentId} \\
+    \textbf{Method:} GET \\
+    Header:\\
+    \begin{itemize}
+        \item token: String
+    \end{itemize}
+    Response:\\
+    \begin{itemize}
+        \item \textbf{200} \\
+        \begin{itemize}
+            \item leaderboard: List<Map<String, int> >
+        \end{itemize}
+        \item \textbf{400} \\
+        \begin{itemize}
+            \item message: "Something went wrong"
+        \end{itemize}
+    \end{itemize}
+    \item \textbf{Endpoint Tournament/ExportTournamentRankings/:tournamentId} \\
+    \textbf{Method:} GET \\
+    Header:\\
+    \begin{itemize}
+        \item token: String
+    \end{itemize}
+    Response:\\
+    \begin{itemize}
+        \item \textbf{200} \\
+        \begin{itemize}
+            \item leaderboard: StreamResponse(File)
+        \end{itemize}
+        \item \textbf{400} \\
+        \begin{itemize}
+            \item message: "Something went wrong"
+        \end{itemize}
+    \end{itemize}
+    \item \textbf{Endpoint Tournament/CreateTournament} \\
+    \textbf{Method:} POST \\
+    Header:\\
+    \begin{itemize}
+        \item token: String
+    \end{itemize}
+    Request Body:\\
+    \begin{itemize}
+        \item title: String
+        \item description: String
+        \item registrationDeadline: DateTime
+        \item invitedEducatorIds: List<int>
+    \end{itemize}
+    Response:\\
+    \begin{itemize}
+        \item \textbf{200} \\
+        \begin{itemize}
+            \item tournament: Tournament
+        \end{itemize}
+        \item \textbf{400} \\
+        \begin{itemize}
+            \item message: "Tournament can not be created"
+        \end{itemize}
+    \end{itemize}
+    \item \textbf{Endpoint Tournament/AnswerTournament/:tournamentId} \\
+    \textbf{Method:} POST \\
+    Header:\\
+    \begin{itemize}
+        \item token: String
+    \end{itemize}
+    Request Body:\\
+    \begin{itemize}
+        \item isAccepted: boolean
+        \item educatorId: int
+    \end{itemize}
+    Response:\\
+    \begin{itemize}
+        \item \textbf{200} \\
+        \begin{itemize}
+            \item message: "Tournament invitation is answered"
+        \end{itemize}
+        \item \textbf{400} \\
+        \begin{itemize}
+            \item message: "Something went wrong"
+        \end{itemize}
+    \end{itemize}
+    \item \textbf{Endpoint Tournament/EndTournament/:tournamentId} \\
+    \textbf{Method:} POST \\
+    Header:\\
+    \begin{itemize}
+        \item token: String
+    \end{itemize}
+    Response:\\
+    \begin{itemize}
+        \item \textbf{200} \\
+        \begin{itemize}
+            \item message: "Tournament is ended"
+        \end{itemize}
+        \item \textbf{400} \\
+        \begin{itemize}
+            \item message: "Something went wrong"
+        \end{itemize}
+    \end{itemize}
+    \item \textbf{Endpoint Battle/GetBattleInfo/:battleId} \\
+    \textbf{Method:} GET \\
+    Header:\\
+    \begin{itemize}
+        \item token: String
+    \end{itemize}
+    Response:\\
+    \begin{itemize}
+        \item \textbf{200} \\
+        \begin{itemize}
+            \item battle: Battle
+        \end{itemize}
+        \item \textbf{400} \\
+        \begin{itemize}
+            \item message: "Something went wrong"
+        \end{itemize}
+    \end{itemize}
+    \item \textbf{Endpoint Battle/GetBattleRankings/:battleId} \\
+    \textbf{Method:} GET \\
+    Header:\\
+    \begin{itemize}
+        \item token: String
+    \end{itemize}
+    Response:\\
+    \begin{itemize}
+        \item \textbf{200} \\
+        \begin{itemize}
+            \item rankings: List<Map<String, int> >
+        \end{itemize}
+        \item \textbf{400} \\
+        \begin{itemize}
+            \item message: "Something went wrong"
+        \end{itemize}
+    \end{itemize}
+    \item \textbf{Endpoint Battle/RegisterBattle/:battleId} \\
+    \textbf{Method:} POST \\
+    Header:\\
+    \begin{itemize}
+        \item token: String
+    \end{itemize}
+    Request Body:\\
+    \begin{itemize}
+        \item teamName: String
+        \item teamInvitations: List<int>
+    \end{itemize}
+    Response:\\
+    \begin{itemize}
+        \item \textbf{200} \\
+        \begin{itemize}
+            \item message: "Registered successfully"
+        \end{itemize}
+        \item \textbf{400} \\
+        \begin{itemize}
+            \item message: "Something went wrong"
+        \end{itemize}
+    \end{itemize}
+    \item \textbf{Endpoint Battle/AnswerBattleInvitation/:teamId} \\
+    \textbf{Method:} POST \\
+    Header:\\
+    \begin{itemize}
+        \item token: String
+    \end{itemize}
+    Request Body:\\
+    \begin{itemize}
+        \item isAccepted: boolean
+        \item studentId: int
+    \end{itemize}
+    Response:\\
+    \begin{itemize}
+        \item \textbf{200} \\
+        \begin{itemize}
+            \item message: "Battle invitation is answered"
+        \end{itemize}
+        \item \textbf{400} \\
+        \begin{itemize}
+            \item message: "Something went wrong"
+        \end{itemize}
+    \end{itemize}
+    \item \textbf{Endpoint Battle/FinalizeTeam/:teamId} \\
+    \textbf{Method:} POST \\
+    Header:\\
+    \begin{itemize}
+        \item token: String
+    \end{itemize}
+    Response:\\
+    \begin{itemize}
+        \item \textbf{200} \\
+        \begin{itemize}
+            \item message: "Team is finalized"
+        \end{itemize}
+        \item \textbf{400} \\
+        \begin{itemize}
+            \item message: "Something went wrong"
+        \end{itemize}
+    \end{itemize}
+    \item \textbf{Endpoint Battle/DeclineTeam/:teamId} \\
+    \textbf{Method:} POST \\
+    Header:\\
+    \begin{itemize}
+        \item token: String
+    \end{itemize}
+    Response:\\
+    \begin{itemize}
+        \item \textbf{200} \\
+        \begin{itemize}
+            \item message: "Team is declined"
+        \end{itemize}
+        \item \textbf{400} \\
+        \begin{itemize}
+            \item message: "Something went wrong"
+        \end{itemize}
+    \end{itemize}
+    \item \textbf{Endpoint Battle/GetTeam/:teamId} \\
+    \textbf{Method:} GET \\
+    Header:\\
+    \begin{itemize}
+        \item token: String
+    \end{itemize}
+    Response:\\
+    \begin{itemize}
+        \item \textbf{200} \\
+        \begin{itemize}
+            \item team: Team
+        \end{itemize}
+        \item \textbf{400} \\
+        \begin{itemize}
+            \item message: "Something went wrong"
+        \end{itemize}
+    \end{itemize}
+    \item \textbf{Endpoint Battle/GetTeamScore/:teamId} \\
+    \textbf{Method:} GET \\
+    Header:\\
+    \begin{itemize}
+        \item token: String
+    \end{itemize}
+    Response:\\
+    \begin{itemize}
+        \item \textbf{200} \\
+        \begin{itemize}
+            \item score: Map<ScoringCriteria, int>
+        \end{itemize}
+        \item \textbf{400} \\
+        \begin{itemize}
+            \item message: "Something went wrong"
+        \end{itemize}
+    \end{itemize}
+    \item \textbf{Endpoint Battle/AddManualEveluation/:teamId} \\
+    \textbf{Method:} POST \\
+    Header:\\
+    \begin{itemize}
+        \item token: String
+    \end{itemize}
+    Request Body:\\
+    \begin{itemize}
+        \item score: float
+    \end{itemize}
+    Response:\\
+    \begin{itemize}
+        \item \textbf{200} \\
+        \begin{itemize}
+            \item message: "Manual evaluation is done successfully"
+        \end{itemize}
+        \item \textbf{400} \\
+        \begin{itemize}
+            \item message: "Something went wrong"
+        \end{itemize}
+    \end{itemize}
+     \item \textbf{Endpoint Battle/CreateBattle} \\
+    \textbf{Method:} POST \\
+    Header:\\
+    \begin{itemize}
+        \item token: String
+    \end{itemize}
+    Request Body:\\
+    \begin{itemize}
+        \item title: String
+        \item description: String
+        \item registrationDeadline: DateTime
+        \item submissionDeadline: DateTime
+        \item languages: List<Language>
+        \item testCases: Map<String, List<File> >
+        \item buildScripts: Map<String, File>
+        \item minGroupSize: int
+        \item maxGroupSize: int
+        \item percentages: Map<String, int>
+        \item isManualScoreEnabled: boolean
+    \end{itemize}
+    Response:\\
+    \begin{itemize}
+        \item \textbf{200} \\
+        \begin{itemize}
+            \item battle: Battle
+        \end{itemize}
+        \item \textbf{400} \\
+        \begin{itemize}
+            \item message: "Battle can not be created"
+        \end{itemize}
+    \end{itemize}
+    \item \textbf{Endpoint Battle/ExportBattleRankings/:battleId} \\
+    \textbf{Method:} GET \\
+    Header:\\
+    \begin{itemize}
+        \item token: String
+    \end{itemize}
+    Response:\\
+    \begin{itemize}
+        \item \textbf{200} \\
+        \begin{itemize}
+            \item rankings: StreamResponse(File)
         \end{itemize}
         \item \textbf{400} \\
         \begin{itemize}
