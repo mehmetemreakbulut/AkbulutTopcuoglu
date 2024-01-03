@@ -1,0 +1,613 @@
+In this section, we are going to illustrate the mapping of the components introduced in this document on the functional requirements introduced in the RASD. Some closely related requirements are explained together in the tables below.
+
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{lp{12cm}}
+    \hline
+    \textbf{R1} & The system shall allow unregistered users to register by providing a unique email, a password, a name, a surname, and institution information. \\
+    \hline
+    \hline
+    \textbf{Authentication Manager} & Gets the client request, and directs it to User Repository. \\
+    \textbf{User Repository} &  Creates the user.\\
+    \textbf{DBMS} & Saves the user. \\
+    \textbf{Notification Manager} &  Triggers Email Manager.\\
+    \textbf{Email Manager} &  Sends verification email.\\
+    \hline
+  \end{tabular}
+  \captionof{table}{Mapping on $R_{1}$}
+\end{table}
+
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{lp{12cm}}
+    \hline
+    \textbf{R2} & The system shall allow users who received a verification email to verify their emails. \\
+    \hline
+    \hline
+    \textbf{Authentication Manager} & Gets the client request, and directs it to User Repository. \\
+    \textbf{User Repository} &  Verifies the user.\\
+    \textbf{DBMS} & Updates the user. \\
+    \hline
+  \end{tabular}
+  \captionof{table}{Mapping on $R_{2}$}
+\end{table}
+
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{lp{12cm}}
+    \hline
+    \textbf{R3} & The system shall allow registered users to log in by providing an email, and a password. \\
+    \hline
+    \hline
+    \textbf{Authentication Manager} & Gets the client request, and directs it to User Repository. \\
+    \textbf{User Repository} &  Validates the user credentials.\\
+    \textbf{DBMS} & Returns user info. \\
+    \hline
+  \end{tabular}
+  \captionof{table}{Mapping on $R_{3}$}
+\end{table}
+
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{lp{12cm}}
+    \hline
+    \textbf{R4} & The system shall allow authenticated users to view all tournaments. \\
+    \hline
+    \hline
+    \textbf{Tournament Manager} & Gets the client request, and directs it to Tournament Repository. \\
+    \textbf{Tournament Repository} &  Gets all tournaments.\\
+    \textbf{DBMS} & Returns all tournaments. \\
+    \hline
+  \end{tabular}
+  \captionof{table}{Mapping on $R_{4}$}
+\end{table}
+
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{lp{12cm}}
+    \hline
+    \textbf{R5} & The system shall allow authenticated users to filter the tournaments by the registration status and availability.  \\
+    \hline
+    \hline
+    \textbf{Tournament Manager} & Gets the client request, and directs it to Tournament Repository. \\
+    \textbf{Tournament Repository} &  Gets filtered tournaments using a query.\\
+    \textbf{DBMS} & Returns queried tournaments. \\
+    \hline
+  \end{tabular}
+  \captionof{table}{Mapping on $R_{5}$}
+\end{table}
+
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{lp{12cm}}
+    \hline
+    \textbf{R6} & The system shall allow authenticated users to sort the tournaments by number of participants and number of battles in it. \\
+    \hline
+    \hline
+    \textbf{Tournament Manager} & Gets the client request, and directs it to Tournament Repository. \\
+    \textbf{Tournament Repository} &  Gets sorted tournaments using a query.\\
+    \textbf{DBMS} & Returns queried tournaments. \\
+    \hline
+  \end{tabular}
+  \captionof{table}{Mapping on $R_{6}$}
+\end{table}
+
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{lp{12cm}}
+    \hline
+    \textbf{R7} & The system shall allow authenticated users to view a specific tournament. \\
+    \hline
+    \hline
+    \textbf{Tournament Manager} & Gets the client request, and directs it to Tournament Repository. \\
+    \textbf{Tournament Repository} &  Gets the tournament by its id using a query.\\
+    \textbf{DBMS} & Returns queried tournament. \\
+    \hline
+  \end{tabular}
+  \captionof{table}{Mapping on $R_{7}$}
+\end{table}
+
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{lp{12cm}}
+    \hline
+    \textbf{R8} & The system shall allow authenticated users to view the leaderboard of the tournament. \\
+    \hline
+    \hline
+    \textbf{Tournament Manager} & Gets the client request, and directs it to Tournament Repository. \\
+    \textbf{Tournament Repository} &  Gets the tournament scores of subscribed users and then sorts them.\\
+    \textbf{DBMS} & Returns tournament scores. \\
+    \hline
+  \end{tabular}
+  \captionof{table}{Mapping on $R_{8}$}
+\end{table}
+
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{lp{12cm}}
+    \hline
+    \textbf{R9} & The system shall allow authenticated users to view all battles in a tournament. \\
+    \hline
+    \hline
+    \textbf{Tournament Manager} & Gets the client request, and directs it to Tournament Repository. \\
+    \textbf{Tournament Repository} &  Gets the list of battles of the tournament.\\
+    \textbf{DBMS} & Returns the list of battles. \\
+    \hline
+  \end{tabular}
+  \captionof{table}{Mapping on $R_{9}$}
+\end{table}
+
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{lp{12cm}}
+    \hline
+    \textbf{R10} & The system shall allow authenticated users to filter the battles by group size, start date - end date, registration status, institution of the battle creator, allowed programming languages, and the battle creator. \\
+    \hline
+    \hline
+    \textbf{Battle Manager} & Gets the client request, and directs it to Battle Repository. \\
+    \textbf{Battle Repository} &  Gets filtered battles using a query.\\
+    \textbf{DBMS} & Returns queried battles. \\
+    \hline
+  \end{tabular}
+  \captionof{table}{Mapping on $R_{10}$}
+\end{table}
+
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{lp{12cm}}
+    \hline
+    \textbf{R11} & The system shall allow authenticated users to search battles by text search. \\
+    \hline
+    \hline
+    \textbf{Battle Manager} & Gets the client request, and directs it to Battle Repository. \\
+    \textbf{Battle Repository} &  Gets searched battles using a query.\\
+    \textbf{DBMS} & Returns queried battles. \\
+    \hline
+  \end{tabular}
+  \captionof{table}{Mapping on $R_{11}$}
+\end{table}
+
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{lp{12cm}}
+    \hline
+    \textbf{R12} & The system shall allow authenticated users to view a specific battle and its instructions. \\
+    \hline
+    \hline
+    \textbf{Battle Manager} & Gets the client request, and directs it to Battle Repository. \\
+    \textbf{Battle Repository} &   Gets the battle by its id using a query.\\
+    \textbf{DBMS} & Returns queried battle. \\
+    \hline
+  \end{tabular}
+  \captionof{table}{Mapping on $R_{12}$}
+\end{table}
+
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{lp{12cm}}
+    \hline
+    \textbf{R13} & The system shall allow authenticated users to view the rankings of the battle. \\
+    \hline
+    \hline
+    \textbf{Battle Manager} & Gets the client request, and directs it to Battle Repository. \\
+    \textbf{Battle Repository} & Gets the battle scores of participating teams and then sorts them.\\
+    \textbf{DBMS} & Returns battle scores. \\
+    \hline
+  \end{tabular}
+  \captionof{table}{Mapping on $R_{13}$}
+\end{table}
+
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{lp{12cm}}
+    \hline
+    \textbf{R14} & The system shall allow authenticated users to search tournaments with text search by educators, by titles, or by institutions.\\
+    \hline
+    \hline
+    \textbf{Tournament Manager} & Gets the client request, and directs it to Tournament Repository. \\
+    \textbf{Tournament Repository} & Gets searched tournaments using a query.\\
+    \textbf{DBMS} & Returns queried tournaments. \\
+    \hline
+  \end{tabular}
+  \captionof{table}{Mapping on $R_{14}$}
+\end{table}
+
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{lp{12cm}}
+    \hline
+    \textbf{R15} & The system shall allow authenticated users to manage their profiles.
+  \begin{enumerate}[(a)]
+      \item The system shall allow authenticated users to view their profiles.
+      
+  \item The system shall allow authenticated users to delete their profiles unless they do not have an ongoing tournament created by themselves.
+
+    \item The system shall allow authenticated users to view their settings.
+  \item The system shall allow authenticated users to edit their settings by name, surname, password, and institution information.
+  \item The system shall oblige authenticated users to enter their old password during settings editing.
+  
+      
+  \end{enumerate}
+\\
+    \hline
+    \hline
+    \textbf{Profile Manager} & Gets the client request, and directs it to User Repository. \\
+    \textbf{User Repository} & \begin{enumerate}[(a)]
+      \item Gets the user profile.
+      
+  \item Deletes the user.
+    \item Gets the user settings.
+  \item Edits the user settings.
+  \item Edits the user settings.
+  
+      
+  \end{enumerate}
+    
+    \\
+    \textbf{DBMS} & \begin{enumerate}[(a)]
+      \item Returns user profile.
+      
+  \item Removes user.
+
+    \item Returns user settings.
+  \item Updates user settings.
+\item Updates user settings.
+  
+      
+  \end{enumerate}
+    
+    
+    
+    \\
+    \hline
+  \end{tabular}
+  \captionof{table}{Mapping on $R_{15}$}
+\end{table}
+
+
+
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{lp{12cm}}
+    \hline
+    \textbf{R16} & The system shall allow educators to create tournaments by providing a title, a description, and a registration 
+    deadline. \\
+    \textbf{R34} & The system shall trigger the email service to send a notification email for a newly created tournament for all registered users.\\
+    \hline
+    \hline
+    \textbf{Tournament Manager} & Gets the client request, and directs it to Tournament Repository. \\
+    \textbf{Tournament Repository} & Creates the tournament.\\
+    \textbf{DBMS} & Saves the tournament. \\
+    \textbf{Notification Manager} &  Triggers Email Manager.\\
+    \textbf{Email Manager} &  Sends notification email to all users.\\
+    \hline
+  \end{tabular}
+  \captionof{table}{Mapping on $R_{16}$ and $R_{34}$}
+\end{table}
+
+
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{lp{12cm}}
+    \hline
+    \textbf{R17} & The system shall allow educators to invite other educators to their tournaments during tournament creation. \\
+    \textbf{R37} & The system shall trigger the email service to send an invitation notification for the tournament to the invitee educators.\\
+    \hline
+    \hline
+    \textbf{Tournament Manager} & Gets the client request, and directs it to Tournament Repository. \\
+    \textbf{Tournament Repository} & Creates the tournament.\\
+    \textbf{DBMS} & Saves the tournament. \\
+    \textbf{Notification Manager} &  Triggers In-App Notification Manager.\\
+    \textbf{In-App Notification Manager} &  Sends invitation notification to invitee educators.\\
+    \hline
+  \end{tabular}
+  \captionof{table}{Mapping on $R_{17}$ and $R_{37}$}
+\end{table}
+
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{lp{12cm}}
+    \hline
+    \textbf{R18} & The system shall allow educators to edit the tournaments that they have created by providing a title, a description, and a registration deadline unless the registration deadline has not passed. \\
+    \hline
+    \hline
+    \textbf{Tournament Manager} & Gets the client request, and directs it to Tournament Repository. \\
+    \textbf{Tournament Repository} & Edits the tournament.\\
+    \textbf{DBMS} & Updates the tournament. \\
+    \hline
+  \end{tabular}
+  \captionof{table}{Mapping on $R_{18}$}
+\end{table}
+
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{lp{12cm}}
+    \hline
+    \textbf{R19} & The system shall allow educators to end the tournaments that they have created. \\
+    \hline
+    \hline
+    \textbf{Tournament Manager} & Gets the client request, and directs it to Tournament Repository. \\
+    \textbf{Tournament Repository} & Ends the tournament.\\
+    \textbf{DBMS} & Updates the tournament. \\
+    \hline
+  \end{tabular}
+  \captionof{table}{Mapping on $R_{19}$}
+\end{table}
+
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{lp{12cm}}
+    \hline
+    \textbf{R20} & The system shall allow educators to accept or reject the tournament invitation to create battles coming from other educators for a tournament. \\
+    \hline
+    \hline
+    \textbf{Tournament Manager} & Gets the client request, and directs it to Tournament Repository. \\
+    \textbf{Tournament Repository} & Adds the educator to the tournament contributors list.\\
+    \textbf{DBMS} & Updates the tournament. \\
+    \hline
+  \end{tabular}
+  \captionof{table}{Mapping on $R_{20}$}
+\end{table}
+
+
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{lp{12cm}}
+    \hline
+    \textbf{R21} & The system shall allow educators to create battles by providing a title, a description, a registration deadline, a submission deadline, the allowed languages, test cases, build scripts, minimum \& maximum group size, and the scoring criteria. \\
+    \hline
+    \hline
+    \textbf{Battle Manager} & Gets the client request, and directs it to Battle Repository. \\
+    \textbf{Battle Repository} & Creates the battle.\\
+    \textbf{DBMS} & Saves the battle. \\
+    \textbf{Notification Manager} &  Triggers Email Manager.\\
+    \textbf{Email Manager} &  Sends notification email to users that subscribe to the battle's tournament.\\
+    \hline
+  \end{tabular}
+  \captionof{table}{Mapping on $R_{21}$}
+\end{table}
+
+
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{lp{12cm}}
+    \hline
+    \textbf{R22} & The system shall oblige educators to upload test case file and build script for every allowed language in battle. \\
+    \hline
+    \hline
+    \textbf{Battle Manager} & Gets the client request, and uploads the battle files. \\
+    \textbf{File Manager} & Stores the battle files. \\
+    \hline
+  \end{tabular}
+  \captionof{table}{Mapping on $R_{22}$}
+\end{table}
+
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{lp{12cm}}
+    \hline
+    \textbf{R23} & The system shall allow educators to manually evaluate the submissions giving extra point between 0 and 10 after the submission deadline has passed. \\
+    \hline
+    \hline
+    \textbf{Battle Manager} & Gets the client request, and directs it to Submission Manager. \\
+    \textbf{Submission Manager} & Utilises Scoring Manager, and gives the score to the Submission Repository.\\
+    \textbf{Scoring Manager} & Enables educator to evaluate. \\
+     \textbf{Submission Repository} & Gives point to the submission.\\
+     \textbf{DBMS} & Updates the submission. \\
+    \hline
+  \end{tabular}
+  \captionof{table}{Mapping on $R_{23}$}
+\end{table}
+
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{lp{12cm}}
+    \hline
+    \textbf{R24} & The system shall allow educators to edit the battles that they have created. \\
+    \hline
+    \hline
+     \textbf{Battle Manager} & Gets the client request, and directs it to Battle Repository. \\
+    \textbf{Battle Repository} & Edits the battle.\\
+    \textbf{DBMS} & Updates the battle. \\
+    \hline
+  \end{tabular}
+  \captionof{table}{Mapping on $R_{24}$}
+\end{table}
+
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{lp{12cm}}
+    \hline
+    \textbf{R25} &  The system shall allow students to register for tournaments. \\
+    \hline
+    \hline
+     \textbf{Tournament Manager} & Gets the client request, and directs it to Tournament Repository. \\
+    \textbf{Tournament Repository} & Adds the student to the tournament subscribers.\\
+    \textbf{DBMS} & Updates the tournament. \\
+    \hline
+  \end{tabular}
+  \captionof{table}{Mapping on $R_{25}$}
+\end{table}
+
+
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{lp{12cm}}
+    \hline
+    \textbf{R26} &  The system shall allow students to register for battles in which the tournaments that they have registered for.\\
+    \textbf{R27} &  The system shall allow students to register for battles individually.\\
+    \textbf{R28} &  The system shall allow students to register for battles by a team having a team name.\\
+    \hline
+    \hline
+    \textbf{Battle Manager} & Gets the client request, and triggers Team Manager. With the response coming from the Team Manager, it utilises Battle Repository.\\
+    \textbf{Team Manager} & Creates a team. (Regardless of the number of students on the team, it is created. Individual students will be considered as a team of one in the project.)\\
+    \textbf{Team Repository} & Creates the team.\\
+    \textbf{Battle Repository} & Adds the team to the battle participants.\\
+    \textbf{DBMS} & Saves the team, and updates the battle. \\
+    \hline
+  \end{tabular}
+  \captionof{table}{Mapping on $R_{26}$, $R_{27}$, $R_{28}$}
+\end{table}
+
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{lp{12cm}}
+    \hline
+    \textbf{R29} &  The system shall allow students to invite other students to their team during battle registration. \\
+    \textbf{R35} &  The system shall trigger the email service to send an invitation notification for the battle to the invitee students. \\
+    \hline
+    \hline
+    \textbf{Battle Manager} & Gets the client request, and directs it to Team Manager. \\
+    \textbf{Team Manager} & Notifies invitee students.\\
+    \textbf{Notification Manager} &  Triggers In-App Notification Manager.\\
+    \textbf{In-App Notification Manager} &  Sends invitation notification to invitee students.\\
+    \hline
+  \end{tabular}
+  \captionof{table}{Mapping on $R_{29}$}
+\end{table}
+
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{lp{12cm}}
+    \hline
+    \textbf{R30} &  The system shall allow students to accept or reject the team invitation coming from other students for a battle. \\
+    \hline
+    \hline
+    \textbf{Battle Manager} & Gets the client request, and directs it to Team Manager. \\
+    \textbf{Team Manager} & Utilises Team Repository.\\
+    \textbf{Team Repository} & Adds the student to the team members.\\
+    \textbf{DBMS} & Updates the team. \\
+    \hline
+  \end{tabular}
+  \captionof{table}{Mapping on $R_{30}$}
+\end{table}
+
+
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{lp{12cm}}
+    \hline
+    \textbf{R31} &  The system shall allow students to finalize their team registration or decline it. \\
+    \hline
+    \hline
+    \textbf{Battle Manager} & Gets the client request, and directs it to Team Manager. \\
+    \textbf{Team Manager} & Utilises Team Repository.\\
+    \textbf{Team Repository} & Finalises or declines the team.\\
+    \textbf{DBMS} & Updates or removes the team. \\
+    \hline
+  \end{tabular}
+  \captionof{table}{Mapping on $R_{31}$}
+\end{table}
+
+
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{lp{12cm}}
+    \hline
+    \textbf{R32} &  The system shall create a repository for a battle after the registration deadline for that battle has passed. \\
+    \textbf{R36} &  The system shall trigger the email service to send a notification email including the link to the battle repository to the students registered for it.\\
+    \hline
+    \hline
+    \textbf{Battle Manager} & Initialises repo creation for a battle. \\
+    \textbf{GitHub Manager} & Creates repository, return the URL to the Battle Manager.\\
+    \textbf{Battle Repository} & Adds repository URL to the battle.\\
+    \textbf{DBMS} & Updates the battle. \\
+    \textbf{Notification Manager} &  Triggers Email Manager.\\
+    \textbf{Email Manager} &  Sends notification email to the users that participate in the battle.\\
+    
+    \hline
+  \end{tabular}
+  \captionof{table}{Mapping on $R_{32}$ and $R_{36}$}
+\end{table}
+
+
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{lp{12cm}}
+    \hline
+    \textbf{R33} &  The system shall pull the repository of a team following a trigger from GitHub Actions. \\
+    \hline
+    \hline
+    \textbf{Submission Manager} & Triggered by GitHub Actions, utilises GitHub Manager and File Manager. \\
+    \textbf{GitHub Manager} & Pulls the repository.\\
+    \textbf{File Manager} & Stores the files retrieved from repository.\\
+    \hline
+  \end{tabular}
+  \captionof{table}{Mapping on $R_{33}$}
+\end{table}
+
+
+
+
+
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{lp{12cm}}
+    \hline
+    \textbf{R38} & The system shall automatically evaluate submissions by scoring criteria.
+     \begin{enumerate}[(a)]
+         \item The system shall score the submission with respect to test cases, and test case weight.
+         \item The system shall score the submission with respect to timeliness, and timeliness weight.
+         \item The system shall score the submission with respect to quality aspects, and quality aspect weight.
+     \end{enumerate}
+\\
+ \textbf{R39} & The system shall utilise a Static Analysis Tool to calculate the score in terms of quality aspects.\\
+ \textbf{R40} & The system shall create a sandbox environment for each team for the submissions in order to run the codes.\\
+    \hline
+    \hline
+    \textbf{Submission Manager} & Gets submission files and send them to evaluation. \\
+    \textbf{File Manager} & Retrieves previously stored files from File Storage.\\
+    \textbf{Scoring Manager} &  Calculates test case scores and timeliness. Gets help from Static Analysis Manager to calculate static analysis score.\\
+    \textbf{Sandbox Manager} & Creates sandbox environment, runs the code, returns the output. Kills the environment after usage.\\
+    \textbf{Static Analysis Manager} & Calculates static analysis score. \\
+    \hline
+  \end{tabular}
+  \captionof{table}{Mapping on $R_{38}$, $R_{39}$, $R_{40}$}
+\end{table}
+
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{lp{12cm}}
+    \hline
+    \textbf{R41} &  The system shall automatically update the battle score of a team after the evaluation of the submission. \\
+    \hline
+    \hline
+    \textbf{Submission Manager} & Delivers the evaluation result to the Submission Repository. \\
+    \textbf{Submission Repository} & Gives score to the submission.\\
+    \textbf{DBMS} & Updates the submission.\\
+    \hline
+  \end{tabular}
+  \captionof{table}{Mapping on $R_{41}$}
+\end{table}
+
+
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{lp{12cm}}
+    \hline
+\textbf{R42} & The system shall automatically update the battle rankings when a score is updated. \\
+    \hline
+    \hline
+    \textbf{Battle Manager} &  Retrieves scores to display battle rankings.\\
+    \textbf{Battle Repository} & Gets the battle scores of participating teams and then sorts them.\\
+    \textbf{DBMS} & Returns battle scores. \\
+    \hline
+  \end{tabular}
+  \captionof{table}{Mapping on $R_{42}$}
+\end{table}
+
+
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{lp{12cm}}
+    \hline
+    \textbf{R43} & The system shall automatically update the tournament leaderboard at the end of each battle. \\
+    \hline
+    \hline
+    \textbf{Tournament Manager} & Retrieves the tournament scores to display the leaderboard. \\
+    \textbf{Tournament Repository} &  Gets the tournament scores of subscribed users and then sorts them.\\
+    \textbf{DBMS} & Returns tournament scores. \\
+    \hline
+  \end{tabular}
+  \captionof{table}{Mapping on $R_{43}$}
+\end{table}
