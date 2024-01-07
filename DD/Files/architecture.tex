@@ -11,7 +11,7 @@
 
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=0.25]{Images/hl-architecture.drawio.png}
+    \includegraphics[scale=0.25]{Images/DD-highlevel-architecture.drawio.png}
     \caption{High-Level Architecture of the System}
 \end{figure}
 
@@ -28,18 +28,13 @@
 
 \newpage
 \subsection{Deployment View}
+Our architecture mainly consists of 3 parts:  A Static Web Server, Application Server and Database Server.
 \\
-\indent Our architecture mainly consists of 3 parts: 
-\begin{itemize}
-    \item A Static Web Server
-    \item Application Server
-    \item Database Server
-\end{itemize}
-Users can interact with website via a browser and a device that has browser support such as a computer, a mobile phone etc. Content Delivery Network is used for the web server which behaves as an entry point to users. It hosts the static and dynamic web content, such as .html, .css, .js, and image files, to users. Using Content Delivery Network has some advantages in terms of performance, reliability and security. CDNs speed up content delivery by decreasing the distance between where content is stored and where it needs to go, reducing file sizes to increase load speed, optimizing server infrastructure to respond to user requests more quickly. Also  if a server, a data center, or an entire region of data centers goes down, CDNs can still deliver content from other servers in the network. Moreover, it is also very useful from the security perspective. With their many servers, CDNs are better able to absorb large amounts of traffic, even unnatural traffic spikes from a DDoS attack, than a single origin server.
+\indent Users can interact with website via a browser and a device that has browser support such as a computer, a mobile phone etc. Content Delivery Network is used for the web server which behaves as an entry point to users. It hosts the static and dynamic web content, such as .html, .css, .js, and image files, to users. Using Content Delivery Network has some advantages in terms of performance, reliability and security. CDNs speed up content delivery by decreasing the distance between where content is stored and where it needs to go, reducing file sizes to increase load speed, optimizing server infrastructure to respond to user requests more quickly. Also  if a server, a data center, or an entire region of data centers goes down, CDNs can still deliver content from other servers in the network. Moreover, it is also very useful from the security perspective. With their many servers, CDNs are better able to absorb large amounts of traffic, even unnatural traffic spikes from a DDoS attack, than a single origin server.
 \\
-\indent Then we have our Application Server which is hosted on the cloud with 2-4 instances. 
+\indent Then we have our Application Server which is hosted on the cloud with 2-4 instances. Also we have an additional Static Analysis Server.
 \\
-\indent At the Data Layer, we have database server which includes database and DBMS with a firewall. 
+\indent At the Data Layer, we have database servers which includes database and DBMS with a firewall. 
 
 
 \begin{figure}[H]
@@ -55,7 +50,8 @@ The deployment diagram offers a more detailed view over the hardware and softwar
 \indent \textbf{Static Web Content:} The static web content of CodeKata Battle is hosted by Content Delivery Network with a Load Balancer distributing traffic and workload. The nodes in CDN can be scaled to very large numbers because it needs low computation power and memory. Geographically distributed nodes can be helpful to provide web interface with great performance in terms of speed. Briefly, The this content is static and all of its code is run on the
 client’s machine,by browser, so there is no need for any logic to be implemented on the CDN side.
 \\
-\indent \textbf{Application Server:} All the business logic is handled in the Application Server which is hosted on the cloud with minimum 2 and maximum 4 instances. Obviously, these numbers can change in time but ,for an initial design, using 2-4 server instances would be adequate. Also 2 load balancer is used to distributing workload among application server instances. This is the bottleneck of the application so we decided to use 2 of them.
+\indent \textbf{Application Server:} All the business logic is handled in the Application Server which is hosted on the cloud with minimum 2 and maximum 4 instances. Obviously, these numbers can change in time but ,for an initial design, using 2-4 server instances would be adequate. Also 2 load balancer is used to distributing workload among application server instances. This is the bottleneck of the application so we decided to use 2 of them. 
+\indent \textbf{Static Analysis Server:} Also, our static analysis solution requires a server that is responsible for static analysis. We conclude to add a server for this solution because most of the \textbf{Static Analysis Service Providers} works in that way. We followed the \textbf{SonarQube Documentation} as a solution  \hyperlink{https://docs.sonarsource.com/sonarqube/9.9/setup-and-upgrade/install-the-server/}{\textbf{Docs}}. We strongly suggest to use of this service. The internal components described in \textbf{Component View} can change if developers decide to implement a solution with another service.
 \\
 \indent Distributing incoming requests among multiple servers hosted on the cloud can helps us to fulfill some technical constraints:
 \\
@@ -71,24 +67,156 @@ client’s machine,by browser, so there is no need for any logic to be implement
 
 \indent \textbf{Portability}: Cloud environments support portability and interoperability. You can move applications and data across different cloud environments or providers with relative ease, avoiding vendor lock-in and allowing for flexibility in deployment choices.
 \\
-\indent \textbf{Database}: This instance contains database with necessary schemas and database managements system. It is used with a replication It is also has a replicated version of itself, because of our \textbf{reliability} and \textbf{availability} constraints. By replicating data across multiple nodes or locations, the system can ensure high \textbf{availability}. If one node fails, the others can continue to operate, minimizing downtime and ensuring continuous access to data. Also, in the event of a major failure or disaster affecting the primary data center, having replicas ensures that data is not lost and can be quickly recovered. 
+\indent \textbf{Database}: This instance contains database with necessary schemas and database managements system. It is used with a replication It is also has a replicated version of itself, because of our \textbf{reliability} and \textbf{availability} constraints. By replicating data across multiple nodes or locations, the system can ensure high \textbf{availability}. If one node fails, the others can continue to operate, minimizing downtime and ensuring continuous access to data. Also, in the event of a major failure or disaster affecting the primary data center, having replicas ensures that data is not lost and can be quickly recovered. Also our static analysis solution requires a database instance for analysis server which is independent from other database instances.
 \\
 \indent \textbf{Firewalls:} Firewall services act as a security gatekeeper for a system's business and data layers, screening incoming connections. They enhance security by enforcing rules that either permit or block traffic, safeguarding the system from illicit access or harmful attacks.
 
 \indent \textbf{Load Balancers:} A load balancer is employed to evenly distribute incoming traffic across various instances of an application. This strategy optimizes the use of resources, boosts performance, and maintains high availability. By doing so, the load balancer aids in managing a significant influx of requests, preventing the application from being overwhelmed or suffering downtime, and contributes to overall stability.
 
 
-
+\newpage
 \subsection{Runtime View}
+This section includes the interaction of components for the important functionalities of the system. 
+\subsubsection{User Registration}
+Firstly, user sends the registration form from the registration screen. The pages differs for students and educators (see $UI_{1}$). Then system check that if this email exists or not. If it does not exis, the system creates user and send verification to user email. After verification, user registration process is completed successfully.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{Images/runtime/register_runtime.drawio.png}
+    \caption{$RW_{1}$} Registration
+\end{figure}
+
+\subsubsection{User Login}
+Students and educators both need to login in order to use system functionalities. Only authenticated users can see the tournaments, battle etc. So user enters the credentials and system responds with respect to correctness of credentials.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{Images/runtime/login_runtime.drawio.png}
+    \caption{$RW_{2}$} Login
+\end{figure}
+
+\subsubsection{View Tournament}
+In this view some alternative ways to see the tournaments are shown. Fundamentally, students and educator can see all the tournaments. Also some options are available to filter the tournaments. After listing list of tournaments user can select and view on from them.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{Images/runtime/view_tournament_runtime.drawio.png}
+    \caption{$RW_{3}$} View Tournament
+\end{figure}
+
+\subsubsection{View Template}
+This runtime view is a demonstration of all view functions of the application. Thanks to our layered approach, we can view the entities such as tournaments, battles, profiles. Consider this runtime view as a template.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{Images/runtime/view_template_runtime.drawio.png}
+    \caption{$RW_{4}$} View Entity Template
+\end{figure}
+
+\subsubsection{Edit Profile}
+This runtime view explains the sequences when a user want to edit their profiles. In the repository level there are functions for user type specific but this logic is encapsulated by Profile Manager, so endpoint is way simple.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{Images/runtime/edit_profile.drawio.png}
+    \caption{$RW_{5}$} Edit Profile
+\end{figure}
+
+
+\subsubsection{Notification Subsystem}
+Notification Subsystem is one of the core parts of the application. It consists of multiple components however other components of application sees only few function provided by Notification Manager. In this diagram we show a notification that send both email and in app notification. In other diagram we do not show all the process about notification, just show trigger function and response. This diagram explain what happens in a detailed way when a notification is sent .
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{Images/runtime/notification_runtime.drawio.png}
+    \caption{$RW_{6}$} Notification Subsystem
+\end{figure}
+
+\subsubsection{Session Management}
+The main components that provides endpoints uses session information. They use the functions provided by ISesssionManager to retrieve user from the token provided in endpoint. 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{Images/runtime/session_runtime.drawio.png}
+    \caption{$RW_{7}$} Session Management
+\end{figure}
+
+
+\subsubsection{Inspect Submission}
+Educators can need to inspect a submission to view them or score manually.  This diagram explains the steps starting from battle to manual scoring. Of course manual scoring can be done if it is enabled in that battle.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{Images/runtime/inspect_submission_runtime.drawio.png}
+    \caption{$RW_{8}$} Inspect Submission
+\end{figure}
+
+
+\subsubsection{Register To Tournament}
+Students can register to Tournament. This diagram shows this process in a sequential way.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{Images/runtime/register_tournament_runtime.drawio.png}
+    \caption{$RW_{9}$} Register to Tournament
+\end{figure}
+
+
+\subsubsection{Register To Battle}
+Students can register to Battle. This diagram shows this process in a sequential way.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{Images/runtime/register_battle_runtime.drawio.png}
+    \caption{$RW_{10}$} Register to Battle
+\end{figure}
+
+\subsubsection{Create Tournament}
+Educators can create tournaments. After tournament creation notifications are sent to all users.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{Images/runtime/create_tournament_runtime.drawio.png}
+    \caption{$RW_{11}$} Create Tournament
+\end{figure}
+
+\subsubsection{Create Battle}
+Educators can create battles. After battle creation notifications are sent to all users in tournament.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{Images/runtime/create_battle_runtime.drawio.png}
+    \caption{$RW_{12}$} Create Battle
+\end{figure}
+
+\subsubsection{Submission Handling}
+This diagram shows the sequential actions when a submission occurs. Submission Handling is triggered by the Github commit from students.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{Images/runtime/submission_handling_runtime.drawio.png}
+    \caption{$RW_{13}$} Submission Handling
+\end{figure}
 
 
 
+\subsubsection{Scoring Subsystem}
+This diagram shows the sequential actions in scoring subsystem. Similar to notification subsystem, it has another components inside and only gives simple methods to other components in order to calculate scores.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{Images/runtime/scoring_subsystem_runtime.drawio.png}
+    \caption{$RW_{14}$} Scoring Subsystem
+\end{figure}
 
+
+
+\subsubsection{Static Analysis Subsystem}
+This diagram shows the sequential actions during static analysis. The Web API used by Scanner is not shown here because it is used for setup for authentication. Also API provides some endpoint to control server instead of CLI operations.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{Images/runtime/static_analysis.drawio.png}
+    \caption{$RW_{15}$} Static Analysis Subsystem
+\end{figure}
+
+\subsubsection{Battle Github Repository Creation}
+After battle registration deadlines passed a Github repository must be created to be used by students. This diagram explains the Github repository creation of the battle.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{Images/runtime/battle_repository_runtime.drawio.png}
+    \caption{$RW_{16}$} Battle Github Repository Creation
+\end{figure}
 
 \subsection{Component Interfaces}
 In this section, we explain the interfaces and provided methods and returned objects. Also a class diagram is provided to show the dependencies and relations between the interfaces. Also at the end of the section endpoints provided by the system is listed and explained.
-\\
-The Class Diagram is the same as Domain Level Class Diagram in RASD except some additional schmes to demonstrate the data structures used in interfaces.
+
+The Class Diagram is the same as Domain Level Class Diagram in RASD except some additional schmeas to demonstrate the data structures used in interfaces.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{Images/DD-Class Diagram.drawio.png}
@@ -111,6 +239,7 @@ This Interface contains endpoints related to profiles of users. Endpoints explai
 \item GetProfile(userId: int) -> HTTP Response
 \item EditProfile(email: String, password: String, newPassword: String, name: String, surname: String, institutionInfo: List<Institution>) -> HTTP Response
 \item GetEducators()-> HTTP Response
+\item GetStudents()-> HTTP Response
 \end{itemize}
 \subsubsection{ITournamentManager}
 This Interface contains endpoints related to Tournament. Endpoints explained in a detailed way at the end of the section. Just signatures are available here.
@@ -130,12 +259,14 @@ This Interface contains endpoints related to Tournament. Endpoints explained in 
 This Interface contains endpoints related to Battle. Endpoints explained in a detailed way at the end of the section. Just signatures are available here.
 \begin{itemize}
 \item GetBattleInfo(battleId: int) -> HTTP Response
+\item GetSubmission(teamId: int) -> HTTP Response
 \item GetBattleRankings(battleId: int) -> HTTP Response
 \item RegisterBattle(battleId: int, teamName: String, teamInvitations: List<int>) -> HTTP Response 
 \item AnswerBattleInvitation(teamId: int, isAccepted: boolean, studentId: int) -> HTTP Response
 \item FinalizeTeam(teamId: int) -> HTTP Response
 \item DeclineTeam(teamId: int) -> HTTP Response
 \item GetTeam(teamId: int) -> HTTP Response
+\item GetMyTeam(battleId: int) -> HTTP Response
 \item GetTeamScore(teamId: int) -> HTTP Response
 \item AddManualEvaluation(teamId: int, score: float) -> HTTP Response
 \item CreateBattle(title: String, description: String, registrationDeadline: DateTime, submissionDeadline: DateTime, languages: List<Language>, testCases: Map<String, List<File> >, buildScripts: Map<String, File>, minGroupSize: int, maxGroupSize: int, percentages: Map<String, int>, isManualScoreEnabled: boolean) -> HTTP Response 
@@ -151,13 +282,15 @@ This Interface provides session related methods to components. Other components 
 This Interface provides methods that enables other components to send notifications via email or in-app notifications. \textbf{INotification} abstracts the internal operations related to using notification services and provides simple methods.
 
 \begin{itemize}
-    \item sendEmail(to: String, type: NotificationType, payload: Map<String,String>) -> boolean \\ This method sends email to given email with predefined email type related to a template and payload of it.
-    \item sendInAppNotification(userId: int, type: NotificationType, payload: Map<String,String>) -> boolean \\ This method sends in-app notification to given user id with predefined notification type related to a template and payload of it.
+    \item SendNotification(to: String, type: NotificationType, payload: Map<String,String>, emailOrInApp: ['EMAIL', 'NOTIFICATION']) -> boolean \\
+    Calls methods below
+    \item sendEmail(to: String, type: NotificationType, payload: Map<String,String>) -> boolean \\ This method sends email to given email with predefined email type related to a template and payload of it. Same method exists in \textbf{IEmailManager}.
+    \item sendInAppNotification(userId: int, type: NotificationType, payload: Map<String,String>) -> boolean \\ This method sends in-app notification to given user id with predefined notification type related to a template and payload of it.Same method exists in \textbf{IInAppNotificationManager}.
 \end{itemize}
-\subsubsection{Model Interfaces}
+\subsubsection{Repository Interfaces}
 These interfaces are mainly responsible for the query management and communication with DBMS. They provide database query methods for other components. 
 \begin{enumerate}
-    \item \textbf{Tournament Model}
+    \item \textbf{Tournament Repository}
     \begin{itemize}
         \item GetAllTournaments() -> List<Tournament> 
         \item GetFilteredTournament(filter: TournamentFilterSchema) -> List<Tournament>\\
@@ -167,35 +300,43 @@ These interfaces are mainly responsible for the query management and communicati
         \item AddEducator(tournamentId: int, educatorId: int) -> boolean
         \item AddStudent(tournamentId: int, studentId: int) -> boolean
     \end{itemize}  
-    \item \textbf{Battle Model}
+    \item \textbf{Battle Repository}
     \begin{itemize}
         \item GetBattle(battleId: int) -> Battle
-        \item CreateBattle(attributes: BattleCreateSchema) -> int (Battle Id)
+        \item CreateBattle(attributes: BattleCreateSchema) -> Battle
+        \item UpdateBattle(battleId: int, repoUrl: String) -> boolean
         \item CreateCodeKata(attributes: CodeKataCreateSchema) -> int (CodeKata Id)
     \end{itemize}
-    \item \textbf{User Model}
+    \item \textbf{User Repository}
     \begin{itemize}
-        \item CreateStudent(attributes: StudentSchema) -> int (Student Id)
-        \item CreateEducator(attributes: EducatorSchema) -> int (Educator Id)
+        \item CreateUser() -> User (This is a abstract method, use CreateStudent or CreateEducator)
+        \item CreateStudent(attributes: StudentSchema) -> Student
+        \item CreateEducator(attributes: EducatorSchema) -> Educator
         \item GetUser(userId: int) -> User
-        \item UpdateStudent(attributes: StudentSchema) -> int (Student Id)
-        \item UpdateEducator(attributes: EducatorSchema) -> int (Educator Id)
+        \item GetAllStudents() -> List<User>
+        \item GetAllEducators() -> List<User>
+        \item UpdateStudent(attributes: StudentSchema) -> Student
+        \item UpdateEducator(attributes: EducatorSchema) -> Educator
         \item DeleteUser(userId: int) -> boolean
+        \item VerifyUserEmail(email:String) -> boolean
+        \item ValidateCredentials(email: String, password: String) -> boolean, boolean
     \end{itemize}
-    \item \textbf{Team Model}
+    \item \textbf{Team Repository}
     \begin{itemize}
-        \item CreateTeam(attributes: TeamCreateSchema) -> int (Team Id)
+        \item CreateTeam(attributes: TeamCreateSchema) -> Team 
         \item FinalizeTeam(teamId: int) -> boolean
+        \item DeclineTeam(teamId: int) -> boolean
         \item UpdateStudentStatus(teamId: int, studentId: int, isAccepted: boolean) -> boolean
         \item GetTeam(teamId: int) -> Team
+        \item GetTeamForStudent(battleId: int, userId: int) -> Team
     \end{itemize}
-    \item \textbf{Submission Model}
+    \item \textbf{Submission Repository}
     \begin{itemize}
-        \item CreateSubmission(attributes: SubmissionCreateSchema) -> int (Submission Id) \\
+        \item CreateSubmission(attributes: SubmissionCreateSchema) -> Submission \\
         This function overwrites the existing submission, more precisely, safe deletes it.
         \item GetSubmission(teamId: int) -> Submission
         \item GetSubmissions(battleId: int) -> List<Submission>
-        \item AddManualEvaluation(submissionId: int, score: float) -> boolean
+        \item UpdateSubmissionManualScore(submissionId: int, score: float) -> boolean
     \end{itemize}
 \end{enumerate}
 \subsubsection{IBattleTeamOrganiser}
@@ -203,38 +344,62 @@ These interfaces are mainly responsible for the query management and communicati
     \item UpdateTeamStatus(teamId: int, status: TeamStatus) -> boolean
     \item CreateTeam(attributes: TeamCreateSchema) -> Team
     \item GetTeam(teamId: int) -> Team
+    \item GetTeamForStudent(battleId: int, studentId: int) -> Team
     \item AcceptTeamInvitation(teamId: int, studentId: int) -> boolean
     \item DeclineTeamInvitation(teamId: int, studentId: int) -> boolean
 \end{itemize}
 \subsubsection{ISubmissionManager}
+\begin{enumerate}
     \item GetSubmission(teamId: int) -> Submission
     \item GetBattleScores(battle: Battle) -> List<Map<Team, int> >
+   \item AddManualEvaluation(submissionId: int, score: float) -> boolean
+\end{enumerate}
 \subsubsection{ISubmissionListener}
+\begin{enumerate}
     \item Submission(teamId: int, repoUrl: string) -> HTTP Status \\
     This is an endpoint responsible to be triggered by Github Actions Workflow created by teams. When they made a new commit, they  send a request to this endpoint.
+\end{enumerate}
 \subsubsection{ISubmissionRetriever}
+\begin{enumerate}
     \item PullSubmission(repoUrl: String, battleId: int, teamId: int) -> String \\
-    This method provides the url of a folder in the file storage system. The pulled repository content is stored in this folder with a naming using battleId and teamId. The component using this method is then responsible for other actions. 
+    This method provides the url of a folder in the file storage system. The pulled repository content is stored in this folder with a naming using battleId and teamId. The component using this method is then responsible for other actions.
+    \end{enumerate}
 \subsubsection{IScoringHandler}
-   \item CalculateTestCaseScore(code: File, testCaseFiles: Map<Language, List<File> >, buildScripts) -> float
+\begin{enumerate}
+   \item ScoreSubmission(code: File, testCaseFiles: Map<Language, List<File> >, buildScripts: Map<Language, List<File> >) -> float
+  \item CalculateTestCaseScore(List<TestCaseOutput>) -> float
    \item CalculateStaticAnalysisScore(code: File, qualityAspects: List<QualityAspect>) -> float
    \item CalculateTimelinessScore(submissionDate: DateTime, battleStartDate: DateTime) -> float
    \item \textbf{ICodeExecutor}
    \begin{itemize}
         \item CreateSandboxEnviroment(language: Language, build
-       \item RunTestCases(code: File, language: Language, testCase: File) -> boolean
+       \item RunTestCase(code: File, language: Language, testCase: File) -> TestCaseOutput (custom schema contains logs and test case result)
    \end{itemize}
    \item \textbf{IStaticAnalysis}
    \begin{itemize}
-       \item GetStaticAnalysisScore(code: File, language: Language, qualityAspects: List<QualityAspect>) -> float
+       \item CalculateStaticAnalysisScore(codeUrls: List<String>, language: Language, qualityAspects: List<QualityAspect>) -> float
    \end{itemize}
+\end{enumerate}
 \subsubsection{IBattleRepoHandler}
 \begin{itemize}
     \item CreateBattleRepository(battle: Battle) -> String (Repository URL)
 \end{itemize}
+\subsubsection{IFileManagement}
+\item StoreFiles(files: List<File> ) -> List<String> (Path to Files)
+\item FetchFiles(url: String) -> File
+\subsubsection{IScanner}
+\item ScanCode(file: File, language: Language, qualityAspects: List<QualityAspect>)) -> ScanOutput
+\item \textbf{IAnalysisServer}
+\begin{itemize}
+    \item NewProject(name: String, configs: Map) -> String
+    \item ScanCode(file: File, token: String) -> ScanOutput (**complex response, look service provider documentation for further exploration)
+    \item DeleteProject(token: String) -> boolean
+\end{itemize}
+\item \textbf{Web API}
+This is API provided by external service to manage the server and other operations such as authentication etc. At first no specific use other than authentication, but it is a good practice to manage server with API instead of CLI commands and bash scripts in long term.
 \subsubsection{IGithubAPI}
 This is the external API used to retrieve submission from Github. This Interface is explained later.
-\subsubsection{IFileManagement}
+\subsubsection{File Storage API}
 This is the external service to store and manager files stored in the application. Cloud Object Storage is used. This Interface is explained later.
 
 \subsubsection{API Endpoints}
@@ -402,6 +567,23 @@ This is the external service to store and manager files stored in the applicatio
         \item \textbf{200} \\
         \begin{itemize}
             \item educators: List<Educator>
+        \end{itemize}
+        \item \textbf{400} \\
+        \begin{itemize}
+            \item message: "Something went wrong"
+        \end{itemize}
+    \end{itemize}
+        \item \textbf{Endpoint Profile/GetStudents} \\
+    \textbf{Method:} GET \\
+    Header:\\
+    \begin{itemize}
+        \item token: String
+    \end{itemize}
+    Response:\\
+    \begin{itemize}
+        \item \textbf{200} \\
+        \begin{itemize}
+            \item students: List<Student>
         \end{itemize}
         \item \textbf{400} \\
         \begin{itemize}
@@ -721,6 +903,23 @@ This is the external service to store and manager files stored in the applicatio
             \item message: "Something went wrong"
         \end{itemize}
     \end{itemize}
+    \item \textbf{Endpoint Battle/GetMyTeam/:battleID} \\
+    \textbf{Method:} GET \\
+    Header:\\
+    \begin{itemize}
+        \item token: String
+    \end{itemize}
+    Response:\\
+    \begin{itemize}
+        \item \textbf{200} \\
+        \begin{itemize}
+            \item team: Team
+        \end{itemize}
+        \item \textbf{400} \\
+        \begin{itemize}
+            \item message: "You don't have a team for this battle"
+        \end{itemize}
+    \end{itemize}
     \item \textbf{Endpoint Battle/GetTeamScore/:teamId} \\
     \textbf{Method:} GET \\
     Header:\\
@@ -831,16 +1030,6 @@ Improved Security: The separation allows for better security measures. For examp
 
 Ease of Maintenance: Individual layers can be updated or repaired without affecting the entire system.
 
-Possible Trade-offs:
-
-Complexity: The architecture can be more complex to design and implement compared to simpler architectures like a monolithic design. This can lead to higher initial development costs and longer development time.
-
-Performance Overhead: The inter-layer communication can introduce latency. For high-performance applications, this might be a limiting factor.
-
-Deployment Complexity: Deploying a 3-tier application can be more complex than deploying a single-tier application, as it may involve setting up and managing multiple servers and environments.
-
-Skill Requirements: The need for expertise in multiple technologies (front-end, back-end, database management) can be higher than in more unified architectures.
-
 Compared to Other Architectures:
 
 Vs. Monolithic Architecture: A monolithic architecture combines all three tiers into a single application. It is simpler to deploy and manage but can become unwieldy as the application grows, and it lacks the modularity and scalability of 3-tier architecture.
@@ -849,15 +1038,14 @@ Vs. Microservices Architecture: Microservices architecture breaks down an applic
 
 In summary, the 3-tier architecture offers a balanced approach between modularity, scalability, and manageability. It is well-suited for applications where these aspects are prioritized over the simplicity of deployment and initial development ease.
 
-
 \subsubsection{Layered Architecture}
 From deployment perspective we have designed Application Layer as a single component, however, from software design perspective it is layered and contains more layers. The application server is divided into Endpoints/Routers, Services (Main Business Logic), and Repositories (Data Access Layer), represents a layered architecture pattern, often used in modern web applications for clear separation of concerns. \\
 \begin{enumerate}
-\item \textbf{Endpoints/Routers:} This layer handles HTTP requests from clients. It's responsible for receiving requests, interpreting them, and directing them to the appropriate service layer for processing. It doesn't contain business logic or data access code; its sole purpose is to route requests to the correct parts of the application.
+\item \textbf{Endpoints/Routers:} This layer handles HTTP requests from clients. It's responsible for receiving requests, interpreting them, and directing them to the appropriate service layer for processing. It doesn't contain business logic or data access code; its sole purpose is to route requests to the correct parts of the application. In the component Diagram interfaces provided to Client Application includes the endpoints.
 
-\item \textbf{Services (Main Business Logic):}This is the heart of your application. The service layer contains the core business logic. It processes requests forwarded from the endpoints/routers, applies business rules, and performs operations based on these rules. This layer doesn't directly interact with the database; instead, it communicates with the repository layer to access and manipulate data.
+\item \textbf{Services (Main Business Logic):}This is the heart of your application. The service layer contains the core business logic. It processes requests forwarded from the endpoints/routers, applies business rules, and performs operations based on these rules. This layer doesn't directly interact with the database; instead, it communicates with the repository layer to access and manipulate data. In the component Diagram, interfaces and components which is not responsible for data access or endpoints belongs to this layer.
 
-\item \textbf{Repositories (Data Access Layer): }The repository layer abstracts the data access logic from the service layer. It provides a collection of methods for accessing and manipulating data in your database or other storage mechanisms. The repository layer's main goal is to isolate the data access logic, making the service layer agnostic of the underlying data source and storage details.
+\item \textbf{Repositories (Data Access Layer): }The repository layer abstracts the data access logic from the service layer. It provides a collection of methods for accessing and manipulating data in your database or other storage mechanisms. The repository layer's main goal is to isolate the data access logic, making the service layer agnostic of the underlying data source and storage details. Repoistory Components are shown Component Diagram.
 \end{enumerate}
 
 \textbf{Characteristics of This Architecture:}
@@ -878,7 +1066,7 @@ This structure aligns with the Layered Architecture pattern, also known as the n
 In summary, this application architecture, with clear divisions between endpoints/routers, services, and repositories, is a well-organized example of a layered architecture. This approach is widely adopted in the development of scalable, maintainable, and testable web applications.
 
 \subsubsection{Facade}
-\textbf{Definition:} The Facade pattern provides a unified interface to a set of interfaces in a subsystem. It defines a higher-level interface that makes the subsystem easier to use.
+\indent \textbf{Definition:} The Facade pattern provides a unified interface to a set of interfaces in a subsystem. It defines a higher-level interface that makes the subsystem easier to use.
 
 \textbf{Purpose:} Facade is typically used to simplify a complex subsystem or to provide a single entry point to a level of functionality. It doesn't encapsulate the subsystem but provides a simplified interface to it.
 
@@ -897,10 +1085,12 @@ The Mediator might also process or transform the data before forwarding it.
 \end{itemize}
 
 
-
+\subsubsection{Restful API:} A RESTful API serves as a secure interface for two computer systems to share information over the internet. In the CodeKataBattle system, this API facilitates the exchange of objects and information in JSON format via HTTP.
 
 \subsection{Other Design Decisions}
 In this section we explained further Design Decisions.
+\subsubsection{Static Analysis Tool}
+Static Analysis Subsystem is one of the fundamental parts of the system. It is responsible to analyse the code in order to create a Quality score. Most of the services uses a server in which Static Analysis Service is installed. Our choice for this kind of service is \hyperlink{https://docs.sonarsource.com/sonarqube/latest/}{SonarQube}. We have 3 components in our \textbf{Static Analysis Subsystem}. Scanner, Analysis Server and Database for the service. These are explained well in the SonarQube Documentation. We don't want to restrict developer to use exactly this technology so this subsystem can be adjusted to another services because this kind of architecture is common in static analysis services. Also a Web API is uses for authentication and other remote controls of the service in Analysis Server. Still, SonarQube is strongly recommended.
 \subsubsection{Load Balancing, Firewall and Replication}
 As we mentioned before we use Load Balancer to satisfy constraints related to \textbf{Availability}. We are aiming to less downtime by distributing incoming traffic to the running instances. Moreover, using Firewall and HTTPS for all data transactions, our \textbf{Security} constraints mentioned in the RASD will be held. Finally, sustaining Database Replication improves the \textbf{Sustainability}
 by backup options and recovery plans. 
@@ -919,6 +1109,7 @@ In summary, sandboxing on a coding challenge platform ensures security, fairness
 
 \newpage
 \textbf{Submission Scoring  Algorithm:}
+In this activity diagram, we briefly explained scoring mechanism in terms of actions operated and decisions made. 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{Images/DD-Sandbox.drawio.png}

@@ -1,16 +1,74 @@
 \subsection{Purpose}
+the CodeKataBattle project serves as a bridge between theoretical learning and practical application in computer science education. It offers students a platform to practice coding, collaborate, and improve their skills, and provides educators with effective teaching tools and assessment methods. The aim of CKB is to make computer science education more engaging, practical, and rewarding for both students and educators.
 
-
+The goal of the \textbf{Design Document} is to provide a detailed explanation of the infrastructure utilized by the CodeKataBattle system. This includes a comprehensive description of the technologies and components employed, with a focus on the interactive actions of the system's users. The primary target audience for this document is developer teams who are responsible for implementing all the features.
 \subsection{Scope}
+The primary users of the platform are students and educators in the field of computer science and related areas.
 
+\indent \textbf{CKB} is a web-based, interactive coding platform aimed at enhancing students' coding skills through battles created by educators. It serves primarily as an educational tool for practical application.CKB creates a competitive learning atmosphere where students are encouraged to excel in challenges formatted as battles, boosting their motivation.The platform fosters teamwork and collaboration, allowing students to work in groups on battles, mirroring real-world software development teamwork.
+
+Educators have significant control over the platform, as they are responsible for creating, managing, and grading the battles and tournaments.
+
+\indent \textbf{CKB} allows students to employ professional tools and methodologies, including version control and GitHub integration, to improve their real-world software development capabilities.
+Automated testing is utilized by the platform for objective assessment of student submissions, while also enabling educators to conduct manual evaluations for more subjective aspects.
+
+The platform is designed to provide immediate feedback on submissions and live updates on team scores and standings.
+
+CKB offers educators flexibility in selecting programming languages, setting challenge difficulty, and determining the scope of coding tasks, catering to diverse educational requirements and learning paces.
 
 
 \subsection{Definitions, Acronyms, Abbreviations}
+\subsubsection{Definitions}
+\begin{itemize}
+    \item \textbf{Student}: An individual enrolled in an educational program or course who uses the platform to participate in coding exercises and improve software development skills.
+    \item \textbf{Educator}: A person, such as a teacher or an instructor, responsible for creating coding challenges and managing learning activities on the platform.
+    \item \textbf{Automated Testing}: A process where the CKB platform automatically executes predefined tests on student code submissions to assess their functionality and correctness without manual intervention.
+    \item \textbf{Manual Scoring}: The process where educators evaluate student code submissions subjectively, complementing the automated testing system.
+    \item \textbf{Battle}: A competitive coding challenge on the platform where students or teams of students solve specific programming problems within set parameters and time frames.
+    \item \textbf{Tournament}: A series of code kata battles organized and managed by educators on the CKB platform, that ranks students or teams based on cumulative scores from individual battles.
+    \item \textbf{Ranking}: A system within the CKB platform that orders participating students or teams based on their performance in individual code kata battles, determined by scores from automated and manual evaluations.
+    \item \textbf{Leaderboard}: A feature on CKB that displays the standings of students or teams based on their performance overall in a tournament.
+    \item \textbf{Institution Information}: Institution Information is multiple choice of institutions for the educators, a single institution for the students.
+    \item \textbf{Unregistered User}: Users that haven't registered to the platform yet.
+    \item \textbf{Registered User}: User that have registered to the platform.
+    \item \textbf{Authenticated User}: User that have logged in to the platform.
+    \item \textbf{Availability}: Availability is the status of tournament in terms of Closed, Open, or Upcoming.
+    \item \textbf{Scoring Criteria}: Scoring Criteria includes Test Cases, Timeliness and Quality.
+    \item \textbf{Quality Aspects:} Quality aspects are the concepts to score the submission in terms of quality. This term includes COMPLEXITY, DUPLICATIONS, MAINTAINABILITY, RELIABILITY, SECURITY, CLEAN\_CODE
 
+\end{itemize}
+
+\subsubsection{Acronyms}
+\begin{itemize}
+    \item \textbf{CKB}: CodeKataBattle
+\end{itemize}
+
+subsubsection{Abbreviations}
+\begin{itemize}
+    \item $AD_{x}$: x-th Activity Diagram
+    \item $RW_{x}$: x-th Runtime View
+    \item $UI_{x}$: x-th UI Design
+    \item $R_{x}$: x-th Functional Requirement
+\end{itemize}
 
 
 \subsection{Revision History}
+07-01-2024 : DDv1 \textbf{Final Version}
 
 \subsection{Reference Documents}
-
+\begin{itemize}
+    \item Course Slides in WeBeep
+    \item Project Assignment Document
+    \item RASD CodeKataBattle
+\end{itemize}
 \subsection{Document Structure}
+
+\begin{itemize}
+    \item \textbf{Introduction:} This section provides an overview for the Design Document of CodeKataBattle,
+    \item \textbf{Architectural Design:} In this section architectural views such as component view , deployment and runtime view are explained. Also components of the system and interfaces they provide are listed. Addition to architectural strategies, an high-level analysis of functionalities, responsibilities and the main components are explained.
+    \item \textbf{User Interface Design:} The graphical respresentation of the system with respect to Design Document are shown here. Mockups are listed with respect to main functionalities of the system. In this section, we can see the system as whole from the user perspective.
+    \item \textbf{Requirements Traceability:} This section contains mapping of functional requirements to the components, requirements and functionalites defined in the DD Document.
+    \item \textbf{Implementation, Integration and Test Plan:} This section outlines the implementation of the system and the integration of its various application components. Additionally, it offers an in-depth explanation of how system testing is conducted.
+    \item \textbf{Effort Spent:} The effort spent by group members are listed in terms of hours.
+    \item \textbf{References:} The documents used, consulted and anaylzed are listed in this section.
+\end{itemize}

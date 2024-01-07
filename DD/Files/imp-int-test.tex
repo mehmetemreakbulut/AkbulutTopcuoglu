@@ -1,7 +1,7 @@
 In this section, we briefly explained the planned implementation, integration and testing of system components. 
 
 \subsection{Implementation}
-\indent The system is structured around three primary layers: client, business, and data. These will be concurrently developed and later integrated. By doing so, each layer can be tested individually, and after integration, comprehensive system-wide testing can be conducted. We will employ a hybrid strategy, combining bottom-up and thread methodologies, to leverage the advantages of both.
+\indent The system is structured around three primary layers: client, application, and data. These will be concurrently developed and later integrated. By doing so, each layer can be tested individually, and after integration, comprehensive system-wide testing can be conducted. We will employ a hybrid strategy, combining bottom-up and thread methodologies, to leverage the advantages of both.
 \\
 \indent The thread approach aids in creating interim deliverables for stakeholder evaluation, proving extremely beneficial for system validation. Concurrently, the bottom-up strategy facilitates incremental integration, enhancing bug detection by allowing for the testing of subsystems as they progressively evolve through the addition of new modules.
 \\
@@ -11,8 +11,8 @@ In this section, we briefly explained the planned implementation, integration an
 
 \subsubsection{Client Application}
 Static parts of Client Web Application ,in other words Frontend, can be implemented without server side implementation. Mockups and UI-UX design can be used for this development. However, dynamic actions rely on REST API to communicate server-side responsible for business logic. So, using documentation, unit test mocking REST API can be used to implement Frontend code.
-\subsubsection{Application Server}
-Application Server, in other words Backend, is responsible for the business logic in server side. We can separate some parts of the Application Server to be developed in parallel.
+\subsubsection{Application Layer}
+Application Layer, in other words Backend, is responsible for the business logic in server side. We can separate some parts of the Application Layer to be developed in parallel.
 The components to be incorporated into the system are derived directly from the system's requirements. The developers can be work separately on these components and integrate and test at the end of their development the components to evaluate the dependency and the interactions between them. The entire business logic can be tested separately from the client logic, which accelerates the development process. Below is a concise summary of the system's components with priorities.
 \begin{tabularx}{0.8\textwidth} { 
   | >{\raggedright\arraybackslash}X 
@@ -25,23 +25,25 @@ The components to be incorporated into the system are derived directly from the 
   \hline
  Profile Manager  & Medium  & Low  \\
 \hline
- Tournament Manager  & High  & High  \\
+ Tournament Manager  & Medium  & High  \\
 \hline
- Battle Manager  & High  & High  \\
+ Battle Manager  & Medium  & High  \\
 \hline
  Team Manager  & Medium  & Low  \\
 \hline
- Notification Manager  & Low  & Medium  \\
+ Notification Subsystem Components  & Low  & Medium  \\
 \hline
  Repository Components  & High  & Medium  \\
 \hline
- Submission Manager  & High  & Medium  \\
+ Submission Manager  & Medium  & Medium  \\
 \hline
  Github Manager  & Low  & Low  \\
 \hline
- Scoring Manager  & High  & High  \\
+ Scoring Manager  & High  & Medium  \\
 \hline
  File Manager  & Medium  & Low  \\
+\hline
+ Static Analysis Subsystem Components  & Medium  & High  \\
 \hline
 \end{tabularx}
 
@@ -60,11 +62,12 @@ So, briefly, we have to consider the importance and complexity of a component be
     \item \textbf{Github Manager:} Even though Github Manager is not fundamental as some main components such as Submission Manager and Battle Manager, implementing it early comes with advantages. It provides interfaces to these components. Also there can be another components using some logic related to Github. 
     \item \textbf{Submission Manager:} This component is one of the main components in the application which provides Submission related methods. It is very critic to use because it also provides an endpoint to be triggered by Github. 
     \item \textbf{Team Manager}: It provides interface related to team operations. Needed from Battle Manager.
-    \item \textbf{Battle Manager:} This components provides the endpoints about Battles and operates the logic related to Battles. It uses various interfaces from various components so it is good to implement this component at the last stages.
+    \item \textbf{Battle Manager:} These components provides the endpoints about Battles and operates the logic related to Battles. It uses various interfaces from various components so it is good to implement this component at the last stages.
+    \item \textbf{Static Analysis Subsystem:} These components are part of the Static Analysis Subsystem. Scanner, Analysis Server and Database are implemented at the the end because it just communicates with the static analysis scoring and can be easily mocked. However, without integration this part can be implemented in parallel.
 \end{enumerate}
 
 \newpage
-\subsection{Integration \& Testing}
+\subsection{Integration}
 \indent The section describes the integration plan of the different components and subcomponents of the CodeKataBattle. The provided graphs illustrate the interdependencies between various components and subcomponents. Before any subcomponent is combined with others to create a larger component, it must undergo unit testing. Following this integration, the complete component is then subjected to further testing.
 \\
 \indent Before proceeding with the integration testing of a component, it is crucial to satisfy two key conditions, each with its distinct benefits. The first condition is that the component's interface must encompass all the functionalities detailed in the component interface diagram. This ensures that the component adheres to the predefined design specifications, which is vital for maintaining consistency and predictability in the system’s overall behavior. Adhering to these specifications also facilitates easier integration with other components, as each piece is designed to fit seamlessly within the broader system architecture.
@@ -128,7 +131,7 @@ So, briefly, we have to consider the importance and complexity of a component be
 \end{figure}
 
 \newpage
-\indent Scoring Manager and Github Manager can be implemented and integrated in parallel. For Scoring Manager, there are two other components which are responsible to Sandbox Manager and Static Analysis Manager. Firstly, Static Analysis Manager is integrated to 3rd Party API, then it is integrated to Scoring Manager with Sandbox Manager. Also Github Manager is integrated to Github with necessary documentation provided by Github.
+\indent Scoring Manager and Github Manager can be implemented and integrated in parallel. For Scoring Manager, there are two other components which are responsible to Sandbox Manager and Static Analysis Manager. Firstly, Static Analysis Manager is integrated to Static Analysis Subsystem, then it is integrated to Scoring Manager with Sandbox Manager. For now, we mock the Static Analysis Subsytem. Also Github Manager is integrated to Github with necessary documentation provided by Github.
 
 \begin{figure}[H]
     \centering
@@ -137,7 +140,7 @@ So, briefly, we have to consider the importance and complexity of a component be
 \end{figure}
 
 \newpage
-\indent Submission Manager has a dependency over Scoring Manager, Github Manager and File Manager. Its implementation and integration will be held after these components. Also, usage of these components' provided interfaces from Submission Manager should be aligned with unit test written before for these components. Submission Manager is still sperated from the application because mainly Battle Manager uses the interface provided by Submission Manager.
+\indent Submission Manager has a dependency over Scoring Manager, Github Manager and File Manager. Its implementation and integration will be held after these components. Also, usage of these components' provided interfaces from Submission Manager should be aligned with unit test written before for these components. Submission Manager is still separated from the application because mainly Battle Manager uses the interface provided by Submission Manager.
 
 \begin{figure}[H]
     \centering
@@ -152,6 +155,23 @@ So, briefly, we have to consider the importance and complexity of a component be
     \centering
     \includegraphics[width=\linewidth]{Images/integration/integration_9.drawio.png}
     \caption{Integration of Battle and Team Manager}
+\end{figure}
+
+\newpage
+\indent Until now, we have mocked the Static Analysis Subsystem. It is implemented and integrated at the end. Its internal implementation is bottom-up. We firstly create db, then server. Our scanner is responsible for outer communication and scanning the code to be analyzed on the analysis server. After we are sure that all tests are passed, this components can be integrated to whole system. 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{Images/integration/integration_10.drawio.png}
+    \caption{Integration of Static Analysis Subsystem}
+\end{figure}
+
+\newpage
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{Images/integration/integration_11.drawio.png}
+    \caption{System as a whole}
 \end{figure}
 
 \newpage
